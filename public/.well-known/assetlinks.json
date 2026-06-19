@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.apex.motors",
+      "sha256_cert_fingerprints": [
+        "8B:60:78:CE:E5:1E:45:8B:7D:5F:34:F5:4E:46:E9:DE:48:98:76:3D"
+      ]
+    }
+  }
+]
