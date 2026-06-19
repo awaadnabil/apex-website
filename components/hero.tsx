@@ -2,8 +2,11 @@
 
 import { useEffect, useRef } from 'react'
 
+const LETTERS = ['A', 'P', 'E', 'X']
+
 export function Hero() {
   const wordRef = useRef<HTMLHeadingElement>(null)
+  const parallaxRef = useRef<HTMLDivElement>(null)
   const fitRef = useRef(1)
 
   useEffect(() => {
@@ -55,18 +58,49 @@ export function Hero() {
     }
   }, [])
 
+  // Subtle pointer parallax on the photograph for depth.
+  useEffect(() => {
+    const wrap = parallaxRef.current
+    if (!wrap) return
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    let raf = 0
+    let tx = 0
+    let ty = 0
+
+    const onMove = (e: MouseEvent) => {
+      const nx = (e.clientX / window.innerWidth - 0.5) * 2
+      const ny = (e.clientY / window.innerHeight - 0.5) * 2
+      tx = nx * -14
+      ty = ny * -14
+      if (!raf) {
+        raf = requestAnimationFrame(() => {
+          raf = 0
+          wrap.style.transform = `translate3d(${tx}px, ${ty}px, 0)`
+        })
+      }
+    }
+
+    window.addEventListener('mousemove', onMove, { passive: true })
+    return () => {
+      window.removeEventListener('mousemove', onMove)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
+
   return (
     <section
       id="top"
       className="relative flex h-[100svh] min-h-[640px] w-full flex-col items-center justify-center overflow-hidden"
     >
       {/* Background — trust the photography, keep the overlay light */}
-      <img
-        src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/apex-supercars-h7OydBomTgS4J9Cz59dYOKCUL8My8z.jpg"
-        alt="A Bugatti Chiron leading supercars down Sheikh Zayed Road at sunset with the Dubai skyline"
-        fetchPriority="high"
-        className="absolute inset-0 h-full w-full object-cover"
-      />
+      <div ref={parallaxRef} className="absolute inset-0 scale-[1.06]" style={{ willChange: 'transform' }}>
+        <img
+          src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/apex-supercars-h7OydBomTgS4J9Cz59dYOKCUL8My8z.jpg"
+          alt="A Bugatti Chiron leading supercars down Sheikh Zayed Road at sunset with the Dubai skyline"
+          fetchPriority="high"
+          className="kenburns h-full w-full object-cover"
+        />
+      </div>
       <div className="absolute inset-0 bg-carbon/35" />
       <div className="absolute inset-0 bg-gradient-to-b from-carbon/20 via-transparent to-carbon/90" />
 
@@ -74,13 +108,20 @@ export function Hero() {
       <div className="relative z-10 flex w-full justify-center px-4">
         <h1
           ref={wordRef}
-          className="select-none whitespace-nowrap font-extrabold leading-[0.8] tracking-[0.03em] text-white"
+          aria-label="APEX"
+          className="flex select-none whitespace-nowrap font-extrabold leading-[0.8] tracking-[0.03em] text-white"
           style={{
             fontSize: 'clamp(4rem, 20vw, 18rem)',
             willChange: 'transform, opacity',
           }}
         >
-          APEX
+          {LETTERS.map((letter, i) => (
+            <span key={letter} aria-hidden="true" className="inline-block overflow-hidden pb-[0.08em]">
+              <span className="hero-letter" style={{ ['--d' as string]: `${1700 + i * 110}ms` }}>
+                {letter}
+              </span>
+            </span>
+          ))}
         </h1>
       </div>
 

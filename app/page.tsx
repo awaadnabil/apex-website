@@ -1,4 +1,6 @@
 import { ScrollReveal } from '@/components/scroll-reveal'
+import { CinematicFx } from '@/components/cinematic-fx'
+import { IntroCurtain } from '@/components/intro-curtain'
 import { SiteNav } from '@/components/site-nav'
 import { Hero } from '@/components/hero'
 import { Stats } from '@/components/stats'
@@ -10,6 +12,8 @@ import { SiteFooter } from '@/components/site-footer'
 export default function Page() {
   return (
     <main className="relative min-h-screen bg-carbon font-sans text-white">
+      <IntroCurtain />
+      <CinematicFx />
       <ScrollReveal />
       <SiteNav />
       <Hero />
