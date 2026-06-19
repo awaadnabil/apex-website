@@ -56,9 +56,6 @@ export function Tribes() {
               />
               <div className="absolute inset-0 bg-carbon/40 transition-opacity duration-700 group-hover:opacity-20" />
 
-              {/* teal edge on hover */}
-              <span className="absolute left-0 top-0 h-full w-px scale-y-0 bg-teal transition-transform duration-700 ease-out group-hover:scale-y-100" />
-
               {/* vertical name (default) -> horizontal on hover, handled via responsive layout */}
               <div className="absolute inset-0 flex flex-col justify-end p-6">
                 <h3 className="font-extrabold uppercase tracking-[0.2em] text-white [font-size:clamp(1.25rem,2.4vw,1.75rem)] md:[writing-mode:vertical-rl] md:rotate-180 md:self-start md:transition-all md:duration-700 md:group-hover:[writing-mode:horizontal-tb] md:group-hover:rotate-0">

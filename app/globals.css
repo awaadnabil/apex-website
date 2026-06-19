@@ -27,58 +27,9 @@
   }
 
   ::selection {
-    background-color: #00c8c8;
+    background-color: #c9a84c;
     color: #080808;
   }
-}
-
-/* SCROLL cue line */
-@keyframes scrollPulse {
-  0% {
-    transform: scaleY(0);
-    transform-origin: top;
-    opacity: 0.2;
-  }
-  50% {
-    transform: scaleY(1);
-    transform-origin: top;
-    opacity: 1;
-  }
-  50.01% {
-    transform-origin: bottom;
-  }
-  100% {
-    transform: scaleY(0);
-    transform-origin: bottom;
-    opacity: 0.2;
-  }
-}
-
-.animate-scroll-line {
-  animation: scrollPulse 2.4s ease-in-out infinite;
-}
-
-/* floating carbon dust */
-@keyframes dustFloat {
-  0% {
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-  20% {
-    opacity: 0.5;
-  }
-  80% {
-    opacity: 0.35;
-  }
-  100% {
-    transform: translate3d(var(--dx), var(--dy), 0);
-    opacity: 0;
-  }
-}
-
-.animate-dust {
-  animation: dustFloat var(--dur) ease-in-out infinite;
-  animation-delay: var(--delay);
 }
 
 /* fade/rise reveal driven by IntersectionObserver */
@@ -104,9 +55,5 @@
     opacity: 1;
     transform: none;
     transition: none;
-  }
-  .animate-dust,
-  .animate-scroll-line {
-    animation: none;
   }
 }

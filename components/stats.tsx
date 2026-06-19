@@ -7,7 +7,7 @@ type Stat = { value: number; suffix?: string; label: string }
 const STATS: Stat[] = [
   { value: 350, suffix: '+', label: 'Routes' },
   { value: 7, label: 'Cities' },
-  { value: 4, label: 'Tribes' },
+  { value: 5, label: 'Tribes' },
   { value: 1, label: 'Community' },
 ]
 

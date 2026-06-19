@@ -1,27 +1,26 @@
+import { ApexButton } from './apex-button'
+
 const TIERS = [
   {
+    no: '01',
     name: 'Ignite',
     price: 'AED 49.99',
     period: '/mo',
-    border: 'border-l-teal',
-    hover: 'hover:bg-teal/[0.04]',
     features: ['Community access', 'Local meets', '50 saved routes', 'Event calendar'],
   },
   {
+    no: '02',
     name: 'Carbon',
     price: 'AED 149.99',
     period: '/mo',
-    border: 'border-l-gold',
-    hover: 'hover:bg-gold/[0.05]',
-    recommended: true,
+    cta: true,
     features: ['Everything in Ignite', 'All 350+ routes', 'Track day priority', 'Tribe leadership'],
   },
   {
+    no: '03',
     name: 'Obsidian',
     price: 'By Invitation',
     period: '',
-    border: 'border-l-silver',
-    hover: 'hover:bg-white/[0.03]',
     redacted: true,
   },
 ]
@@ -37,32 +36,38 @@ function Lock() {
 
 export function Membership() {
   return (
-    <section id="membership" className="px-6 py-28 md:py-40">
+    <section id="membership" className="px-6 py-40 md:py-56">
       <div className="mx-auto max-w-6xl">
-        <h2 className="reveal mb-20 text-center font-extrabold leading-none text-white [font-size:clamp(2rem,5vw,3rem)]">
-          Choose Your Access
+        <h2 className="reveal mb-24 text-left font-extrabold leading-none text-white [font-size:clamp(2.5rem,6vw,4rem)]">
+          Your Access
         </h2>
 
         <div className="flex flex-col">
           {TIERS.map((t, i) => (
             <div
               key={t.name}
-              className={`reveal group flex flex-col gap-6 border-b border-white/8 border-l-2 px-6 py-10 transition-colors duration-500 md:flex-row md:items-center md:gap-10 md:px-12 ${t.border} ${t.hover} ${i === 0 ? 'border-t border-white/8' : ''}`}
+              className={`reveal flex flex-col gap-8 border-b border-white/10 py-14 md:flex-row md:items-center md:gap-12 ${
+                i === 0 ? 'border-t border-white/10' : ''
+              }`}
               style={{ transitionDelay: `${i * 100}ms` }}
             >
-              <div className="flex min-w-[260px] items-center gap-4">
+              {/* Tier number — teal lives here and nowhere else */}
+              <span
+                className={`font-extrabold leading-none [font-size:clamp(2rem,4vw,3rem)] ${
+                  t.no === '01' ? 'text-teal' : 'text-white/20'
+                }`}
+              >
+                {t.no}
+              </span>
+
+              <div className="min-w-[200px]">
                 <h3 className="font-extrabold uppercase tracking-[0.15em] text-white [font-size:clamp(1.5rem,3vw,2rem)]">
                   {t.name}
                 </h3>
-                {t.recommended && (
-                  <span className="border border-gold px-2 py-1 text-[8px] uppercase tracking-[0.3em] text-gold">
-                    Recommended
-                  </span>
-                )}
               </div>
 
               <div className="min-w-[180px]">
-                <span className="text-lg font-bold text-white">{t.price}</span>
+                <span className="text-lg font-bold text-gold">{t.price}</span>
                 <span className="text-[11px] uppercase tracking-[0.2em] text-white/50">
                   {t.period}
                 </span>
@@ -94,6 +99,15 @@ export function Membership() {
                   ))
                 )}
               </div>
+
+              {/* The single filled button on the page */}
+              {t.cta && (
+                <div className="md:ml-auto">
+                  <ApexButton href="#top" variant="solid">
+                    Get Carbon
+                  </ApexButton>
+                </div>
+              )}
             </div>
           ))}
         </div>

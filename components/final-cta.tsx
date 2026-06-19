@@ -8,15 +8,12 @@ export function FinalCta() {
         <span className="block text-gold">for everyone.</span>
       </h2>
 
-      <p className="reveal mt-16 text-[14px] uppercase tracking-[0.5em] text-white/80">
+      <p className="reveal mt-20 text-[14px] uppercase tracking-[0.5em] text-white/80">
         You already know if you belong.
       </p>
 
-      <div className="reveal mt-16 flex flex-col items-center gap-4 sm:flex-row sm:gap-6">
-        <ApexButton href="#top" variant="white">
-          Download iOS
-        </ApexButton>
-        <ApexButton href="#membership" variant="gold">
+      <div className="reveal mt-20">
+        <ApexButton href="#membership" variant="white">
           Request Access
         </ApexButton>
       </div>

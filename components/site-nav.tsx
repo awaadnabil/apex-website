@@ -39,7 +39,7 @@ export function SiteNav() {
     >
       <a
         href="#top"
-        className="text-xl font-extrabold tracking-[0.04em] text-white transition-colors duration-500 hover:text-teal md:text-2xl"
+        className="text-xl font-extrabold tracking-[0.04em] text-white md:text-2xl"
         aria-label="APEX — back to top"
       >
         APEX
