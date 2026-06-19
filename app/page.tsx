@@ -1,115 +1,329 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'APEX — GCC\'s Premier Motor Community',
+  title: "APEX — GCC's Premier Motor Community",
   description: 'The most exclusive motor community in the GCC. Drives. Tribes. Routes. By invitation. By passion. By machine.',
 }
 
+const IMG = {
+  hero:      'https://d8j0ntlcm91z4.cloudfront.net/user_3FLa4kgr567GaHos7YYoxPHwglb/hf_20260619_102527_745ad5ec-0218-4b68-afba-57de90d30193.png',
+  supercars: 'https://d8j0ntlcm91z4.cloudfront.net/user_3FLa4kgr567GaHos7YYoxPHwglb/hf_20260619_093459_f5b0056e-f8bb-4324-90f5-8dc5cb89a1f4.png',
+  bikes:     'https://d8j0ntlcm91z4.cloudfront.net/user_3FLa4kgr567GaHos7YYoxPHwglb/hf_20260619_093415_b8d5343a-3a7b-49a0-9522-a1578be68fb3.png',
+  offroad:   'https://d8j0ntlcm91z4.cloudfront.net/user_3FLa4kgr567GaHos7YYoxPHwglb/hf_20260619_091454_2680bdf5-1ade-4fcf-b72d-dc964c6e911f.png',
+  karting:   'https://d8j0ntlcm91z4.cloudfront.net/user_3FLa4kgr567GaHos7YYoxPHwglb/hf_20260619_091349_cba774ff-4435-4a69-ade9-195ea0d27a94.png',
+  sport:     'https://d8j0ntlcm91z4.cloudfront.net/user_3FLa4kgr567GaHos7YYoxPHwglb/hf_20260619_090254_d24f617d-482e-442e-a745-2ce7d31fc097.png',
+  community: 'https://d8j0ntlcm91z4.cloudfront.net/user_3FLa4kgr567GaHos7YYoxPHwglb/hf_20260619_090249_dcbd5e42-4cca-4bf0-b975-73ec13237cd8.png',
+}
+
+const TRIBES = [
+  { name: 'SUPERCAR', img: IMG.supercars },
+  { name: 'MOTO',     img: IMG.bikes     },
+  { name: 'KARTING',  img: IMG.karting   },
+  { name: 'OFFROAD',  img: IMG.offroad   },
+  { name: 'SPORT',    img: IMG.sport     },
+]
+
 export default function Home() {
   return (
-    <main className="min-h-screen bg-[#080808] text-white font-sans">
-      {/* HERO */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center px-6 text-center overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/80 z-10" />
-        <div className="relative z-20 flex flex-col items-center gap-6">
-          <p className="text-[#C9A84C] text-xs tracking-[0.6em] uppercase">Statement of exclusivity</p>
-          <h1 className="text-[clamp(5rem,20vw,14rem)] font-black leading-none tracking-tight text-white">APEX</h1>
-          <div className="w-20 h-px bg-[#C9A84C]" />
-          <p className="text-[#C9A84C] text-xs tracking-[0.4em] uppercase">GCC&apos;s Premier Motor Community</p>
-          <p className="text-white/60 text-sm italic">By invitation. By passion. By machine.</p>
-          <div className="flex gap-4 mt-4">
-            <a href="https://apps.apple.com" className="px-8 py-3 bg-[#00C8C8] text-black text-xs font-bold tracking-[0.3em] uppercase hover:bg-[#00C8C8]/80 transition-colors">
+    <main
+      className="min-h-screen bg-[#080808] text-white overflow-x-hidden"
+      style={{ fontFamily: 'var(--font-syne), sans-serif' }}
+    >
+
+      {/* ── NAV ── */}
+      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-8 py-6">
+        <span className="text-white font-extrabold text-base tracking-widest">APEX</span>
+        
+          href="https://apps.apple.com"
+          className="text-[10px] tracking-[0.35em] uppercase text-white/50 hover:text-white transition-colors duration-300"
+        >
+          Download iOS
+        </a>
+      </nav>
+
+      {/* ── HERO ── */}
+      <section className="relative w-full h-screen overflow-hidden">
+        {/* bg image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${IMG.hero})` }}
+        />
+        {/* dark veil */}
+        <div className="absolute inset-0 bg-[#080808]/55" />
+        {/* bottom fade to black */}
+        <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-[#080808] to-transparent" />
+
+        {/* APEX wordmark — bleeds off edges like v0 */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center">
+          <h1
+            className="text-white font-extrabold leading-none select-none"
+            style={{
+              fontSize: 'clamp(7rem, 23vw, 22rem)',
+              letterSpacing: '-0.02em',
+              marginLeft: '-0.04em',
+            }}
+          >
+            APEX
+          </h1>
+
+          {/* tagline block */}
+          <div className="flex flex-col items-center gap-3 mt-6">
+            <div className="w-12 h-px bg-[#C9A84C]" />
+            <p
+              className="text-[10px] tracking-[0.55em] uppercase text-white/60"
+            >
+              GCC&apos;s Premier Motor Community
+            </p>
+            <p className="text-white/35 text-sm italic tracking-wide">
+              By invitation. By passion. By machine.
+            </p>
+          </div>
+
+          {/* CTAs */}
+          <div className="flex items-center gap-4 mt-10">
+            
+              href="https://apps.apple.com"
+              className="px-9 py-3.5 border border-white text-white text-[10px] font-bold tracking-[0.35em] uppercase hover:bg-white hover:text-black transition-all duration-300"
+            >
               DOWNLOAD IOS
             </a>
-            <a href="https://instagram.com/getapexmena" className="px-8 py-3 border border-[#C9A84C] text-[#C9A84C] text-xs font-bold tracking-[0.3em] uppercase hover:bg-[#C9A84C]/10 transition-colors">
-              FOLLOW US
+            
+              href="https://instagram.com/getapexmena"
+              className="px-9 py-3.5 border border-[#C9A84C]/60 text-[#C9A84C] text-[10px] font-bold tracking-[0.35em] uppercase hover:border-[#C9A84C] transition-all duration-300"
+            >
+              REQUEST ACCESS
             </a>
           </div>
-          <p className="text-[#00C8C8] text-xs tracking-[0.4em] uppercase mt-2 animate-pulse">COMING SOON</p>
+
+          {/* scroll hint */}
+          <div className="absolute bottom-10 flex flex-col items-center gap-2">
+            <p className="text-[9px] tracking-[0.5em] uppercase text-white/25">SCROLL</p>
+            <div className="w-px h-8 bg-white/20" />
+          </div>
         </div>
       </section>
 
-      {/* STATS */}
-      <section className="py-24 border-t border-white/10">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-12 px-6 text-center">
+      {/* ── STATS ── */}
+      <section className="py-28 border-y border-white/[0.06]">
+        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4">
           {[
-            { number: '7', label: 'Cities' },
-            { number: '4', label: 'Tribes' },
-            { number: '350+', label: 'Routes' },
-            { number: '1', label: 'Community' },
-          ].map((stat) => (
-            <div key={stat.label}>
-              <p className="text-[#C9A84C] text-5xl font-black">{stat.number}</p>
-              <p className="text-white/50 text-xs tracking-[0.3em] uppercase mt-2">{stat.label}</p>
+            { n: '350+', l: 'ROUTES'    },
+            { n: '7',    l: 'CITIES'    },
+            { n: '5',    l: 'TRIBES'    },
+            { n: '1',    l: 'COMMUNITY' },
+          ].map((s, i) => (
+            <div
+              key={s.l}
+              className={`flex flex-col items-start px-12 py-6 ${i < 3 ? 'md:border-r border-white/[0.07]' : ''}`}
+            >
+              <p
+                className="font-extrabold leading-none text-[#C9A84C]"
+                style={{ fontSize: 'clamp(3.5rem, 8vw, 7rem)' }}
+              >
+                {s.n}
+              </p>
+              <p className="text-[9px] tracking-[0.5em] uppercase text-white/30 mt-3">{s.l}</p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* TRIBES */}
-      <section className="py-24 px-6 border-t border-white/10">
-        <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-black mb-16 text-white">THE TRIBES</h2>
-          <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-            {[
-              { name: 'SUPERCAR', emoji: '🏎️' },
-              { name: 'MOTO', emoji: '🏍️' },
-              { name: 'OFFROAD', emoji: '🏔️' },
-              { name: 'SPORT', emoji: '🏁' },
-              { name: 'KARTING', emoji: '🎯' },
-            ].map((tribe) => (
-              <div key={tribe.name} className="border border-white/10 p-8 flex flex-col items-center gap-4 hover:border-[#00C8C8] transition-colors group">
-                <span className="text-4xl">{tribe.emoji}</span>
-                <p className="text-xs font-bold tracking-[0.3em] text-white/60 group-hover:text-[#00C8C8] transition-colors">{tribe.name}</p>
+      {/* ── TRIBES ── */}
+      <section className="py-24">
+        {/* heading — flush left like v0 */}
+        <div className="px-10 mb-10">
+          <h2
+            className="font-extrabold text-white leading-none"
+            style={{ fontSize: 'clamp(3rem, 9vw, 8rem)' }}
+          >
+            The Tribes
+          </h2>
+        </div>
+
+        {/* 5 panels — full bleed, vertical rotated text */}
+        <div className="flex w-full" style={{ height: '70vh' }}>
+          {TRIBES.map((t) => (
+            <div
+              key={t.name}
+              className="relative flex-1 overflow-hidden group cursor-pointer"
+            >
+              {/* photo */}
+              <img
+                src={t.img}
+                alt={t.name}
+                className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-75 group-hover:scale-105 transition-all duration-700"
+              />
+              {/* dark veil */}
+              <div className="absolute inset-0 bg-[#080808]/40 group-hover:bg-[#080808]/20 transition-all duration-700" />
+              {/* vertical text — bottom left, rotated like v0 */}
+              <div className="absolute bottom-8 left-0 right-0 flex justify-center">
+                <p
+                  className="font-extrabold text-white tracking-widest select-none"
+                  style={{
+                    fontSize: 'clamp(0.65rem, 1.4vw, 1rem)',
+                    writingMode: 'vertical-rl',
+                    textOrientation: 'mixed',
+                    transform: 'rotate(180deg)',
+                    letterSpacing: '0.25em',
+                  }}
+                >
+                  {t.name}
+                </p>
               </div>
-            ))}
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── COMMUNITY BAND ── */}
+      <section className="relative h-[50vh] overflow-hidden">
+        <img
+          src={IMG.community}
+          alt="APEX Community"
+          className="absolute inset-0 w-full h-full object-cover opacity-45"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#080808] via-transparent to-[#080808]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#080808] via-transparent to-[#080808]" />
+        <div className="absolute inset-0 flex items-center justify-center text-center px-6">
+          <div>
+            <p className="text-[9px] tracking-[0.7em] uppercase text-white/30 mb-5">One platform. Every machine.</p>
+            <h2
+              className="font-extrabold text-white leading-none"
+              style={{ fontSize: 'clamp(2.5rem, 7vw, 6rem)' }}
+            >
+              THE GCC DRIVES<br />
+              <span className="text-[#C9A84C]">TOGETHER.</span>
+            </h2>
           </div>
         </div>
       </section>
 
-      {/* MEMBERSHIP */}
-      <section className="py-24 px-6 border-t border-white/10">
-        <div className="max-w-5xl mx-auto">
-          <h2 className="text-4xl md:text-6xl font-black mb-16 text-center text-white">CHOOSE YOUR ACCESS</h2>
-          <div className="flex flex-col gap-4">
-            {[
-              { name: 'IGNITE', price: 'AED 49.99/mo', border: 'border-[#00C8C8]', features: ['Create unlimited drives', 'Join request-only drives', 'Pro badge', 'MEMBER tier unlocked'] },
-              { name: 'CARBON', price: 'AED 149.99/mo', border: 'border-[#C9A84C]', badge: 'RECOMMENDED', features: ['Everything in IGNITE', 'Animated gold badge', 'Verified profile', 'Featured organizer'] },
-              { name: 'OBSIDIAN', price: 'By invitation only', border: 'border-white/20', features: ['Everything in CARBON', '████████████', '████████████', '████████████'] },
-            ].map((tier) => (
-              <div key={tier.name} className={`border-l-2 ${tier.border} bg-white/5 p-8 flex flex-col md:flex-row md:items-center gap-6`}>
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <p className="text-xl font-black text-white">{tier.name}</p>
-                    {tier.badge && <span className="text-[8px] bg-[#C9A84C] text-black px-2 py-1 font-bold tracking-widest">{tier.badge}</span>}
-                  </div>
-                  <p className="text-[#C9A84C] text-sm">{tier.price}</p>
-                </div>
-                <div className="flex-2 grid grid-cols-2 gap-2">
-                  {tier.features.map((f) => (
-                    <p key={f} className="text-white/40 text-xs">{f}</p>
-                  ))}
-                </div>
+      {/* ── ACCESS ── */}
+      <section className="py-32 border-t border-white/[0.06]">
+        <div className="max-w-6xl mx-auto px-10">
+          <h2
+            className="font-extrabold text-white leading-none mb-20"
+            style={{ fontSize: 'clamp(3rem, 9vw, 8rem)' }}
+          >
+            Your Access
+          </h2>
+
+          {/* three tiers — horizontal rows like v0 */}
+          <div className="flex flex-col divide-y divide-white/[0.07]">
+
+            {/* IGNITE */}
+            <div className="flex items-start gap-16 py-14 group">
+              <div className="w-48 flex-shrink-0">
+                <p className="text-[9px] tracking-[0.5em] uppercase text-[#00C8C8] mb-2">01</p>
+                <p className="font-extrabold text-white text-2xl">IGNITE</p>
+                <p className="text-[#C9A84C] text-sm mt-2">AED 49.99 / mo</p>
               </div>
-            ))}
+              <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-4 pt-1">
+                {['Create unlimited drives','Join request-only drives','Pro member badge','Tribe chat access','Route library — 350+ routes','APEX Perks discounts'].map(f => (
+                  <p key={f} className="text-white/35 text-xs tracking-wide">{f}</p>
+                ))}
+              </div>
+              
+                href="https://apps.apple.com"
+                className="flex-shrink-0 self-center px-8 py-3 border border-white/20 text-white/50 text-[10px] tracking-[0.3em] uppercase hover:border-white hover:text-white transition-all duration-300"
+              >
+                GET IGNITE
+              </a>
+            </div>
+
+            {/* CARBON */}
+            <div className="flex items-start gap-16 py-14 group">
+              <div className="w-48 flex-shrink-0">
+                <p className="text-[9px] tracking-[0.5em] uppercase text-[#C9A84C] mb-2">02</p>
+                <p className="font-extrabold text-white text-2xl">CARBON</p>
+                <p className="text-[#C9A84C] text-sm mt-2">AED 149.99 / mo</p>
+                <span className="inline-block mt-3 text-[8px] tracking-[0.3em] bg-[#C9A84C] text-black px-2 py-1 uppercase font-bold">
+                  Recommended
+                </span>
+              </div>
+              <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-4 pt-1">
+                {['Everything in IGNITE','Animated gold badge','Verified profile','Featured drive organizer','Priority group requests','Early access — new features'].map(f => (
+                  <p key={f} className="text-white/35 text-xs tracking-wide">{f}</p>
+                ))}
+              </div>
+              
+                href="https://apps.apple.com"
+                className="flex-shrink-0 self-center px-8 py-3 bg-[#C9A84C] text-black text-[10px] tracking-[0.3em] uppercase font-bold hover:bg-white transition-all duration-300"
+              >
+                GET CARBON
+              </a>
+            </div>
+
+            {/* OBSIDIAN */}
+            <div className="flex items-start gap-16 py-14 group opacity-60">
+              <div className="w-48 flex-shrink-0">
+                <p className="text-[9px] tracking-[0.5em] uppercase text-white/30 mb-2">03</p>
+                <p className="font-extrabold text-white text-2xl">OBSIDIAN</p>
+                <p className="text-white/30 text-sm mt-2">By invitation only</p>
+              </div>
+              <div className="flex-1 grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-4 pt-1">
+                {['Everything in CARBON','████████████████','████████████████','████████████████','████████████████','████████████████'].map((f,i) => (
+                  <p key={i} className={`text-xs tracking-wide ${i === 0 ? 'text-white/35' : 'text-white/10'}`}>{f}</p>
+                ))}
+              </div>
+              <div className="flex-shrink-0 self-center px-8 py-3 border border-white/10 text-white/20 text-[10px] tracking-[0.3em] uppercase cursor-not-allowed">
+                INVITATION ONLY
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
-      {/* FINAL CTA */}
-      <section className="py-40 px-6 border-t border-white/10 text-center">
-        <h2 className="text-5xl md:text-8xl font-black text-white leading-none mb-4">THIS IS NOT<br /><span className="text-[#C9A84C]">FOR EVERYONE.</span></h2>
-        <p className="text-white/40 text-xs tracking-[0.5em] uppercase mt-8 mb-12">You already know if you belong.</p>
-        <div className="flex gap-4 justify-center">
-          <a href="https://apps.apple.com" className="px-8 py-3 bg-[#00C8C8] text-black text-xs font-bold tracking-[0.3em] uppercase">DOWNLOAD IOS</a>
-          <a href="https://instagram.com/getapexmena" className="px-8 py-3 border border-[#C9A84C] text-[#C9A84C] text-xs font-bold tracking-[0.3em] uppercase">FOLLOW US</a>
+      {/* ── FINAL CTA ── */}
+      <section className="relative py-52 overflow-hidden border-t border-white/[0.06]">
+        <img
+          src={IMG.supercars}
+          alt="APEX"
+          className="absolute inset-0 w-full h-full object-cover opacity-15"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#080808] via-[#080808]/60 to-[#080808]" />
+        <div className="relative z-10 text-center px-6">
+          <h2
+            className="font-extrabold text-white leading-none"
+            style={{ fontSize: 'clamp(3.5rem, 12vw, 11rem)' }}
+          >
+            THIS IS NOT<br />
+            <span className="text-[#C9A84C]">FOR EVERYONE.</span>
+          </h2>
+          <p className="text-[9px] tracking-[0.8em] uppercase text-white/25 mt-10 mb-14">
+            You already know if you belong.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            
+              href="https://apps.apple.com"
+              className="px-12 py-4 border border-white text-white text-[10px] font-bold tracking-[0.35em] uppercase hover:bg-white hover:text-black transition-all duration-300"
+            >
+              DOWNLOAD IOS
+            </a>
+            
+              href="https://instagram.com/getapexmena"
+              className="px-12 py-4 border border-[#C9A84C]/50 text-[#C9A84C] text-[10px] font-bold tracking-[0.35em] uppercase hover:border-[#C9A84C] transition-all duration-300"
+            >
+              FOLLOW US
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="py-8 border-t border-white/10 text-center">
-        <p className="text-white/20 text-xs">support@getapexmena.com · © 2026 APEX</p>
+      {/* ── FOOTER ── */}
+      <footer className="py-10 border-t border-white/[0.05]">
+        <div className="max-w-6xl mx-auto px-10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <span className="font-extrabold text-white/60 text-sm tracking-widest">APEX</span>
+          <div className="flex items-center gap-8">
+            <a href="/privacy" className="text-[9px] tracking-[0.35em] uppercase text-white/20 hover:text-white/50 transition-colors">Privacy</a>
+            <a href="https://instagram.com/getapexmena" className="text-[9px] tracking-[0.35em] uppercase text-white/20 hover:text-white/50 transition-colors">Instagram</a>
+            <a href="mailto:support@getapexmena.com" className="text-[9px] tracking-[0.35em] uppercase text-white/20 hover:text-white/50 transition-colors">Contact</a>
+          </div>
+          <p className="text-[9px] text-white/10 tracking-widest">© 2026 APEX</p>
+        </div>
       </footer>
+
     </main>
   )
 }
