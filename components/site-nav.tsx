@@ -32,18 +32,40 @@ export function SiteNav() {
   }, [])
 
   return (
-    <div
-      ref={ref}
-      className="fixed left-6 top-6 z-50 opacity-0 md:left-10 md:top-8"
-      style={{ willChange: 'opacity, transform' }}
-    >
-      <a
-        href="#top"
-        className="text-xl font-extrabold tracking-[0.04em] text-white md:text-2xl"
-        aria-label="APEX — back to top"
+    <>
+      <div
+        ref={ref}
+        className="fixed left-6 top-6 z-50 opacity-0 md:left-10 md:top-8"
+        style={{ willChange: 'opacity, transform' }}
       >
-        APEX
-      </a>
-    </div>
+        <a
+          href="#top"
+          className="text-xl font-extrabold tracking-[0.04em] text-white md:text-2xl"
+          aria-label="APEX — back to top"
+        >
+          APEX
+        </a>
+      </div>
+
+      {/* Always-visible top navigation to every page */}
+      <nav
+        aria-label="Primary"
+        className="fixed right-6 top-6 z-50 flex items-center gap-5 md:right-10 md:top-8 md:gap-8"
+      >
+        {[
+          { label: 'Membership', href: '/membership' },
+          { label: 'Concierge', href: '/concierge' },
+          { label: 'Privacy', href: '/privacy' },
+        ].map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/75 transition-colors duration-500 hover:text-white md:text-[11px]"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </>
   )
 }

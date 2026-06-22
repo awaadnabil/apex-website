@@ -5,7 +5,6 @@ import { SiteNav } from '@/components/site-nav'
 import { Hero } from '@/components/hero'
 import { Stats } from '@/components/stats'
 import { Tribes } from '@/components/tribes'
-import { Membership } from '@/components/membership'
 import { FinalCta } from '@/components/final-cta'
 import { SiteFooter } from '@/components/site-footer'
 
@@ -19,7 +18,6 @@ export default function Page() {
       <Hero />
       <Stats />
       <Tribes />
-      <Membership />
       <FinalCta />
       <SiteFooter />
     </main>
