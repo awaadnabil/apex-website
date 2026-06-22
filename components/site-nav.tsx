@@ -47,14 +47,24 @@ export function SiteNav() {
         </a>
       </div>
 
-      {/* Always-visible primary link to the Membership page */}
-      <nav className="fixed right-6 top-6 z-50 md:right-10 md:top-8">
-        <a
-          href="/membership"
-          className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/80 transition-colors duration-500 hover:text-white"
-        >
-          Membership
-        </a>
+      {/* Always-visible top navigation to every page */}
+      <nav
+        aria-label="Primary"
+        className="fixed right-6 top-6 z-50 flex items-center gap-5 md:right-10 md:top-8 md:gap-8"
+      >
+        {[
+          { label: 'Membership', href: '/membership' },
+          { label: 'Concierge', href: '/concierge' },
+          { label: 'Privacy', href: '/privacy' },
+        ].map((item) => (
+          <a
+            key={item.href}
+            href={item.href}
+            className="text-[10px] font-semibold uppercase tracking-[0.3em] text-white/75 transition-colors duration-500 hover:text-white md:text-[11px]"
+          >
+            {item.label}
+          </a>
+        ))}
       </nav>
     </>
   )
