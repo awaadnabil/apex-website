@@ -13,7 +13,7 @@ export function FinalCta() {
       </p>
 
       <div className="reveal mt-20">
-        <ApexButton href="#membership" variant="white">
+        <ApexButton href="/membership" variant="white">
           Request Access
         </ApexButton>
       </div>
