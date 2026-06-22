@@ -6,7 +6,7 @@ export function SiteFooter() {
         <span aria-hidden="true" className="text-white/20">
           ·
         </span>
-        <a href="#" className="transition-colors duration-500 hover:text-white">
+        <a href="/privacy" className="transition-colors duration-500 hover:text-white">
           Privacy
         </a>
         <span aria-hidden="true" className="text-white/20">

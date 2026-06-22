@@ -32,18 +32,30 @@ export function SiteNav() {
   }, [])
 
   return (
-    <div
-      ref={ref}
-      className="fixed left-6 top-6 z-50 opacity-0 md:left-10 md:top-8"
-      style={{ willChange: 'opacity, transform' }}
-    >
-      <a
-        href="#top"
-        className="text-xl font-extrabold tracking-[0.04em] text-white md:text-2xl"
-        aria-label="APEX — back to top"
+    <>
+      <div
+        ref={ref}
+        className="fixed left-6 top-6 z-50 opacity-0 md:left-10 md:top-8"
+        style={{ willChange: 'opacity, transform' }}
       >
-        APEX
-      </a>
-    </div>
+        <a
+          href="#top"
+          className="text-xl font-extrabold tracking-[0.04em] text-white md:text-2xl"
+          aria-label="APEX — back to top"
+        >
+          APEX
+        </a>
+      </div>
+
+      {/* Always-visible primary link to the Membership page */}
+      <nav className="fixed right-6 top-6 z-50 md:right-10 md:top-8">
+        <a
+          href="/membership"
+          className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/80 transition-colors duration-500 hover:text-white"
+        >
+          Membership
+        </a>
+      </nav>
+    </>
   )
 }
