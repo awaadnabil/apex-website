@@ -8,7 +8,7 @@ import { SupportContactForm } from '@/components/support/support-contact-form'
 import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
-  title: 'Support · APEX',
+  title: 'Concierge · APEX',
   description:
     'The APEX concierge desk — search the help center, reach a live agent, or send a request. Members are answered within the hour.',
 }

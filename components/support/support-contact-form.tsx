@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react'
 import { useFormStatus } from 'react-dom'
-import { submitSupportRequest, type SupportState } from '@/app/support/actions'
+import { submitSupportRequest, type SupportState } from '@/app/concierge/actions'
 
 const initialState: SupportState = { status: 'idle', message: '', errors: {} }
 
