@@ -17,8 +17,8 @@ export function SupportChannels() {
           href="mailto:support@getapexmena.com"
           className="reveal group mt-12 flex flex-col gap-8 border border-white/12 bg-carbon p-8 transition-colors duration-500 hover:border-gold/50 md:flex-row md:items-center md:justify-between md:p-12"
         >
-          <span className="flex items-center gap-6">
-            <span className="text-gold">
+          <span className="flex min-w-0 items-center gap-5">
+            <span className="shrink-0 text-gold">
               <svg
                 width={28}
                 height={28}
@@ -34,11 +34,11 @@ export function SupportChannels() {
                 <path d="m3.5 6.5 8.5 6 8.5-6" />
               </svg>
             </span>
-            <span>
+            <span className="min-w-0">
               <span className="block text-[10px] font-semibold uppercase tracking-[0.3em] text-white/40">
                 Email the concierge
               </span>
-              <span className="mt-3 block font-extrabold text-white [font-size:clamp(1.25rem,4vw,2rem)]">
+              <span className="mt-3 block break-all font-extrabold text-white [font-size:clamp(1.1rem,5vw,1.875rem)]">
                 support@getapexmena.com
               </span>
             </span>

@@ -36,9 +36,9 @@ function Lock() {
 
 export function Membership() {
   return (
-    <section id="membership" className="px-6 py-40 md:py-56">
+    <section id="membership" className="px-6 pb-32 pt-12 md:pb-48 md:pt-16">
       <div className="mx-auto max-w-6xl">
-        <h2 className="reveal mb-24 text-left font-extrabold leading-none text-white [font-size:clamp(2.5rem,6vw,4rem)]">
+        <h2 className="reveal mb-16 text-left font-extrabold leading-none text-white [font-size:clamp(2.5rem,6vw,4rem)] md:mb-24">
           Your Access
         </h2>
 
