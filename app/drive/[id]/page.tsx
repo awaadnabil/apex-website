@@ -2,14 +2,23 @@ import type { Metadata } from 'next'
 import { CinematicFx } from '@/components/cinematic-fx'
 import { ScrollReveal } from '@/components/scroll-reveal'
 import { SiteFooter } from '@/components/site-footer'
-import { ApexButton } from '@/components/apex-button'
+import { DriveRedirect } from './DriveRedirect'
 
-const APP_STORE_URL = 'https://apps.apple.com/app/apex-mena/id6773114294'
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>
+}): Promise<Metadata> {
+  const { id } = await params
 
-export const metadata: Metadata = {
-  title: "You're Invited · APEX",
-  description:
-    "You've been invited to join a drive on APEX — the GCC's most exclusive motor community.",
+  return {
+    title: "You're Invited · APEX",
+    description:
+      "You've been invited to join a drive on APEX — the GCC's most exclusive motor community.",
+    other: {
+      'apple-itunes-app': `app-id=6773114294, app-argument=apex://drive/${id}`,
+    },
+  }
 }
 
 export default async function DriveInvitePage({
@@ -17,9 +26,7 @@ export default async function DriveInvitePage({
 }: {
   params: Promise<{ id: string }>
 }) {
-  // The id only matters to the app's universal-link handler — if APEX is
-  // installed, iOS intercepts this URL before this fallback page ever renders.
-  await params
+  const { id } = await params
 
   return (
     <main className="relative min-h-screen bg-carbon font-sans text-white">
@@ -45,15 +52,7 @@ export default async function DriveInvitePage({
           Join this drive on APEX — the GCC&apos;s most exclusive motor community.
         </p>
 
-        <div className="reveal mt-14">
-          <ApexButton href={APP_STORE_URL} variant="solid">
-            Download APEX on iOS
-          </ApexButton>
-        </div>
-
-        <p className="reveal mt-8 text-[11px] uppercase tracking-[0.3em] text-white/40">
-          Already have APEX? The link will open automatically.
-        </p>
+        <DriveRedirect driveId={id} />
       </section>
 
       <SiteFooter />
