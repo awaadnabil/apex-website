@@ -6,6 +6,9 @@ export function SiteFooter() {
         <span aria-hidden="true" className="text-white/20">
           ·
         </span>
+        <a href="/android" className="transition-colors duration-500 hover:text-white">
+          Android
+        </a>
         <a href="/privacy" className="transition-colors duration-500 hover:text-white">
           Privacy
         </a>
