@@ -15,6 +15,20 @@ export async function generateMetadata({
     title: "You're Invited · APEX",
     description:
       "You've been invited to join a drive on APEX — the GCC's most exclusive motor community.",
+    openGraph: {
+      title: "You're Invited · APEX",
+      description:
+        "You've been invited to join a drive on APEX — the GCC's most exclusive motor community.",
+      url: `https://getapexmena.com/drive/${id}`,
+      siteName: 'APEX',
+      type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: "You're Invited · APEX",
+      description:
+        "You've been invited to join a drive on APEX — the GCC's most exclusive motor community.",
+    },
     other: {
       'apple-itunes-app': `app-id=6773114294, app-argument=apex://drive/${id}`,
     },
