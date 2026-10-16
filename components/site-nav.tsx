@@ -53,7 +53,7 @@ export function SiteNav() {
         className="fixed right-6 top-6 z-50 flex items-center gap-5 md:right-10 md:top-8 md:gap-8"
       >
         {[
-          { label: 'Android', href: '/android' },
+          { label: 'Download', href: '/download' },
           { label: 'Concierge', href: '/concierge' },
           { label: 'Privacy', href: '/privacy' },
         ].map((item) => (
