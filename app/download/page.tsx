@@ -11,7 +11,8 @@ const APP_STORE_URL = 'https://apps.apple.com/app/apex-mena/id6773114294'
  * Supabase Storage or any static host is the durable choice.
  */
 const APK_URL =
-  process.env.NEXT_PUBLIC_APK_URL ?? 'https://getapexmena.com/apex.apk'
+  process.env.NEXT_PUBLIC_APK_URL ??
+  'https://github.com/awaadnabil/apex-releases/releases/latest/download/apex.apk'
 
 const ANDROID_STEPS = [
   {
