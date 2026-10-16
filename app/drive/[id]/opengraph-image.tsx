@@ -16,6 +16,7 @@ type Drive = {
   date_time?: string | null
   meeting_point?: string | null
   destination_name?: string | null
+  start_name?: string | null
   route_distance_km?: number | null
   count?: number | null
   max_participants?: number | null
@@ -52,12 +53,20 @@ function formatWhen(iso?: string | null) {
       month: 'short',
       timeZone: 'Asia/Dubai',
     })
-    const time = d.toLocaleTimeString('en-GB', {
+    return date
+  } catch {
+    return null
+  }
+}
+
+function formatTime(iso?: string | null) {
+  if (!iso) return null
+  try {
+    return new Date(iso).toLocaleTimeString('en-GB', {
       hour: '2-digit',
       minute: '2-digit',
       timeZone: 'Asia/Dubai',
     })
-    return `${date} · ${time}`
   } catch {
     return null
   }
@@ -69,17 +78,26 @@ export default async function Image({ params }: { params: Promise<{ id: string }
 
   const title = drive?.title?.trim() || 'A drive on APEX'
   const when = formatWhen(drive?.date_time)
+  const rollTime = formatTime(drive?.date_time)
   const distance = drive?.route_distance_km
     ? `${Math.round(drive.route_distance_km)} km`
     : null
-  const where = drive?.meeting_point?.trim() || drive?.destination_name?.trim() || null
+  const meetup = drive?.meeting_point?.trim() || drive?.start_name?.trim() || null
+  const destination = drive?.destination_name?.trim() || null
 
   const riding = drive?.count ?? 0
   const capacity = drive?.max_participants ?? 0
   const remaining = capacity > 0 ? Math.max(capacity - riding, 0) : null
   const fill = capacity > 0 ? Math.min(riding / capacity, 1) : 0
 
-  const meta = [when, distance].filter(Boolean).join(' · ')
+  const facts: { label: string; value: string }[] = []
+  if (meetup) facts.push({ label: 'MEET', value: meetup })
+  if (rollTime) facts.push({ label: 'ROLL', value: rollTime })
+  if (destination)
+    facts.push({
+      label: 'TO',
+      value: distance ? `${destination} · ${distance}` : destination,
+    })
 
   return new ImageResponse(
     (
@@ -94,16 +112,27 @@ export default async function Image({ params }: { params: Promise<{ id: string }
           padding: '64px 72px',
         }}
       >
-        <div
-          style={{
-            display: 'flex',
-            fontSize: 30,
-            fontWeight: 800,
-            letterSpacing: 10,
-            color: '#FFFFFF',
-          }}
-        >
-          APEX
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          <div
+            style={{
+              display: 'flex',
+              fontSize: 38,
+              fontWeight: 800,
+              letterSpacing: 12,
+              color: '#FFFFFF',
+            }}
+          >
+            APEX
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              marginTop: 8,
+              width: 54,
+              height: 3,
+              background: '#00C8C8',
+            }}
+          />
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -120,29 +149,46 @@ export default async function Image({ params }: { params: Promise<{ id: string }
             {title}
           </div>
 
-          {meta ? (
+          {when ? (
             <div
               style={{
                 display: 'flex',
-                marginTop: 22,
-                fontSize: 34,
+                marginTop: 20,
+                fontSize: 32,
                 color: '#9AA6B0',
               }}
             >
-              {meta}
+              {when}
             </div>
           ) : null}
 
-          {where ? (
-            <div
-              style={{
-                display: 'flex',
-                marginTop: 10,
-                fontSize: 28,
-                color: '#6E6E6E',
-              }}
-            >
-              {where}
+          {facts.length > 0 ? (
+            <div style={{ display: 'flex', marginTop: 34, gap: 56 }}>
+              {facts.map((f) => (
+                <div key={f.label} style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      fontSize: 18,
+                      fontWeight: 600,
+                      letterSpacing: 4,
+                      color: '#6E6E6E',
+                    }}
+                  >
+                    {f.label}
+                  </div>
+                  <div
+                    style={{
+                      display: 'flex',
+                      marginTop: 9,
+                      fontSize: 27,
+                      color: '#FFFFFF',
+                    }}
+                  >
+                    {f.value}
+                  </div>
+                </div>
+              ))}
             </div>
           ) : null}
         </div>
