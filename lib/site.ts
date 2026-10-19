@@ -16,6 +16,12 @@ export const SITE = {
   heroImage:
     'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/apex-supercars-h7OydBomTgS4J9Cz59dYOKCUL8My8z.jpg',
   instagram: '', // add the APEX Instagram URL here — it feeds Organization.sameAs
+  /**
+   * IndexNow key (public by design — it's served at /<key>.txt). Ping Bing,
+   * Yandex, Seznam, Naver after a deploy:
+   *   https://api.indexnow.org/indexnow?url=<page>&key=<key>
+   */
+  indexNowKey: '89eab492a093f6f82f8848cc8242b458',
   sameAs: ['https://apps.apple.com/app/apex-mena/id6773114294'],
   areaServed: ['United Arab Emirates', 'Oman', 'Saudi Arabia', 'Qatar', 'Bahrain', 'Kuwait'],
 } as const
