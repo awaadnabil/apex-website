@@ -12,17 +12,20 @@ const STATS: Stat[] = [
 ]
 
 function Counter({ target, suffix = '' }: { target: number; suffix?: string }) {
-  const [n, setN] = useState(0)
+  // Start at the real number so the server HTML (what Google reads) says
+  // "350+ Routes", not "0+ Routes". The count-up only runs in the browser.
+  const [n, setN] = useState(target)
   const ref = useRef<HTMLSpanElement>(null)
   const started = useRef(false)
 
   useEffect(() => {
     const el = ref.current
     if (!el) return
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setN(target)
-      return
-    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    // Already on screen at load (e.g. deep link / refresh mid-page): leave the real value.
+    const r = el.getBoundingClientRect()
+    if (r.top < window.innerHeight && r.bottom > 0) return
+    setN(0)
 
     const obs = new IntersectionObserver(
       (entries) => {

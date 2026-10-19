@@ -5,7 +5,8 @@ import { SupportTopNav } from '@/components/support/support-topnav'
 import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
-  title: 'Privacy · APEX',
+  alternates: { canonical: '/privacy' },
+  title: 'Privacy Policy',
   description: 'How APEX collects, uses, and protects your information.',
 }
 
