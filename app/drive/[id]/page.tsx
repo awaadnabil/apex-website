@@ -12,7 +12,9 @@ export async function generateMetadata({
   const { id } = await params
 
   return {
-    title: "You're Invited · APEX",
+    // Personal invite links: shareable, but never indexed (thin + infinite URLs)
+    robots: { index: false, follow: true },
+    title: { absolute: "You're Invited · APEX" },
     description:
       "You've been invited to join a drive on APEX — the GCC's most exclusive motor community.",
     openGraph: {
@@ -29,9 +31,8 @@ export async function generateMetadata({
       description:
         "You've been invited to join a drive on APEX — the GCC's most exclusive motor community.",
     },
-    other: {
-      'apple-itunes-app': `app-id=6773114294, app-argument=apex://drive/${id}`,
-    },
+    // Overrides the layout's banner so the iOS smart banner deep-links into this invite
+    itunes: { appId: '6773114294', appArgument: `apex://drive/${id}` },
   }
 }
 

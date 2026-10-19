@@ -1,7 +1,8 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Terms of Use — APEX",
+  alternates: { canonical: '/terms' },
+  title: "Terms of Use",
   description: "APEX Terms of Use",
 }
 

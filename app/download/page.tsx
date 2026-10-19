@@ -33,16 +33,19 @@ const ANDROID_STEPS = [
 ]
 
 export const metadata: Metadata = {
-  title: 'Download APEX',
+  title: { absolute: 'Download APEX for iPhone and Android' },
   description:
-    'Install APEX on iPhone or Android — the GCC’s most exclusive motor community.',
+    'Download APEX — the GCC car and motorcycle community app. Free on the App Store for iPhone, and as a direct install for Android.',
+  alternates: { canonical: '/download' },
   openGraph: {
     title: 'Download APEX',
     description: 'Install APEX on iPhone or Android.',
     url: 'https://getapexmena.com/download',
     siteName: 'APEX',
     type: 'website',
+    images: ['/opengraph-image'],
   },
+  twitter: { card: 'summary_large_image', images: ['/opengraph-image'] },
 }
 
 export default function DownloadPage() {

@@ -8,7 +8,8 @@ import { SupportContactForm } from '@/components/support/support-contact-form'
 import { SiteFooter } from '@/components/site-footer'
 
 export const metadata: Metadata = {
-  title: 'Concierge · APEX',
+  alternates: { canonical: '/concierge' },
+  title: 'Concierge & Support',
   description:
     'The APEX concierge desk — search the help center, reach a live agent, or send a request. Members are answered within the hour.',
 }

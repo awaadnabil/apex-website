@@ -16,7 +16,9 @@ export async function generateMetadata({
   const { ref } = await params
 
   return {
-    title: "You're Invited · APEX",
+    // Personal invite links: shareable, but never indexed (thin + infinite URLs)
+    robots: { index: false, follow: true },
+    title: { absolute: "You're Invited · APEX" },
     description:
       "You've been invited to APEX — the GCC's most exclusive motor community. By invitation. By passion. By machine.",
     openGraph: {
@@ -26,16 +28,17 @@ export async function generateMetadata({
       url: `https://getapexmena.com/join/${ref}`,
       siteName: 'APEX',
       type: 'website',
+      images: ['/opengraph-image'],
     },
     twitter: {
       card: 'summary_large_image',
+      images: ['/opengraph-image'],
       title: "You're Invited · APEX",
       description:
         "You've been invited to APEX — the GCC's most exclusive motor community.",
     },
-    other: {
-      'apple-itunes-app': `app-id=6773114294, app-argument=apex://join/${ref}`,
-    },
+    // Overrides the layout's banner so the iOS smart banner deep-links into this invite
+    itunes: { appId: '6773114294', appArgument: `apex://join/${ref}` },
   }
 }
 
