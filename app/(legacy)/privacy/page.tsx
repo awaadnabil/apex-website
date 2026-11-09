@@ -13,27 +13,32 @@ const SECTIONS = [
   {
     no: '01',
     title: 'What we collect',
-    body: 'Account details you provide — name, email, and membership tier — along with activity within the APEX app such as saved routes, events you attend, and the tribes you join.',
+    body: 'Your account (name, e-mail, photo, membership tier), the rides you join or record, your garage, and anything you choose to add in Profile details: phone, contact e-mail, emirate, date of birth, Instagram handle, riding experience and style, market plans (buying or selling, timeline, budget band), interests, gear sizes and preferred contact. Every Profile details field is optional.',
   },
   {
     no: '02',
     title: 'How we use it',
-    body: 'To operate your membership, surface relevant meets and routes, coordinate track-day priority, and keep the collective secure. We never sell your personal data.',
+    body: 'To run rides safely (ride leaders can reach riders), show you rides, Market items and deals near you and in your size, award XP and badges, process membership, and keep the community genuine. We never sell your personal data.',
   },
   {
     no: '03',
-    title: 'Who can see it',
-    body: 'Your profile is visible to verified members of the collective. Concierge requests are handled only by the APEX team. We share data with processors strictly to run the service.',
+    title: 'Location during rides',
+    body: 'When you go live or join a live ride, your position is shared only with riders who joined and checked in to that same ride, and only while it is running. Sharing stops when the ride ends and your live pin is removed.',
   },
   {
     no: '04',
-    title: 'Your control',
-    body: 'You can request a copy of your data, correct it, or delete your account at any time by contacting the concierge. Removal is permanent and clears your saved routes and history.',
+    title: 'Partners: only with your consent',
+    body: 'APEX partner dealers, shops and Ride Stops can see your profile only if you switch on "Share my profile with APEX partner dealers and shops so they can send me offers". It is off until you turn it on, and every change is recorded with the date and the policy version you agreed to. When you redeem a perk with your APEX Card, that partner sees your name, tier and the bill for that redemption.',
   },
   {
     no: '05',
+    title: 'Your control',
+    body: 'Turn partner sharing off any time in Profile → Privacy; partners stop seeing your profile immediately and the XP you earned stays. Delete your account in Profile → Settings, or e-mail us and we will delete your data within 30 days. You can also ask for a copy of your data or a correction.',
+  },
+  {
+    no: '06',
     title: 'Retention & security',
-    body: 'We hold your data only as long as your membership is active, plus the period required by law. Information is encrypted in transit and access is restricted to authorized staff.',
+    body: 'We keep your data while your account is active, plus any period required by UAE law. Data is encrypted in transit, protected by access rules in our database, and access is limited to authorized APEX staff and the service providers that run the app for us.',
   },
 ]
 
@@ -54,7 +59,7 @@ export default function PrivacyPage() {
           </h1>
           <p className="reveal mt-8 max-w-xl text-[15px] leading-relaxed text-white/60">
             APEX is built on trust. This policy explains, in plain language, what
-            we collect and how we protect it. Last updated June 2026.
+            we collect and how we protect it. Last updated 9 November 2026.
           </p>
 
           <div className="mt-20 flex flex-col">
