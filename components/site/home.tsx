@@ -378,8 +378,14 @@ export function Home({ c, media: m = MEDIA }: { c: Copy; media?: Media }) {
                 <h2 id="faq-h">{c.faq.h2}</h2>
                 <p className="muted">{c.faq.line}</p>
                 <p><a className="link" href="/concierge">{c.faq.link}<Arrow /></a></p>
-                <div className="d-card apx-glass apx-install">
-                  <h3 className="apx-install__title">{c.faq.install.title}</h3>
+                <div className="d-card apx-install">
+                  <div className="apx-install__head">
+                    <span className="apx-install__icons" aria-hidden="true">
+                      <img src="/assets/icons/android.svg" alt="" width={40} height={23} />
+                      <img src="/assets/icons/chrome.svg" alt="" width={28} height={28} />
+                    </span>
+                    <h3 className="apx-install__title">{c.faq.install.title}</h3>
+                  </div>
                   <ol className="apx-install__steps">
                     {c.faq.install.steps.map((st, i) => (
                       <li key={st}><span className="apx-install__n" aria-hidden="true">{i + 1}</span><span>{st}</span></li>

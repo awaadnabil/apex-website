@@ -108,7 +108,7 @@ html[data-ground="apex"] {
 .d-note__line b { font-weight: 500; color: var(--app-ink); }
 
 /* ---- rides: two real screens on the lit ground, both cut by the frame's foot */
-.apx-duo { position: relative; overflow: hidden; background: radial-gradient(80% 60% at 50% 0%, rgb(0 200 200 / 0.16), transparent 70%), var(--ground-bg); min-height: 640px; }
+.apx-duo { position: relative; overflow: hidden; background: var(--ground-bg); min-height: 640px; }
 .frame.apx-duo > .apx-phone { position: absolute; width: min(43%, 270px); }
 .frame.apx-duo > .apx-duo__a { inset-inline-start: 8%; top: var(--s-8); }
 .frame.apx-duo > .apx-duo__b { inset-inline-end: 8%; top: calc(var(--s-8) + var(--s-8)); }
@@ -120,7 +120,7 @@ html[data-ground="apex"] {
 /* ---- xp: three open cards; panels on the lit ground */
 .apx-cards > .card { grid-column: 1 / -1; }
 @media (min-width: 1024px) { .apx-cards > .card { grid-column: auto / span 4; } }
-.apx-cards .panel.apx-panel { --p-h: 260px; height: var(--p-h); min-height: 0; flex: none; position: relative; overflow: hidden; display: grid; place-items: center; background: radial-gradient(80% 70% at 30% 0%, rgb(0 200 200 / 0.14), transparent 70%), var(--ground-bg); }
+.apx-cards .panel.apx-panel { --p-h: 260px; height: var(--p-h); min-height: 0; flex: none; position: relative; overflow: hidden; display: grid; place-items: center; background: var(--ground-bg); }
 .apx-panel > .d-card { width: min(300px, calc(100% - 2 * var(--s-5))); }
 .apx-spot__week { font-size: 13px; color: var(--app-muted); }
 .apx-spot__row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 70px; align-items: center; gap: 10px; padding-block: 9px; border-top: 1px solid var(--app-line); }
@@ -173,7 +173,7 @@ html[data-ground="apex"] {
 #partners .mo-la__sub { color: var(--ink); }
 #partners .mo-la__type { font-size: clamp(48px, 6.2vw, 96px); max-width: 12ch; }
 .apx-partners-grid { row-gap: var(--s-7); }
-.apx-dealerframe { grid-row: 1 / span 3; position: relative; overflow: hidden; min-height: 520px; border-radius: var(--r-lg); background: radial-gradient(90% 60% at 50% 0%, rgb(0 200 200 / 0.22), transparent 70%), #0b1a1c; }
+.apx-dealerframe { grid-row: 1 / span 3; position: relative; overflow: hidden; min-height: 520px; border-radius: var(--r-lg); background: var(--ground-bg); }
 @media (max-width: 1023px) { .apx-dealerframe { grid-row: auto; min-height: 0; } .apx-partners-col { grid-column: auto / span 6; } }
 @media (max-width: 639px) { .apx-dealerframe { padding: var(--s-4); } .apx-partners-col { grid-column: 1 / -1; } }
 :lang(ar) #partners .mo-la__sub { color: var(--ink); }
@@ -388,7 +388,7 @@ html.m-enter .hero[data-enter] .hero__art { transition: scale 700ms var(--m-ease
 /* ---- break-ui: worst-case data */
 /* a picture that failed to load keeps its box; the frame's lit ground shows instead of a broken icon */
 img[data-broken] { visibility: hidden; }
-.frame--photo { background: radial-gradient(80% 70% at 50% 20%, rgb(0 200 200 / 0.14), transparent 70%), var(--ground-bg); }
+.frame--photo { background: var(--ground-bg); }
 /* a phone's screen is dark before (or without) its picture; the chrome stays on the 5px edge */
 .apx-phone {
   background:
@@ -414,3 +414,16 @@ header.nav { padding-top: env(safe-area-inset-top, 0px); height: calc(var(--nav)
 :is(.loop-pause, .ui-pause)::before { content: ""; position: absolute; inset: -6px; }
 /* /ar/download footer links: 44px wide as well as tall */
 .apx-sub__foot a { min-inline-size: 44px; justify-content: center; }
+/* the kit writes the "n to fix" line itself; it reads as an error whenever a field is invalid */
+.form:has([aria-invalid="true"]) .form__status:not([data-state="sent"]) { color: var(--error-ink); }
+
+/* no stranded last word in leads, fact lines and answers (both scripts) */
+:is(.t-lead, .hero__lead, .apx-facts li, .faq p, .mo-la__sub, .apx-chapter-line) { text-wrap: pretty; }
+/* the XP panels on the flat lit ground: the kit's soft-light panel gradient repeated on every card read as
+   one glow everywhere (impeccable critique + detector); the glow is kept for the hero frame (the App Store
+   artwork's own teal gradient) and the Ride Card (the app's own card) */
+.apx-cards .card .panel.apx-panel { background: var(--ground-bg) !important; }
+.apx-cards .card .panel.apx-panel::before { background: none !important; }
+.apx-install__head { display: flex; align-items: center; gap: var(--s-4); }
+.apx-install__icons { display: inline-flex; align-items: center; gap: var(--s-3); flex: none; padding: 10px 12px; border-radius: 14px; background: var(--app-fill); }
+.apx-install__icons img { flex: none; }

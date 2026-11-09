@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: 'APEX',
     type: 'website',
     locale: 'ar_AE',
-    images: [{ url: '/og.jpg', width: 1200, height: 630 }],
+    images: [{ url: '/og-ar.jpg', width: 1200, height: 630 }],
   },
 }
 export const viewport = kitViewport

@@ -8,14 +8,10 @@ import type { Locale } from '@/lib/site/content'
 import { KitScripts } from './kit-scripts'
 
 
-const KIT_CSS = [
-  'system.css',
-  'ui/cards.css',
-  'motion/motion.css',
-  'backgrounds/backgrounds.css',
-  'layout/layout.css',
-  'icons/icon.css',
-]
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
+const BACKGROUNDS_JS = readFileSync(join(process.cwd(), 'public/assets/backgrounds/backgrounds.js'), 'utf8')
 
 // :root as `start.mjs brand --page software --bg #080808 --ink #EEF2F4 --accent #00C8C8 --surface #121518
 // --muted #9AA4AB --type outfit --radius round` printed it. The families are named directly, not through
@@ -33,6 +29,12 @@ const PALETTE = `:root {
   --display-weight: 400;
   --display-tracking: -0.03em;
   --display-tracking-xl: -0.04em;
+}
+/* Arabic: while IBM Plex Sans Arabic loads (not preloaded: next/font cannot scope a preload to /ar), the
+   text sets in next/font's metric-matched fallback for it, so the swap does not move the layout */
+:root:lang(ar) {
+  --font-display: "Outfit", "IBM Plex Sans Arabic", "IBM Plex Sans Arabic Fallback", system-ui, sans-serif;
+  --font-text: "Outfit", "IBM Plex Sans Arabic", "IBM Plex Sans Arabic Fallback", system-ui, sans-serif;
 }`
 
 export function KitDocument({
@@ -46,7 +48,6 @@ export function KitDocument({
   children: React.ReactNode
 }) {
   const rtl = locale === 'ar'
-  const base = rtl ? '/assets/rtl/' : '/assets/'
   const fonts = [outfit.variable, dmMono.variable, extraFontClass].filter(Boolean).join(' ')
   return (
     <html
@@ -63,11 +64,10 @@ export function KitDocument({
       <head>
         <meta name="site-kind" content="software" />
         <meta name="page-type" content="software" />
-        {KIT_CSS.map((f) => (
-          <link key={f} rel="stylesheet" href={`${base}${f}`} precedence="kit" />
-        ))}
+        {/* the kit's six stylesheets and the page CSS as one minified file (scripts/build-kit-bundle.mjs) */}
+        <link rel="stylesheet" href={rtl ? '/assets/kit.rtl.bundle.css' : '/assets/kit.bundle.css'} precedence="kit" />
+        <link rel="stylesheet" href={rtl ? '/assets/rtl/motion/motion.css' : '/assets/motion/motion.css'} precedence="kit-motion" />
         <style dangerouslySetInnerHTML={{ __html: PALETTE }} />
-        <link rel="stylesheet" href="/site/apex.css" precedence="page" />
         {/* the hero's entrance: set before first paint so its words wait for motion.js; the 700ms mark
             fades them in if the script is late */}
         <script
@@ -77,7 +77,8 @@ export function KitDocument({
               "document.documentElement.classList.add('mo-js');setTimeout(function(){document.documentElement.classList.add('mo-safe')},2500);",
           }}
         />
-        <script src="/assets/backgrounds/backgrounds.js" />
+        {/* the grounds' tokens before first paint, inline (the kit loads this plain, not deferred) */}
+        <script dangerouslySetInnerHTML={{ __html: BACKGROUNDS_JS }} />
         <link rel="modulepreload" href="/assets/system.js" />
         <link rel="modulepreload" href="/assets/moments/moments.js" />
       </head>

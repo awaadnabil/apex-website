@@ -8,5 +8,15 @@
     "check": "section-gaps",
     "target": "main#top > section.hero.hero--collage / section#rides",
     "reason": "At 390 the dealt collage hero ends its art at H-24 exactly as layout-v4 specifies (kit demo measures the same 342x256 visual at y 564); the median is set by phone sections that grow with their content per the kit. Closing this gap would cut the hero art under the kit's 220px minimum."
+  },
+  {
+    "check": "scroll-linked",
+    "target": "div.frame.frame--split > div.apx-phone.apx-duo__a",
+    "reason": "Owner direction (2026-11-09, mid-build): \"i love transitions on scroll\". The phones settle into their frames with CSS scroll-driven animation (transform only); they are whole and in place at rest, absent under prefers-reduced-motion and where scroll timelines are unsupported, and no text moves with the scroll."
+  },
+  {
+    "check": "scroll-linked",
+    "target": "div.frame.frame--photo > div.apx-phone.apx-wide__phone",
+    "reason": "Owner direction (2026-11-09, mid-build): \"i love transitions on scroll\". The phones settle into their frames with CSS scroll-driven animation (transform only); they are whole and in place at rest, absent under prefers-reduced-motion and where scroll timelines are unsupported, and no text moves with the scroll."
   }
 ]

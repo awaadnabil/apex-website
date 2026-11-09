@@ -3,4 +3,5 @@
 import { DM_Mono, Outfit } from 'next/font/google'
 
 export const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500'], variable: '--f-outfit', display: 'swap' })
-export const dmMono = DM_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--f-mono', display: 'swap' })
+// DM Mono only sets small UI figures (chips, XP): not worth a preload that competes with first paint
+export const dmMono = DM_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--f-mono', display: 'swap', preload: false })
