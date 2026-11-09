@@ -1,25 +1,28 @@
-import { ScrollReveal } from '@/components/scroll-reveal'
-import { CinematicFx } from '@/components/cinematic-fx'
-import { IntroCurtain } from '@/components/intro-curtain'
-import { SiteNav } from '@/components/site-nav'
-import { Hero } from '@/components/hero'
-import { Stats } from '@/components/stats'
-import { Tribes } from '@/components/tribes'
-import { FinalCta } from '@/components/final-cta'
-import { SiteFooter } from '@/components/site-footer'
+import { Clubs } from '@/components/drive/clubs'
+import { Footer } from '@/components/drive/footer'
+import { Hero } from '@/components/drive/hero'
+import { Loader } from '@/components/drive/loader'
+import { Market } from '@/components/drive/market'
+import { Numbers } from '@/components/drive/odometer'
+import { SpeedoProgress } from '@/components/drive/speedo-progress'
+import { Story } from '@/components/drive/story'
+import { TopBar } from '@/components/drive/top-bar'
+import { LangProvider } from '@/lib/drive/i18n'
 
 export default function Page() {
   return (
-    <main className="relative min-h-screen bg-carbon font-sans text-white">
-      <IntroCurtain />
-      <CinematicFx />
-      <ScrollReveal />
-      <SiteNav />
-      <Hero />
-      <Stats />
-      <Tribes />
-      <FinalCta />
-      <SiteFooter />
-    </main>
+    <LangProvider>
+      <Loader />
+      <TopBar />
+      <main>
+        <Hero />
+        <Story />
+        <Numbers />
+        <Clubs />
+        <Market />
+      </main>
+      <Footer />
+      <SpeedoProgress />
+    </LangProvider>
   )
 }

@@ -10,20 +10,36 @@
   --color-gold: #c9a84c;
   --color-silver: #8a8a8a;
   --color-ink: #333333;
+
+  /* Desert Night Chrome — home page */
+  --font-display: var(--font-michroma), 'Michroma Fallback', sans-serif;
+  --font-body: var(--font-hanken), 'Hanken Grotesk Fallback', sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+  --font-arabic: var(--font-plex-arabic), 'IBM Plex Sans Arabic Fallback', sans-serif;
+
+  --color-night: #05070c;
+  --color-dune: #0d1320;
+  --color-amber: #ffb547;
+  --color-ice: #cfe3ff;
+  --color-bone: #eef2f8;
+  --color-haze: #8b96aa;
+
+  --ease-drive: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
   html {
-    background-color: #080808;
+    background-color: #05070c;
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
     overflow-x: clip;
   }
 
   body {
-    background-color: #080808;
+    background-color: #05070c;
     color: #ffffff;
-    overflow-x: hidden;
+    /* clip (not hidden) so body never becomes a scroll container and sticky keeps working */
+    overflow-x: clip;
   }
 
   ::selection {
@@ -169,6 +185,235 @@
     transparent 55%,
     rgba(0, 0, 0, 0.55) 100%
   );
+}
+
+/* ==== Desert Night Chrome (home) ======================================== */
+
+.drive {
+  --dir: 1;
+}
+.drive[dir='rtl'] {
+  --dir: -1;
+}
+
+/* Arabic: Michroma, Hanken and JetBrains Mono have no Arabic glyphs.
+   Latin-only pieces (wordmark, store names) opt out with lang="en".
+   Letter-spacing is reset because tracking breaks Arabic letter joining. */
+.drive[lang='ar'] :is(.font-display, .font-body, .font-mono):not(:lang(en)) {
+  font-family: var(--font-arabic);
+  letter-spacing: 0;
+}
+.drive[lang='ar'] {
+  font-family: var(--font-arabic);
+}
+
+.drive ::selection {
+  background-color: #ffb547;
+  color: #05070c;
+}
+
+.drive :focus-visible {
+  outline: 2px solid #ffb547;
+  outline-offset: 3px;
+}
+
+/* Loader — logo stroke draws, then the overlay wipes up (total < 1.3s) */
+.drive-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #05070c;
+  pointer-events: none;
+  animation: loaderWipe 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.82s forwards;
+}
+
+.drive-loader svg {
+  filter: drop-shadow(0 0 6px rgba(255, 181, 71, 0.9))
+    drop-shadow(0 0 22px rgba(255, 154, 46, 0.55));
+}
+
+.loader-stroke {
+  fill: none;
+  stroke: #ffb547;
+  stroke-width: 2.4;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: strokeDraw 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes strokeDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes loaderWipe {
+  to {
+    transform: translateY(-100%);
+    visibility: hidden;
+  }
+}
+
+/* Liquid glass card */
+.glass {
+  position: relative;
+  isolation: isolate;
+  border-radius: 28px;
+  background: linear-gradient(
+    155deg,
+    rgba(207, 227, 255, 0.11) 0%,
+    rgba(13, 19, 32, 0.58) 42%,
+    rgba(5, 7, 12, 0.66) 100%
+  );
+  -webkit-backdrop-filter: blur(14px) saturate(170%);
+  backdrop-filter: blur(14px) saturate(170%);
+  box-shadow:
+    inset 0 1px 0 rgba(207, 227, 255, 0.3),
+    inset 0 -1px 0 rgba(5, 7, 12, 0.6),
+    0 40px 90px -30px rgba(0, 0, 0, 0.8);
+}
+
+/* Chromium only: real refraction through the SVG displacement filter */
+.glass.is-liquid {
+  backdrop-filter: url(#liquid) blur(14px) saturate(170%);
+}
+
+.glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(
+    from 215deg,
+    rgba(255, 181, 71, 0.95),
+    rgba(207, 227, 255, 0.75),
+    rgba(92, 132, 204, 0.55),
+    rgba(207, 227, 255, 0.3),
+    rgba(255, 181, 71, 0.95)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.glass-spec {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    380px circle at var(--mx, 24%) var(--my, 0%),
+    rgba(207, 227, 255, 0.17),
+    transparent 62%
+  );
+}
+
+/* Pulsing live dot */
+.live-dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #ffb547;
+  box-shadow: 0 0 10px rgba(255, 181, 71, 0.9);
+}
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #ffb547;
+  animation: livePulse 1.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
+@keyframes livePulse {
+  from {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(3.2);
+    opacity: 0;
+  }
+}
+
+/* Primary button glow + arrow "rev" kick */
+.btn-amber {
+  background: #ffb547;
+  color: #05070c;
+  transition:
+    box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-amber:hover {
+  background: #ffc266;
+  box-shadow:
+    0 0 26px 2px rgba(255, 181, 71, 0.5),
+    0 0 90px 10px rgba(255, 154, 46, 0.2);
+}
+.rev-arrow {
+  display: inline-flex;
+}
+.btn-amber:hover .rev-arrow {
+  animation: rev 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes rev {
+  0% {
+    transform: translateX(0);
+  }
+  26% {
+    transform: translateX(calc(7px * var(--dir)));
+  }
+  48% {
+    transform: translateX(calc(2px * var(--dir)));
+  }
+  70% {
+    transform: translateX(calc(6px * var(--dir)));
+  }
+  100% {
+    transform: translateX(calc(4px * var(--dir)));
+  }
+}
+
+/* Holographic foil on the membership pass */
+.foil {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  mix-blend-mode: color-dodge;
+  opacity: 0.38;
+  background-image: linear-gradient(
+    115deg,
+    transparent 26%,
+    rgba(255, 181, 71, 0.5) 38%,
+    rgba(207, 227, 255, 0.55) 47%,
+    rgba(255, 214, 140, 0.45) 55%,
+    transparent 68%
+  );
+  background-size: 260% 260%;
+  background-position: var(--fx, 50%) var(--fy, 50%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drive-loader {
+    display: none;
+  }
+  .live-dot::after,
+  .btn-amber:hover .rev-arrow {
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
