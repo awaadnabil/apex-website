@@ -39,6 +39,7 @@ const photos = [
   { src: BLOB && join(BLOB, 'apex-bikes-s4mRdYk7929ut9Y6Jbo1y1yd5ZD5yf.png'), name: 'standin-riders-mountain' },
   { src: BLOB && join(BLOB, 'apex-community.png-nsD35voV06hihiEr439JSAK1Zm5SKi.jpeg'), name: 'standin-night-meet' },
   { src: join(DL, 'apex-offroad-real.jpg'), name: 'standin-offroad-shore' },
+  { src: BLOB && join(BLOB, 'apex-supercars-h7OydBomTgS4J9Cz59dYOKCUL8My8z.jpg'), name: 'standin-convoy' },
 ];
 for (const p of photos) {
   if (!p.src) { console.warn('skip (set BLOB_DIR):', p.name); continue; }

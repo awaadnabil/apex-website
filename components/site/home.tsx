@@ -111,10 +111,10 @@ export function Home({ c }: { c: Copy }) {
             </div>
             <div className="hero__art span-6 start-7" role="img" aria-label={c.hero.artLabel} data-fx="grain-gradient" data-fx-params='{"drift":0}'>
               <div className="ly-piece ly-piece--main apx-hero-phone" aria-hidden="true">
-                <Phone name="screen-home" alt="" priority />
+                <Phone name="screen-fly" alt="" priority />
               </div>
-              <div className="ly-piece ly-piece--note d-card apx-note" aria-hidden="true" data-ly-steps="700">
-                <div className="d-card__row"><h5>{c.hero.cardTitle}</h5><span className="d-chip" data-step data-step-at="3">{c.hero.cardChip}</span></div>
+              <div className="ly-piece ly-piece--note d-card apx-glass apx-note" aria-hidden="true" data-ly-steps="600">
+                <div className="d-card__row"><h5>{c.hero.cardTitle}</h5><span className="d-chip" data-step data-step-at="3"><bdi dir="ltr">{c.hero.cardChip}</bdi></span></div>
                 <div className="d-note__line" data-step><i>✓</i><span>{c.hero.cardLines[0]}</span></div>
                 <div className="d-note__line" data-step><i>✓</i><span>{c.hero.cardLines[1]}</span></div>
                 <div className="d-note__line" data-step><i className="xp">XP</i><span><b>{c.hero.cardLines[2]}</b></span></div>
@@ -135,7 +135,7 @@ export function Home({ c }: { c: Copy }) {
               </div>
               <div className="frame frame--split frame--lit span-6 start-7 apx-duo" role="img" aria-label={c.rides.artLabel}>
                 <Phone name="screen-home" alt="" className="apx-duo__a" />
-                <Phone name="screen-fly" alt="" className="apx-duo__b" />
+                <Phone name="screen-ridecard" alt="" className="apx-duo__b" />
               </div>
             </div>
           </div>
@@ -149,15 +149,22 @@ export function Home({ c }: { c: Copy }) {
               <article className="card card--row">
                 <h3>{c.xp.cards[0].title}</h3>
                 <p>{c.xp.cards[0].body}</p>
-                <div className="panel apx-panel apx-panel--screen">
-                  <Phone name="screen-ridecard" alt={c.xp.rideCardAlt} className="apx-phone--peek" />
+                <div className="panel apx-panel" role="img" aria-label={c.xp.rideCardAlt}>
+                  <div className="d-card apx-glass apx-ridecard" aria-hidden="true">
+                    <p className="apx-ridecard__earned"><bdi dir="ltr">{c.xp.share.xp}</bdi></p>
+                    <div className="apx-ridecard__card">
+                      <span className="apx-ridecard__brand" dir="ltr">A P E X</span>
+                      <span className="apx-ridecard__meta" dir="ltr">RIDE CARD · 09 NOV 2026</span>
+                      <span className="apx-ridecard__title">{c.hero.cardTitle}</span>
+                    </div>
+                  </div>
                 </div>
               </article>
               <article className="card card--row">
                 <h3>{c.xp.cards[1].title}</h3>
                 <p>{c.xp.cards[1].body}</p>
                 <div className="panel apx-panel" role="img" aria-label={`${c.xp.spotlight.head}: ${c.xp.spotlight.rows.map((r) => `${r.rank}, ${r.xp} XP`).join('; ')}`}>
-                  <div className="d-card apx-spot" aria-hidden="true">
+                  <div className="d-card apx-glass apx-spot" aria-hidden="true">
                     <div className="d-card__row"><h5>{c.xp.spotlight.head}</h5><span className="apx-spot__week">{c.xp.spotlight.week}</span></div>
                     {c.xp.spotlight.rows.map((r, i) => (
                       <div className="apx-spot__row" key={r.rank} style={{ ['--v' as string]: `${Math.round((r.xp / 200) * 100)}%`, ['--i' as string]: i }}>
@@ -173,7 +180,7 @@ export function Home({ c }: { c: Copy }) {
                 <h3>{c.xp.cards[2].title}</h3>
                 <p>{c.xp.cards[2].body}</p>
                 <div className="panel apx-panel" role="img" aria-label={c.xp.cards[2].body}>
-                  <div className="d-card apx-share" aria-hidden="true">
+                  <div className="d-card apx-glass apx-share" aria-hidden="true">
                     <div className="d-card__row"><h5>{c.xp.share.saved}</h5><span className="d-chip">{c.xp.share.xp}</span></div>
                     <div className="apx-share__grid">
                       <span className="apx-share__btn"><img src="/assets/icons/instagram.svg" alt="" width={18} height={18} />{c.xp.share.buttons[0]}</span>
@@ -252,7 +259,7 @@ export function Home({ c }: { c: Copy }) {
                   data-source="library"
                   data-subject="night meet at the marina"
                 />
-                <div className="d-card apx-qr" role="img" aria-label={c.card.qr.label} data-apx-qr>
+                <div className="d-card apx-glass apx-qr" role="img" aria-label={c.card.qr.label} data-apx-qr>
                   <p className="apx-qr__show">{c.card.qr.show}</p>
                   <img className="apx-qr__code" src="/img/apex-card-qr.svg" alt="" width={132} height={132} />
                   <p className="apx-qr__num" dir="ltr" data-apx-code>{c.card.qr.code}</p>
@@ -280,8 +287,15 @@ export function Home({ c }: { c: Copy }) {
                 <h2 id="partners-h" className="mo-la__type">{c.partners.statement}</h2>
                 <p className="mo-la__sub">{c.partners.sub}</p>
               </div>
-              <div className="span-4 start-9 apx-dealerframe">
-                <Phone name="screen-dealer" alt={c.partners.screenAlt} />
+              <div className="span-4 start-9 apx-dealerframe" role="img" aria-label={c.partners.screenAlt}>
+                <div className="d-card apx-glass apx-dash" aria-hidden="true">
+                  <div className="d-card__row"><h5>{c.partners.dash.title}</h5><span className="apx-dash__range">{c.partners.dash.range}</span></div>
+                  <ul className="apx-dash__grid">
+                    {c.partners.dash.items.map((it) => (
+                      <li key={it}><span className="apx-dash__tick" aria-hidden="true" />{it}</li>
+                    ))}
+                  </ul>
+                </div>
               </div>
               {c.partners.cols.map((col, i) => (
                 <div className={`span-3 stack-4 apx-partners-col${i === 1 ? ' start-4' : ''}`} key={col.title}>
@@ -309,16 +323,16 @@ export function Home({ c }: { c: Copy }) {
                 {/* stand-in: replace with a real APEX photograph at a partner */}
                 <img
                   className="frame__img"
-                  src="/img/standin-offroad-shore-1280.webp"
-                  srcSet="/img/standin-offroad-shore-640.webp 480w, /img/standin-offroad-shore-1280.webp 960w"
-                  sizes="(max-width: 1023px) 100vw, 628px"
+                  src="/img/standin-convoy-1280.webp"
+                  srcSet="/img/standin-convoy-640.webp 640w, /img/standin-convoy-1280.webp 1280w"
+                  sizes="(max-width: 639px) 1200px, (max-width: 1023px) 100vw, 1120px"
                   alt={c.form.photoAlt}
-                  width={960}
-                  height={1280}
+                  width={1280}
+                  height={714}
                   loading="lazy"
                   decoding="async"
                   data-source="library"
-                  data-subject="car on the shore"
+                  data-subject="supercar convoy"
                 />
               </div>
             </div>
@@ -326,15 +340,21 @@ export function Home({ c }: { c: Copy }) {
         </section>
 
         {/* FAQ: the page's split; every answer open. */}
-        <section className="section" id="faq" aria-labelledby="faq-h">
+        <section className="section" id="faq" aria-labelledby="faq-h" style={{ ['--hm' as string]: 2 }}>
           <div className="wrap">
             <div className="grid grid--top">
               <div className="span-5 stack-4">
                 <h2 id="faq-h">{c.faq.h2}</h2>
                 <p className="muted">{c.faq.line}</p>
                 <p><a className="link" href="/concierge">{c.faq.link}<Arrow /></a></p>
-                <div className="apx-peakframe" aria-hidden="true">
-                  <img src="/img/apex-peak.svg" alt="" width={256} height={220} loading="lazy" />
+                <div className="d-card apx-glass apx-install">
+                  <h3 className="apx-install__title">{c.faq.install.title}</h3>
+                  <ol className="apx-install__steps">
+                    {c.faq.install.steps.map((st, i) => (
+                      <li key={st}><span className="apx-install__n" aria-hidden="true">{i + 1}</span><span>{st}</span></li>
+                    ))}
+                  </ol>
+                  <p><a className="link" href={c.androidHref}>{c.faq.install.link}<Arrow /></a></p>
                 </div>
               </div>
               <div className="faq span-6 start-7">
@@ -387,7 +407,8 @@ export function Home({ c }: { c: Copy }) {
       </footer>
 
       <nav className="actionbar" aria-label={ar ? 'إجراءات سريعة' : 'Quick actions'}>
-        <a className="btn btn--primary" href={c.download}>{c.nav.cta}</a>
+        {/* its own address, so the kit only steps the bar aside for the same action, not for every /download link */}
+        <a className="btn btn--primary" href={`${c.download}?from=bar`}>{c.nav.cta}</a>
       </nav>
     </>
   )

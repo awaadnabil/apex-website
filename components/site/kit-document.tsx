@@ -2,14 +2,11 @@
 // RTL), the client's palette as start.mjs printed it (brand: #080808 / #121518 / #eef2f4 / #9aa4ab / teal),
 // the dealt type self-hosted through next/font (Outfit, DM Mono; IBM Plex Sans Arabic on Arabic pages),
 // the hero-entrance guard, and the kit's scripts at the end of <body>.
-import { DM_Mono, IBM_Plex_Sans_Arabic, Outfit } from 'next/font/google'
+import { dmMono, outfit } from '@/lib/site/fonts'
 import { Analytics } from '@vercel/analytics/next'
 import type { Locale } from '@/lib/site/content'
 import { KitScripts } from './kit-scripts'
 
-const outfit = Outfit({ subsets: ['latin'], weight: ['400', '500'], variable: '--f-outfit', display: 'swap' })
-const dmMono = DM_Mono({ subsets: ['latin'], weight: ['400', '500'], variable: '--f-mono', display: 'swap' })
-const plexAr = IBM_Plex_Sans_Arabic({ subsets: ['arabic'], weight: ['400', '500'], variable: '--f-plex-ar', display: 'swap', preload: true })
 
 const KIT_CSS = [
   'system.css',
@@ -21,16 +18,18 @@ const KIT_CSS = [
 ]
 
 // :root as `start.mjs brand --page software --bg #080808 --ink #EEF2F4 --accent #00C8C8 --surface #121518
-// --muted #9AA4AB --type outfit --radius round` printed it; only the font families point at the self-hosted
-// next/font copies of the same faces.
+// --muted #9AA4AB --type outfit --radius round` printed it. The families are named directly, not through
+// next/font's variables: those carry a generated "Outfit Fallback" (local Arial, every code point), which
+// caught the Arabic glyphs before IBM Plex Sans Arabic. Outfit's own faces cover Latin only, so Arabic
+// falls through to Plex (loaded on Arabic pages only).
 const PALETTE = `:root {
   --p-bg: #080808; --p-surface: #121518; --p-ink: #eef2f4; --p-muted: #9aa4ab;
   --p-accent: #00c8c8; --p-accent-ink: #080808; --p-action: #00c8c8; --p-action-ink: #080808;
   --p-inv-bg: #eef2f4; --p-inv-surface: #dbdfe1; --p-inv-ink: #080808; --p-inv-muted: #535555;
   --p-inv-accent: #080808; --p-inv-accent-ink: #eef2f4; --p-inv-action: #080808; --p-inv-action-ink: #eef2f4;
-  --font-display: var(--f-outfit), var(--f-plex-ar, system-ui), system-ui, sans-serif;
-  --font-text: var(--f-outfit), var(--f-plex-ar, system-ui), system-ui, sans-serif;
-  --font-mono: var(--f-mono), ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-display: "Outfit", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-text: "Outfit", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
   --display-weight: 400;
   --display-tracking: -0.03em;
   --display-tracking-xl: -0.04em;
@@ -38,14 +37,17 @@ const PALETTE = `:root {
 
 export function KitDocument({
   locale,
+  extraFontClass = '',
   children,
 }: {
   locale: Locale
+  /** the Arabic layout passes IBM Plex Sans Arabic's variable class; English pages never load it */
+  extraFontClass?: string
   children: React.ReactNode
 }) {
   const rtl = locale === 'ar'
   const base = rtl ? '/assets/rtl/' : '/assets/'
-  const fonts = [outfit.variable, dmMono.variable, rtl ? plexAr.variable : ''].filter(Boolean).join(' ')
+  const fonts = [outfit.variable, dmMono.variable, extraFontClass].filter(Boolean).join(' ')
   return (
     <html
       lang={locale}

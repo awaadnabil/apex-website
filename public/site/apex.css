@@ -3,6 +3,21 @@
 
 /* The lit ground: the kit's are daylight tints (sand, sky, sage); APEX's is the deep teal-black of its
    App Store artwork, used behind UI frames and in footer-statement. */
+/* The app's own UI colours, for the pieces of APEX UI drawn as live HTML (they depict the app, so they
+   do not follow the page's grounds). */
+:root {
+  --app-card: #121518;
+  --app-ink: #eef2f4;
+  --app-muted: #9aa4ab;
+  --app-faint: #b9c2c8;
+  --app-teal: #00c8c8;
+  --app-teal-hi: #2fe0e0;
+  --app-teal-lo: #00a3a3;
+  --app-line: rgb(255 255 255 / 0.07);
+  --app-fill: rgb(255 255 255 / 0.06);
+  --error-ink: #ff8a7a;
+}
+
 html[data-ground="apex"] {
   --ground-bg: #0b1a1c;
   --ground-surface: #10252a;
@@ -70,27 +85,27 @@ html[data-ground="apex"] {
 
 /* ---- d-card: a small piece of APEX UI, in the app's own dark card look */
 .d-card {
-  background: #121518; color: #eef2f4;
+  background: var(--app-card); color: var(--app-ink);
   border-radius: 16px; padding: 14px 16px;
   font: 400 14px/1.4 var(--font-text);
   text-align: start;
   box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07), 0 18px 40px -20px rgb(0 0 0 / 0.85);
 }
 .d-card h5 { margin: 0 0 4px; font: 500 15px/1.3 var(--font-text); }
-.d-card p { margin: 0; color: #9aa4ab; font-size: 13px; }
+.d-card p { margin: 0; color: var(--app-muted); font-size: 13px; }
 .d-card__row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
 .d-chip {
   display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 10px; border-radius: 99px;
-  font: 500 13px/1 var(--font-mono); background: rgb(0 200 200 / 0.14); color: #2fe0e0; white-space: nowrap;
+  font: 500 13px/1 var(--font-mono); background: rgb(0 200 200 / 0.14); color: var(--app-teal-hi); white-space: nowrap;
 }
-.d-note__line { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; color: #b9c2c8; border-top: 1px solid rgb(255 255 255 / 0.07); }
+.d-note__line { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; color: var(--app-faint); border-top: 1px solid var(--app-line); }
 .d-note__line:first-of-type { border-top: 0; }
 .d-note__line i {
   inline-size: 20px; block-size: 20px; border-radius: 50%; flex: none; display: grid; place-items: center;
-  background: rgb(0 200 200 / 0.14); color: #2fe0e0; font: 500 11px/1 var(--font-mono); font-style: normal;
+  background: rgb(0 200 200 / 0.14); color: var(--app-teal-hi); font: 500 11px/1 var(--font-mono); font-style: normal;
 }
 .d-note__line i.xp { inline-size: auto; padding-inline: 6px; border-radius: 99px; }
-.d-note__line b { font-weight: 500; color: #eef2f4; }
+.d-note__line b { font-weight: 500; color: var(--app-ink); }
 
 /* ---- rides: two real screens on the lit ground, both cut by the frame's foot */
 .apx-duo { position: relative; overflow: hidden; background: radial-gradient(80% 60% at 50% 0%, rgb(0 200 200 / 0.16), transparent 70%), var(--ground-bg); min-height: 640px; }
@@ -107,24 +122,21 @@ html[data-ground="apex"] {
 @media (min-width: 1024px) { .apx-cards > .card { grid-column: auto / span 4; } }
 .apx-cards .panel.apx-panel { --p-h: 260px; height: var(--p-h); min-height: 0; flex: none; position: relative; overflow: hidden; display: grid; place-items: center; background: radial-gradient(80% 70% at 30% 0%, rgb(0 200 200 / 0.14), transparent 70%), var(--ground-bg); }
 .apx-panel > .d-card { width: min(300px, calc(100% - 2 * var(--s-5))); }
-.apx-panel--screen { place-items: start center; }
-.apx-phone--peek { width: 210px; margin-top: var(--s-6); border-radius: 34px; }
-.apx-phone--peek img { border-radius: 30px; }
-.apx-spot__week { font-size: 12px; color: #9aa4ab; }
-.apx-spot__row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 70px; align-items: center; gap: 10px; padding-block: 9px; border-top: 1px solid rgb(255 255 255 / 0.07); }
+.apx-spot__week { font-size: 13px; color: var(--app-muted); }
+.apx-spot__row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 70px; align-items: center; gap: 10px; padding-block: 9px; border-top: 1px solid var(--app-line); }
 .apx-spot__row:first-of-type { margin-top: 8px; }
-.apx-spot__rank { font: 500 13px/1 var(--font-mono); color: #2fe0e0; }
-.apx-spot__bar { block-size: 6px; border-radius: 99px; background: rgb(255 255 255 / 0.08); overflow: hidden; }
-.apx-spot__bar i { display: block; block-size: 100%; inline-size: var(--v); border-radius: inherit; background: linear-gradient(90deg, #00a3a3, #2fe0e0); }
-[dir="rtl"] .apx-spot__bar i { background: linear-gradient(270deg, #00a3a3, #2fe0e0); }
-.apx-spot__xp { text-align: end; font: 400 13px/1 var(--font-mono); color: #9aa4ab; }
-.apx-spot__xp b { font-weight: 500; color: #eef2f4; }
+.apx-spot__rank { font: 500 13px/1 var(--font-mono); color: var(--app-teal-hi); }
+.apx-spot__bar { block-size: 6px; border-radius: 99px; background: var(--app-fill); overflow: hidden; }
+.apx-spot__bar i { display: block; block-size: 100%; inline-size: var(--v); border-radius: inherit; background: linear-gradient(90deg, var(--app-teal-lo), var(--app-teal-hi)); }
+[dir="rtl"] .apx-spot__bar i { background: linear-gradient(270deg, var(--app-teal-lo), var(--app-teal-hi)); }
+.apx-spot__xp { text-align: end; font: 400 13px/1 var(--font-mono); color: var(--app-muted); }
+.apx-spot__xp b { font-weight: 500; color: var(--app-ink); }
 .apx-share__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
-.apx-share__btn { display: flex; align-items: center; gap: 8px; min-block-size: 40px; padding-inline: 10px; border-radius: 12px; background: rgb(255 255 255 / 0.06); font-size: 12.5px; font-weight: 500; color: #eef2f4; }
+.apx-share__btn { display: flex; align-items: center; gap: 8px; min-block-size: 40px; padding-inline: 10px; border-radius: 12px; background: var(--app-fill); font-size: 13px; font-weight: 500; color: var(--app-ink); }
 .apx-share__btn img, .apx-share__btn svg { flex: none; }
-.apx-share__btn--on { background: #00c8c8; color: #041414; }
+.apx-share__btn--on { background: var(--app-teal); color: #041414; }
 @media (max-width: 1023px) { .apx-cards .panel.apx-panel { --p-h: 240px; } }
-@media (max-width: 639px) { .apx-cards .panel.apx-panel { --p-h: 200px; } .apx-phone--peek { width: 170px; } }
+@media (max-width: 639px) { .apx-cards .panel.apx-panel { --p-h: 200px; } }
 
 /* ---- market: chapter. One wide frame (photograph) with the real Market screen over its edge */
 .apx-chapter-line { font-size: var(--t-lead); line-height: 1.5; }
@@ -145,11 +157,11 @@ html[data-ground="apex"] {
 .apx-cardframe { position: relative; overflow: hidden; min-height: 620px; }
 .apx-cardframe > .frame__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .frame.apx-cardframe > .apx-qr { position: absolute; inset-inline-start: var(--s-6); bottom: var(--s-6); width: 236px; display: grid; justify-items: center; gap: 10px; padding: 18px; z-index: 1; }
-.apx-qr__show { font: 500 11px/1.2 var(--font-mono) !important; letter-spacing: 0.08em; color: #9aa4ab !important; }
+.apx-qr__show { font: 500 13px/1.3 var(--font-text) !important; color: var(--app-muted) !important; }
 .apx-qr__code { width: 132px; height: 132px; padding: 8px; border-radius: 12px; background: #fff; }
-.apx-qr__num { font: 500 26px/1 var(--font-mono) !important; color: #eef2f4 !important; letter-spacing: 0.12em; }
-.apx-qr__bar { inline-size: 100%; block-size: 3px; border-radius: 99px; background: rgb(255 255 255 / 0.1); overflow: hidden; }
-.apx-qr__bar i { display: block; block-size: 100%; inline-size: 18%; background: #00c8c8; border-radius: inherit; }
+.apx-qr__num { font: 500 26px/1 var(--font-mono) !important; color: var(--app-ink) !important; letter-spacing: 0.12em; }
+.apx-qr__bar { inline-size: 100%; block-size: 3px; border-radius: 99px; background: var(--app-fill); overflow: hidden; }
+.apx-qr__bar i { display: block; block-size: 100%; inline-size: 18%; background: var(--app-teal); border-radius: inherit; }
 .apx-qr__next { font-size: 12px !important; }
 .apx-price { margin: 0; display: grid; gap: var(--s-1); padding-block: var(--s-4); border-block: 1px solid var(--line); }
 .apx-price dt { font-size: var(--t-small); color: var(--muted); }
@@ -161,10 +173,9 @@ html[data-ground="apex"] {
 #partners .mo-la__sub { color: var(--ink); }
 #partners .mo-la__type { font-size: clamp(48px, 6.2vw, 96px); max-width: 12ch; }
 .apx-partners-grid { row-gap: var(--s-7); }
-.apx-dealerframe { grid-row: 1 / span 3; position: relative; overflow: hidden; height: 660px; border-radius: var(--r-lg); background: radial-gradient(90% 60% at 50% 0%, rgb(0 200 200 / 0.22), transparent 70%), #0b1a1c; }
-.apx-dealerframe > .apx-phone { position: absolute; inset-inline: 0; margin-inline: auto; top: var(--s-7); width: 300px; }
-@media (max-width: 1023px) { .apx-dealerframe { grid-row: auto; height: 460px; } .apx-dealerframe > .apx-phone { width: 240px; } .apx-partners-col { grid-column: auto / span 6; } }
-@media (max-width: 639px) { .apx-dealerframe { height: 380px; } .apx-dealerframe > .apx-phone { width: 200px; top: var(--s-5); } .apx-partners-col { grid-column: 1 / -1; } }
+.apx-dealerframe { grid-row: 1 / span 3; position: relative; overflow: hidden; min-height: 520px; border-radius: var(--r-lg); background: radial-gradient(90% 60% at 50% 0%, rgb(0 200 200 / 0.22), transparent 70%), #0b1a1c; }
+@media (max-width: 1023px) { .apx-dealerframe { grid-row: auto; min-height: 0; } .apx-partners-col { grid-column: auto / span 6; } }
+@media (max-width: 639px) { .apx-dealerframe { padding: var(--s-4); } .apx-partners-col { grid-column: 1 / -1; } }
 :lang(ar) #partners .mo-la__sub { color: var(--ink); }
 #partners .mo-la__type { font-size: clamp(40px, 6.4vw, 104px); max-width: 16ch; }
 .apx-partners-col h3 { font: 500 var(--t-card)/1.3 var(--font-text); }
@@ -208,7 +219,100 @@ html[data-ground="apex"] {
 .apx-sub__foot .wrap { display: flex; flex-wrap: wrap; gap: var(--s-4) var(--s-6); color: var(--muted); font-size: var(--t-small); }
 .apx-sub__foot a { color: var(--ink); min-block-size: 44px; display: inline-flex; align-items: center; }
 
-/* ---- questions: the chrome peak on the lit ground, the section's one picture */
-.apx-peakframe { margin-top: var(--s-6); display: grid; place-items: center; aspect-ratio: 4 / 3; max-width: 410px; border-radius: var(--r-lg); background: radial-gradient(70% 70% at 50% 30%, rgb(0 200 200 / 0.18), transparent 70%), var(--ground-bg); }
-.apx-peakframe img { width: 46%; height: auto; }
-@media (max-width: 1023px) { .apx-peakframe { aspect-ratio: auto; height: 160px; max-width: none; } .apx-peakframe img { width: auto; height: 96px; } }
+
+/* ---- questions: the Android install path, beside the answers */
+.apx-install { margin-top: var(--s-6); max-width: 460px; padding: var(--s-5); display: grid; gap: var(--s-4); }
+.apx-install__title { font: 500 var(--t-card)/1.3 var(--font-text); letter-spacing: 0; color: var(--app-ink); }
+.apx-install__steps { display: grid; gap: var(--s-3); counter-reset: none; }
+.apx-install__steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: var(--s-3); align-items: start; color: var(--app-faint); font-size: 15px; line-height: 1.5; }
+.apx-install__n { display: grid; place-items: center; inline-size: 28px; block-size: 28px; border-radius: 50%; background: rgb(0 200 200 / 0.14); color: var(--app-teal-hi); font: 500 13px/1 var(--font-mono); }
+
+/* ---- the Ride Card summary and the dealer dashboard, as live UI */
+.apx-ridecard { display: grid; gap: 12px; }
+.apx-ridecard__earned { text-align: center; color: var(--app-teal-hi) !important; font: 500 16px/1.2 var(--font-text) !important; }
+.apx-ridecard__card { display: grid; gap: 6px; padding: 16px; border-radius: 14px; background: radial-gradient(120% 90% at 100% 0%, rgb(0 200 200 / 0.28), transparent 60%), #0b2023; }
+.apx-ridecard__brand { font: 500 13px/1 var(--font-text); letter-spacing: 0.3em; color: var(--app-ink); }
+.apx-ridecard__meta { font: 500 11px/1.3 var(--font-mono); letter-spacing: 0.06em; color: var(--app-teal-hi); }
+.apx-ridecard__title { font: 500 20px/1.2 var(--font-text); color: var(--app-ink); }
+.apx-dealerframe { display: grid; place-items: center; padding: var(--s-6); }
+.apx-dash { width: 100%; max-width: 320px; }
+.apx-dash__range { font-size: 13px; color: var(--app-muted); }
+.apx-dash__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.apx-dash__grid li { display: flex; align-items: center; gap: 8px; min-block-size: 56px; padding: 10px; border-radius: 12px; background: var(--app-fill); font-size: 13px; line-height: 1.3; color: var(--app-ink); }
+.apx-dash__tick { flex: none; inline-size: 8px; block-size: 8px; border-radius: 50%; background: var(--app-teal); box-shadow: 0 0 0 4px rgb(0 200 200 / 0.16); }
+
+/* ---- liquid glass: the owner's direction (2026-11-09). Floating UI over imagery and glow is a pane of
+   frosted glass: a translucent tint, a strong backdrop blur with saturation, a bright hairline edge, a
+   specular highlight on its top edge and a soft offset shadow. Solid when blur is unsupported or the
+   visitor asks for less transparency. */
+.apx-glass {
+  --glass-tint: rgb(14 20 24 / 0.52);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.10), rgb(255 255 255 / 0.02) 42%, rgb(255 255 255 / 0)) ,
+    var(--glass-tint);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -1px 0 rgb(255 255 255 / 0.04),
+    0 24px 48px -24px rgb(0 0 0 / 0.75);
+}
+/* over a busy photograph the pane darkens so its words keep 7:1 */
+.apx-cardframe .apx-glass { --glass-tint: rgb(10 14 16 / 0.62); }
+
+/* the nav and the phone bar: glass over the page as it scrolls under them */
+header.nav, nav.actionbar {
+  background: rgb(8 8 8 / 0.58);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: inset 0 -1px 0 rgb(255 255 255 / 0.08);
+}
+nav.actionbar { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.10); }
+header.nav .nav__menu { background: rgb(10 12 14 / 0.86); -webkit-backdrop-filter: blur(24px) saturate(160%); backdrop-filter: blur(24px) saturate(160%); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .apx-glass { background: var(--app-card); }
+  header.nav, nav.actionbar, header.nav .nav__menu { background: var(--bg); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .apx-glass { background: var(--app-card); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  header.nav, nav.actionbar, header.nav .nav__menu { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  .apx-glass { background: var(--app-card); border-color: rgb(255 255 255 / 0.4); }
+}
+
+/* ---- hierarchy: the hero h1 stays the largest type; the partner promise sits under it */
+#partners .mo-la__type { font-size: clamp(40px, 4.4vw, 60px); max-width: 16ch; }
+:lang(ar) #partners .mo-la__type { font-size: clamp(36px, 4vw, 56px); }
+
+/* ---- Arabic headings: IBM Plex Sans Arabic at 500, open leading */
+:lang(ar) :is(h1, h2, .mo-la__type) { font-weight: 500; }
+:lang(ar) .hero__lead, :lang(ar) .t-lead { line-height: 1.75; }
+
+/* ---- RTL: the pill buttons' chevron points the reading way (scale, so the kit's hover nudge still runs) */
+[dir="rtl"] :is(.btn--primary, .btn--secondary)::after { scale: -1 1; }
+
+/* ---- form states */
+.form__status[data-state="error"] { color: var(--error-ink); display: flex; gap: 8px; align-items: baseline; }
+.form__status[data-state="error"]::before { content: "!"; flex: none; display: inline-grid; place-items: center; inline-size: 18px; block-size: 18px; border-radius: 50%; background: var(--error-ink); color: #1a0705; font: 600 12px/1 var(--font-text); }
+.form__status[data-state="sent"] { color: var(--app-teal-hi); }
+.apx-form__fallback { grid-column: 1 / -1; }
+/* the phone bar steps aside while a visitor is typing in a form */
+@media (max-width: 639px) { body:has(form :focus) > nav.actionbar { translate: 0 110%; } }
+
+/* ---- the close: the badge and the Android pill as one pair, never a wide pill beside a small badge */
+@media (max-width: 639px) {
+  .btn-row:has(> .apx-badge) { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; align-items: center; }
+  .btn-row:has(> .apx-badge) > .btn { width: auto; flex: 0 1 auto; }
+  .apx-badge { justify-content: flex-start; }
+}
+
+/* ---- small fixes from the audit */
+.footer__lede { line-height: 1.5; }
+@media (prefers-reduced-motion: reduce) { .apx-badge { transition: none; } .apx-badge:hover { transform: none; } }
+
+/* ---- browser surfaces carry the palette */
+::selection { background: rgb(0 200 200 / 0.35); color: #fff; }
+:root { accent-color: var(--app-teal); caret-color: var(--app-teal); scrollbar-color: #2a3238 var(--p-bg); }
+@media (min-width: 640px) and (max-width: 1023px) { .apx-wide { aspect-ratio: 16 / 9; } }

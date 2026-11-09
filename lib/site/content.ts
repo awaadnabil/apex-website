@@ -55,6 +55,7 @@ export type Copy = {
     cols: { title: string; body: string; assumed?: string }[]
     button: string
     screenAlt: string
+    dash: { title: string; range: string; items: string[] }
   }
   form: {
     h2: string
@@ -70,10 +71,11 @@ export type Copy = {
     rate: string
     turnstile: string
     unavailable: string
+    fallback: string
     photoAlt: string
     honeypot: string
   }
-  faq: { h2: string; line: string; link: string; items: { q: string; a: string; assumedTail?: string }[] }
+  faq: { h2: string; line: string; link: string; install: { title: string; steps: string[]; link: string }; items: { q: string; a: string; assumedTail?: string }[] }
   close: { h2: string; line: string }
   footer: {
     lede: string
@@ -122,7 +124,7 @@ const en: Copy = {
     h1: 'Motor community app for GCC riders and drivers',
     lead: 'Find your next group ride, see when it rolls and who leads it, then track it live with FLY. Every saved ride earns XP. Built in Dubai.',
     proof: 'iPhone on the App Store. Android as a direct download.',
-    artLabel: 'The APEX Home screen with the next ride, and a ride being saved for 150 XP',
+    artLabel: 'FLY tracking a ride live on the map, and the ride being saved for 150 XP',
     cardTitle: 'Ride saved',
     cardChip: '+150 XP',
     cardLines: ['Solo ride, Ride Card for 9 Nov', 'Distance, time and top speed logged', '+150 XP earned'],
@@ -133,7 +135,7 @@ const en: Copy = {
     body: 'Each ride shows the day, time and meeting point, how many riders have joined and who leads. Tap Request to join.',
     facts: ['On the road, FLY shows speed, distance, time and peak G live.', 'Stop FLY and the ride is saved to your Ride Card.'],
     link: 'Download APEX to join a ride',
-    artLabel: 'Two APEX screens: the next ride on Home, and FLY going live on the map',
+    artLabel: 'Two APEX screens: the next ride on Home, and the saved Ride Card with +150 XP',
   },
   xp: {
     h2: 'XP for every ride you save.',
@@ -194,6 +196,7 @@ const en: Copy = {
     ],
     button: 'Send a partner enquiry',
     screenAlt: 'The APEX dealer dashboard counting listing views, WhatsApp taps, calls and showroom visits',
+    dash: { title: 'Dealer dashboard', range: '7 days · 30 days', items: ['Listing views', 'WhatsApp taps', 'Calls', 'Saves', 'Showroom visits', 'Perk redemptions'] },
   },
   form: {
     h2: 'Partner enquiry.',
@@ -224,20 +227,29 @@ const en: Copy = {
     rate: 'Too many enquiries from this connection. Try again in ten minutes.',
     turnstile: 'The security check did not pass. Tick it again, then send.',
     unavailable: "Enquiries can't be sent right now. Your details are still here, so try again later.",
-    photoAlt: 'A sports car parked on the sand by the water',
+    fallback: 'Or reach the APEX concierge',
+    photoAlt: 'Supercars driving on Sheikh Zayed Road at dusk',
     honeypot: 'Leave this empty',
   },
   faq: {
     h2: 'Questions',
     line: 'The things riders and partners ask first.',
     link: 'Ask the concierge',
+    install: {
+      title: 'Android install, in three steps',
+      steps: ['Download the file. Chrome warns about every app from outside the Play Store: choose Download anyway.', 'Open it and allow the install. You only do this once.', 'Open APEX and sign in. Updates arrive automatically.'],
+      link: 'See the Android steps',
+    },
     items: [
       {
         q: 'How do I install the APEX app on Android?',
         a: 'APEX for Android is a direct download, not on Google Play. Get the file from the download page, allow the install once, then sign in.',
       },
+      {
+        q: 'Is the Android file safe to install?',
+        a: "It's the same APEX app, delivered without a storefront in between. Chrome's warning appears for every app installed from outside the Play Store.",
+      },
       { q: 'What does APEX Member cost riders?', a: 'AED 49 a month or AED 399 a year, bought inside the iPhone app. On Android, speak to an organiser.' },
-      { q: 'Where does the APEX app run?', a: 'APEX is built in Dubai and runs across the GCC.' },
       {
         q: 'What do partners pay for the app?',
         a: "Only on sales to APEX members, tracked when members scan your QR. There's no listing fee and no monthly fee.",
@@ -322,10 +334,10 @@ const ar: Copy = {
     h1: 'تطبيق مجتمع السيارات والدراجات في الخليج',
     lead: 'اعثر على رحلتك الجماعية التالية، واعرف موعد انطلاقها ومن يقودها، ثم تابعها مباشرةً مع FLY. كل رحلة تحفظها تمنحك نقاط XP. صُنع في دبي.',
     proof: '‏iPhone عبر App Store، وAndroid بتنزيل مباشر.',
-    artLabel: 'الشاشة الرئيسية في APEX مع الرحلة التالية، ورحلة تُحفظ مقابل 150 نقطة XP',
+    artLabel: 'FLY يتتبّع رحلة مباشرةً على الخريطة، ثم تُحفظ الرحلة مقابل 150 نقطة XP',
     cardTitle: 'حُفظت الرحلة',
     cardChip: '+150 XP',
-    cardLines: ['رحلة فردية، Ride Card ليوم 9 نوفمبر', 'سُجّلت المسافة والوقت والسرعة القصوى', '‎+150 XP'],
+    cardLines: ['رحلة فردية، Ride Card ليوم 9 نوفمبر', 'سُجّلت المسافة والوقت والسرعة القصوى', '\u2066+150 XP\u2069'],
   },
   rides: {
     h2: 'رحلات المجتمع بنقطة تجمّع وموعد انطلاق وقائد.',
@@ -333,7 +345,7 @@ const ar: Copy = {
     body: 'تعرض كل رحلة اليوم والوقت ونقطة التجمّع، وعدد المنضمّين ومن يقودها. اضغط Request للانضمام.',
     facts: ['وعلى الطريق، يعرض FLY السرعة والمسافة والوقت وقوة التسارع (G) مباشرةً.', 'أوقف FLY فتُحفظ الرحلة على Ride Card.'],
     link: 'نزّل APEX وانضم إلى رحلة',
-    artLabel: 'شاشتان من APEX: الرحلة التالية في الرئيسية، وFLY يبدأ البث المباشر على الخريطة',
+    artLabel: 'شاشتان من APEX: الرحلة التالية في الرئيسية، وبطاقة Ride Card المحفوظة مع ‎+150 XP',
   },
   xp: {
     h2: 'نقاط XP مع كل رحلة تحفظها.',
@@ -394,6 +406,7 @@ const ar: Copy = {
     ],
     button: 'أرسل طلب شراكة',
     screenAlt: 'لوحة الوكيل في APEX تحصي مشاهدات الإعلانات ونقرات WhatsApp والمكالمات وزيارات المعرض',
+    dash: { title: 'لوحة الوكيل', range: '7 أيام · 30 يوماً', items: ['مشاهدات الإعلانات', 'نقرات WhatsApp', 'المكالمات', 'مرات الحفظ', 'زيارات المعرض', 'استخدام المزايا'] },
   },
   form: {
     h2: 'طلب شراكة.',
@@ -413,8 +426,8 @@ const ar: Copy = {
       name: 'اكتب اسمك.',
       type: 'اختر وكيلاً أو متجراً أو Ride Stop.',
       city: 'اكتب المدينة التي يقع فيها نشاطك.',
-      email: 'اكتب بريداً إلكترونياً يحتوي على @، مثل name@business.ae.',
-      phone: 'اكتب الرقم بالأرقام فقط، مثل ‎+971 50 123 4567.',
+      email: 'اكتب بريداً إلكترونياً يحتوي على @، مثل \u2066name@business.ae\u2069.',
+      phone: 'اكتب الرقم بالأرقام فقط، مثل \u2066+971 50 123 4567\u2069.',
     },
     button: 'أرسل طلب الشراكة',
     sending: 'جارٍ الإرسال',
@@ -424,20 +437,29 @@ const ar: Copy = {
     rate: 'طلبات كثيرة من هذا الاتصال. حاول مجدداً بعد عشر دقائق.',
     turnstile: 'لم يكتمل التحقق الأمني. أكمله مرة أخرى ثم أرسل.',
     unavailable: 'تعذّر إرسال الطلبات الآن. بياناتك ما زالت هنا، فحاول لاحقاً.',
-    photoAlt: 'سيارة رياضية متوقفة على الرمل عند الماء',
+    fallback: 'أو تواصل مع فريق الدعم (بالإنجليزية)',
+    photoAlt: 'سيارات خارقة على شارع الشيخ زايد عند الغروب',
     honeypot: 'اترك هذا الحقل فارغاً',
   },
   faq: {
     h2: 'أسئلة',
     line: 'ما يسأل عنه الراكبون والشركاء أولاً.',
-    link: 'اسأل فريق الدعم',
+    link: 'اسأل فريق الدعم (بالإنجليزية)',
+    install: {
+      title: 'التثبيت على Android في ثلاث خطوات',
+      steps: ['نزّل الملف. يحذّر Chrome من كل تطبيق من خارج متجر Play، فاختر «التنزيل على أي حال».', 'افتحه واسمح بالتثبيت. يحدث هذا مرة واحدة فقط.', 'افتح APEX وسجّل الدخول. وتصلك التحديثات تلقائياً.'],
+      link: 'خطوات Android كاملة',
+    },
     items: [
       {
         q: 'كيف أثبّت تطبيق APEX على Android؟',
         a: 'تطبيق APEX لأجهزة Android متاح بتنزيل مباشر وليس على Google Play. نزّل الملف من صفحة التنزيل، واسمح بالتثبيت مرة واحدة، ثم سجّل الدخول.',
       },
+      {
+        q: 'هل ملف تطبيق Android آمن للتثبيت؟',
+        a: 'إنه تطبيق APEX نفسه، يصلك دون متجر بينك وبينه. ويظهر تحذير Chrome لكل تطبيق يُثبَّت من خارج متجر Play.',
+      },
       { q: 'كم تكلّف عضوية APEX Member للراكبين؟', a: '‏49 درهماً شهرياً أو 399 درهماً سنوياً، والاشتراك من داخل تطبيق iPhone. وعلى Android، تحدّث إلى أحد المنظّمين.' },
-      { q: 'أين يعمل تطبيق APEX؟', a: 'صُنع APEX في دبي ويعمل في دول الخليج كافة.' },
       {
         q: 'ماذا يدفع الشركاء مقابل التطبيق؟',
         a: 'تدفع فقط على المبيعات لأعضاء APEX، وتُسجَّل حين يمسح العضو رمز QR. لا رسوم إدراج ولا رسوم شهرية.',
@@ -473,7 +495,7 @@ const ar: Copy = {
         title: 'المساعدة',
         links: [
           { label: 'التنزيل', href: '/ar/download' },
-          { label: 'الدعم', href: '/concierge' },
+          { label: 'الدعم (بالإنجليزية)', href: '/concierge' },
           { label: 'أسئلة', href: '#faq' },
         ],
       },

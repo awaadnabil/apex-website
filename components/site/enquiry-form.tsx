@@ -33,8 +33,15 @@ export function EnquiryForm({ c }: { c: Copy }) {
   const [busy, setBusy] = useState(false)
   // The status line is shared with system.js (it writes "n to fix" there), so it is written to directly,
   // never through React state: a React-owned text node would be replaced under React's feet.
-  const setStatus = (text: string) => {
-    if (statusRef.current) statusRef.current.textContent = text
+  const [failed, setFailed] = useState(false)
+  const setStatus = (text: string, error = false) => {
+    setFailed(error)
+    const el = statusRef.current
+    if (!el) return
+    el.textContent = text
+    // a failure is announced at once and shown in the error style; progress and success stay polite
+    el.setAttribute('role', error ? 'alert' : 'status')
+    el.dataset.state = error ? 'error' : text === f.sent ? 'sent' : ''
   }
 
   useEffect(() => {
@@ -83,7 +90,7 @@ export function EnquiryForm({ c }: { c: Copy }) {
     const phone = (data.phone ?? '').trim()
     if (phone && !/^[+0-9 ()-]{5,32}$/.test(phone)) {
       showFieldError('phone', f.errors.phone)
-      setStatus(f.fix.replace('{n}', '1'))
+      setStatus(f.fix.replace('{n}', '1'), true)
       ;(form.elements.namedItem('phone') as HTMLInputElement).focus()
       return
     }
@@ -127,17 +134,19 @@ export function EnquiryForm({ c }: { c: Copy }) {
           phone: f.errors.phone,
         }
         names.forEach((n) => showFieldError(n, map[n] ?? f.failed))
-        setStatus(f.fix.replace('{n}', String(names.length)))
+        setStatus(f.fix.replace('{n}', String(names.length)), true)
         ;(form.elements.namedItem(names[0]) as HTMLElement | null)?.focus()
         return
       }
-      if (res.status === 429) setStatus(f.rate)
-      else if (out.error === 'turnstile_failed' || out.error === 'turnstile_missing') setStatus(f.turnstile)
-      else if (res.status === 503) setStatus(f.unavailable)
-      else setStatus(f.failed)
+      // "tick it again" only makes sense when a Turnstile widget is on the page
+      const hasWidget = Boolean(widgetId.current)
+      if (res.status === 429) setStatus(f.rate, true)
+      else if (hasWidget && (out.error === 'turnstile_failed' || out.error === 'turnstile_missing')) setStatus(f.turnstile, true)
+      else if (res.status === 503 || res.status === 403) setStatus(f.unavailable, true)
+      else setStatus(f.failed, true)
     } catch {
       window.clearTimeout(wait)
-      setStatus(f.failed)
+      setStatus(f.failed, true)
     } finally {
       setBusy(false)
       if (widgetId.current && window.turnstile) window.turnstile.reset(widgetId.current)
@@ -190,6 +199,11 @@ export function EnquiryForm({ c }: { c: Copy }) {
       <div ref={tsRef} className="apx-turnstile" />
       <div className="btn-row"><button className="btn btn--primary" type="submit" disabled={busy} aria-busy={busy || undefined}>{f.button}</button></div>
       <p ref={statusRef} className="form__status" role="status" data-form-status />
+      {failed && (
+        <p className="apx-form__fallback">
+          <a className="link" href="/concierge" hrefLang="en">{f.fallback}</a>
+        </p>
+      )}
     </form>
   )
 }
