@@ -8,6 +8,7 @@
 // explicit mode; its token is single-use, so the widget is reset after every attempt.
 import { useEffect, useRef, useState } from 'react'
 import type { Copy } from '@/lib/site/content'
+import { toAsciiDigits } from '@/lib/site/digits'
 
 declare global {
   interface Window {
@@ -87,7 +88,7 @@ export function EnquiryForm({ c }: { c: Copy }) {
     const form = e.currentTarget
     const data = Object.fromEntries(new FormData(form).entries()) as Record<string, string>
 
-    const phone = (data.phone ?? '').trim()
+    const phone = toAsciiDigits(data.phone ?? '').trim()
     if (phone && !/^[+0-9 ()-]{5,32}$/.test(phone)) {
       showFieldError('phone', f.errors.phone)
       setStatus(f.fix.replace('{n}', '1'), true)
@@ -101,6 +102,7 @@ export function EnquiryForm({ c }: { c: Copy }) {
     try {
       const res = await fetch('/api/enquiry', {
         method: 'POST',
+        signal: AbortSignal.timeout(20_000),
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
           kind: 'partner',
@@ -155,10 +157,11 @@ export function EnquiryForm({ c }: { c: Copy }) {
 
   const L = f.labels
   return (
-    <form ref={formRef} className="form apx-form" onSubmit={onSubmit} noValidate data-fix={f.fix} lang={c.locale}>
+    <form ref={formRef} className="form apx-form" method="post" action="/api/enquiry" onSubmit={onSubmit} noValidate data-fix={f.fix} lang={c.locale}>
+      <noscript><p className="apx-form__noscript">{f.noscript}</p></noscript>
         <div className="field">
           <label htmlFor="pf-business_name">{L.business}</label>
-          <input id="pf-business_name" name="business_name" type="text" autoComplete="organization" required minLength={2} maxLength={160} aria-describedby="pf-business_name-err" />
+          <input id="pf-business_name" name="business_name" type="text" autoComplete="organization" enterKeyHint="next" required minLength={2} maxLength={160} aria-describedby="pf-business_name-err" />
           <p className="field__error" id="pf-business_name-err" hidden>{f.errors.business}</p>
         </div>
         <div className="field">
@@ -178,17 +181,17 @@ export function EnquiryForm({ c }: { c: Copy }) {
         </div>
         <div className="field">
           <label htmlFor="pf-city">{L.city}</label>
-          <input id="pf-city" name="city" type="text" autoComplete="address-level2" required minLength={2} maxLength={80} aria-describedby="pf-city-err" />
+          <input id="pf-city" name="city" type="text" autoComplete="address-level2" enterKeyHint="next" required minLength={2} maxLength={80} aria-describedby="pf-city-err" />
           <p className="field__error" id="pf-city-err" hidden>{f.errors.city}</p>
         </div>
         <div className="field">
           <label htmlFor="pf-email">{L.email}</label>
-          <input id="pf-email" name="email" type="email" inputMode="email" autoComplete="email" dir="ltr" required maxLength={254} aria-describedby="pf-email-err" />
+          <input id="pf-email" name="email" type="email" inputMode="email" autoComplete="email" autoCapitalize="none" autoCorrect="off" spellCheck={false} dir="ltr" required maxLength={254} aria-describedby="pf-email-err" />
           <p className="field__error" id="pf-email-err" hidden>{f.errors.email}</p>
         </div>
         <div className="field">
           <label htmlFor="pf-phone">{L.phone} <span className="muted">({L.optional})</span></label>
-          <input id="pf-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" dir="ltr" maxLength={32} aria-describedby="pf-phone-err" />
+          <input id="pf-phone" name="phone" type="tel" inputMode="tel" autoComplete="tel" enterKeyHint="send" dir="ltr" maxLength={32} aria-describedby="pf-phone-err" />
           <p className="field__error" id="pf-phone-err" hidden>{f.errors.phone}</p>
         </div>
       {/* honeypot: people never see or reach it; bots that fill it are dropped server-side */}

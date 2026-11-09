@@ -10,6 +10,24 @@ const SCRIPTS = ['/assets/system.js', '/assets/motion/motion.js', '/assets/layou
 
 export function KitScripts() {
   useEffect(() => {
+    // the kit labels its pause/play control in English; on Arabic pages say it in Arabic
+    let mo: MutationObserver | undefined
+    if (document.documentElement.lang === 'ar') {
+      const AR: Record<string, string> = { 'Pause animation': 'إيقاف الحركة مؤقتاً', 'Play animation': 'تشغيل الحركة' }
+      const fix = () =>
+        document.querySelectorAll<HTMLElement>('.loop-pause, .ui-pause').forEach((b) => {
+          const l = b.getAttribute('aria-label') ?? ''
+          if (AR[l]) { b.setAttribute('aria-label', AR[l]); b.title = AR[l] }
+        })
+      mo = new MutationObserver(fix)
+      mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['aria-label'] })
+    }
+    // a picture that fails to load (a deleted or renamed upload) keeps its box but is hidden, so its frame's
+    // lit ground shows instead of the browser's broken-image icon and raw alt text
+    const broken = (img: HTMLImageElement) => img.setAttribute('data-broken', '')
+    const onError = (e: Event) => { if (e.target instanceof HTMLImageElement) broken(e.target) }
+    document.addEventListener('error', onError, true)
+    document.querySelectorAll('img').forEach((img) => { if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) broken(img) })
     for (const src of SCRIPTS) {
       if (document.querySelector(`script[data-kit="${src}"]`)) continue
       const s = document.createElement('script')
@@ -18,6 +36,7 @@ export function KitScripts() {
       s.dataset.kit = src
       document.body.append(s)
     }
+    return () => { mo?.disconnect(); document.removeEventListener('error', onError, true) }
   }, [])
   return null
 }

@@ -38,6 +38,11 @@ const CONCIERGE_TOPICS = new Set([
 
 type FieldErrors = Record<string, string>;
 
+/** Eastern Arabic (٠-٩) and Persian (۰-۹) digits to ASCII, for phone numbers typed on Gulf keyboards. */
+function toAsciiDigits(s: string): string {
+  return s.replace(/[\u0660-\u0669]/g, (d) => String(d.charCodeAt(0) - 0x0660)).replace(/[\u06f0-\u06f9]/g, (d) => String(d.charCodeAt(0) - 0x06f0));
+}
+
 function str(v: unknown, max: number): string {
   return typeof v === 'string' ? v.normalize('NFC').trim().slice(0, max) : '';
 }
@@ -77,7 +82,7 @@ function validatePartner(b: Record<string, unknown>) {
     partner_type: str(b.partner_type, 20),
     city: str(b.city, 80),
     email: str(b.email, 254).toLowerCase(),
-    phone: str(b.phone, 32) || null,
+    phone: toAsciiDigits(str(b.phone, 32)) || null,
   };
   const errors: FieldErrors = {};
   if (row.business_name.length < 2) errors.business_name = 'required';

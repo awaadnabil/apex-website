@@ -366,8 +366,8 @@ html.m-enter .hero[data-enter] .hero__art { transition: scale 700ms var(--m-ease
     [dir="rtl"] .apx-spot__bar i { transform-origin: right center; }
     .apx-spot__row:nth-of-type(3) .apx-spot__bar i { animation-range: entry 34% cover 54%; }
     .apx-spot__row:nth-of-type(4) .apx-spot__bar i { animation-range: entry 38% cover 58%; }
-    .apx-spot__xp b { font-size: 0; }
-    .apx-spot__xp b::after {
+    .apx-spot[data-count="on"] .apx-spot__xp b { font-size: 0; }
+    .apx-spot[data-count="on"] .apx-spot__xp b::after {
       font-size: 13px;
       counter-reset: xp var(--xp);
       content: counter(xp);
@@ -382,3 +382,35 @@ html.m-enter .hero[data-enter] .hero__art { transition: scale 700ms var(--m-ease
 @keyframes apx-fill { from { transform: scaleX(0.08); } to { transform: none; } }
 @property --xp { syntax: "<integer>"; inherits: false; initial-value: 0; }
 @keyframes apx-count { from { --xp: 0; } to { --xp: var(--xp-to); } }
+
+.apx-form__noscript { grid-column: 1 / -1; color: var(--error-ink); }
+
+/* ---- break-ui: worst-case data */
+/* a picture that failed to load keeps its box; the frame's lit ground shows instead of a broken icon */
+img[data-broken] { visibility: hidden; }
+.frame--photo { background: radial-gradient(80% 70% at 50% 20%, rgb(0 200 200 / 0.14), transparent 70%), var(--ground-bg); }
+/* a phone's screen is dark before (or without) its picture; the chrome stays on the 5px edge */
+.apx-phone {
+  background:
+    linear-gradient(#050606, #050606) content-box,
+    linear-gradient(140deg, #eef5fa 0%, #8ea3b2 30%, #2a3238 55%, #a9bdc9 80%, #dbe7ef 100%) border-box;
+}
+/* long labels (fuller Arabic phrasing) never push a card past its panel */
+.apx-panel, .apx-dealerframe { container-type: inline-size; }
+.apx-share__btn, .apx-dash__grid li { min-width: 0; overflow-wrap: anywhere; }
+@container (max-width: 300px) { .apx-share__grid, .apx-dash__grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- mobile-native (Stage 5) */
+/* no gray flash on tap: every control already has its own :active press (motion layer) */
+html { -webkit-tap-highlight-color: transparent; }
+/* no 300ms double-tap wait; long-press never selects a control's label or opens the link callout */
+:is(a, button, [role="button"], summary, label, select) { touch-action: manipulation; }
+:is(.btn, .apx-badge, .nav__toggle, .nav__link, .loop-pause, .ui-pause) { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+/* edge to edge under the notch (viewport-fit=cover); the content keeps clear of it in landscape and in an
+   installed web app's status bar */
+.wrap { width: min(100% - 2 * max(var(--gut), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)), var(--container, 1280px)); }
+header.nav { padding-top: env(safe-area-inset-top, 0px); height: calc(var(--nav) + env(safe-area-inset-top, 0px)); }
+/* the kit's 32px pause disc keeps its look; its tap area grows to 44px */
+:is(.loop-pause, .ui-pause)::before { content: ""; position: absolute; inset: -6px; }
+/* /ar/download footer links: 44px wide as well as tall */
+.apx-sub__foot a { min-inline-size: 44px; justify-content: center; }

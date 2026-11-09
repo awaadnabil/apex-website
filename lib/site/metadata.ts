@@ -7,6 +7,8 @@ export const kitViewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
+  // the Android keyboard shrinks the layout like iOS does, so the phone bar and form react to it
+  interactiveWidget: 'resizes-content',
   colorScheme: 'dark',
   themeColor: '#080808',
 }

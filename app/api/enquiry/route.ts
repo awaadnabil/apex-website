@@ -3,6 +3,7 @@
 // edge function `enquiry-notify` with the shared secret. The function verifies Turnstile, inserts
 // with the service role and pushes to the owner. Vercel never holds the service role key.
 import { NextResponse, type NextRequest } from 'next/server'
+import { toAsciiDigits } from '@/lib/site/digits'
 
 export const runtime = 'nodejs'
 export const dynamic = 'force-dynamic'
@@ -21,7 +22,19 @@ const str = (v: unknown, max: number) => (typeof v === 'string' ? v.normalize('N
 const json = (status: number, body: Record<string, unknown>) =>
   NextResponse.json(body, { status, headers: { 'Cache-Control': 'no-store' } })
 
+// A form posted without JavaScript (no Turnstile token, so it cannot be accepted): say so plainly, keep the
+// visitor's typing (the back button returns to the filled form) and point at the concierge.
+function noScriptPage(ar: boolean) {
+  const html = ar
+    ? '<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>APEX</title><body style="background:#080808;color:#eef2f4;font:16px/1.7 system-ui;padding:48px 24px;max-width:560px;margin:auto"><h1 style="font-size:24px">لم يُرسَل الطلب</h1><p>يحتاج الإرسال إلى JavaScript. ارجع إلى الصفحة السابقة فبياناتك ما زالت هناك، وفعّل JavaScript ثم أرسل مجدداً.</p><p><a style="color:#00c8c8" href="/concierge">فريق الدعم (بالإنجليزية)</a></p></body></html>'
+    : '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>APEX</title><body style="background:#080808;color:#eef2f4;font:16px/1.6 system-ui;padding:48px 24px;max-width:560px;margin:auto"><h1 style="font-size:24px">Not sent</h1><p>Sending needs JavaScript. Go back (your details are still there), turn JavaScript on and send again.</p><p><a style="color:#00c8c8" href="/concierge">Reach the APEX concierge</a></p></body></html>'
+  return new NextResponse(html, { status: 400, headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } })
+}
+
 export async function POST(req: NextRequest) {
+  if (!(req.headers.get('content-type') ?? '').includes('application/json')) {
+    return noScriptPage((req.headers.get('referer') ?? '').includes('/ar'))
+  }
   let body: Record<string, unknown>
   try {
     body = await req.json()
@@ -49,7 +62,7 @@ export async function POST(req: NextRequest) {
       partner_type: str(body.partner_type, 20),
       city: str(body.city, 80),
       email: str(body.email, 254),
-      phone: str(body.phone, 32),
+      phone: toAsciiDigits(str(body.phone, 32)),
     }
     if ((payload.business_name as string).length < 2) fields.business_name = 'required'
     if ((payload.contact_name as string).length < 2) fields.contact_name = 'required'

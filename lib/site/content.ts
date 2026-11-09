@@ -30,6 +30,7 @@ export type Copy = {
   }
   appStoreAlt: string
   android: string
+  /** h1: 48 characters at most in either language (the collage hero's stress limit, kept by break-ui) */
   hero: { h1: string; lead: string; proof: string; artLabel: string; cardTitle: string; cardChip: string; cardLines: [string, string, string] }
   rides: { h2: string; h2m: string; body: string; facts: string[]; link: string; artLabel: string }
   xp: {
@@ -72,6 +73,7 @@ export type Copy = {
     turnstile: string
     unavailable: string
     fallback: string
+    noscript: string
     photoAlt: string
     honeypot: string
   }
@@ -228,6 +230,7 @@ const en: Copy = {
     turnstile: 'The security check did not pass. Tick it again, then send.',
     unavailable: "Enquiries can't be sent right now. Your details are still here, so try again later.",
     fallback: 'Or reach the APEX concierge',
+    noscript: 'Sending this form needs JavaScript. Turn it on, or reach the APEX concierge.',
     photoAlt: 'Supercars driving on Sheikh Zayed Road at dusk',
     honeypot: 'Leave this empty',
   },
@@ -438,6 +441,7 @@ const ar: Copy = {
     turnstile: 'لم يكتمل التحقق الأمني. أكمله مرة أخرى ثم أرسل.',
     unavailable: 'تعذّر إرسال الطلبات الآن. بياناتك ما زالت هنا، فحاول لاحقاً.',
     fallback: 'أو تواصل مع فريق الدعم (بالإنجليزية)',
+    noscript: 'يحتاج إرسال هذا النموذج إلى JavaScript. فعّله، أو تواصل مع فريق الدعم.',
     photoAlt: 'سيارات خارقة على شارع الشيخ زايد عند الغروب',
     honeypot: 'اترك هذا الحقل فارغاً',
   },

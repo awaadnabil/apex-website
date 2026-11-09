@@ -8,6 +8,18 @@
 // letters-assemble (#partners). The page is a stack of screens: hero, rides, xp, market, card,
 // partners, partner, faq, footer.closing.
 import { APP_STORE_URL, type Copy } from '@/lib/site/content'
+
+/** Every picture the page shows, by base name under /img (photos: -640/-1280.webp; screens: -360/-720.webp). */
+export const MEDIA = {
+  heroScreen: 'screen-fly',
+  ridesA: 'screen-home',
+  ridesB: 'screen-ridecard',
+  marketScreen: 'screen-market',
+  marketPhoto: 'standin-riders-mountain', // stand-in: replace with a real APEX photograph
+  cardPhoto: 'standin-night-meet', // stand-in: replace with a real APEX photograph of a Ride Stop
+  formPhoto: 'standin-convoy', // stand-in: replace with a real APEX photograph at a partner
+}
+export type Media = typeof MEDIA
 import { EnquiryForm } from './enquiry-form'
 
 const Arrow = () => (
@@ -69,8 +81,12 @@ function Phone({
   )
 }
 
-export function Home({ c }: { c: Copy }) {
+export function Home({ c, media: m = MEDIA }: { c: Copy; media?: Media }) {
   const ar = c.locale === 'ar'
+  // the Spotlight bars are drawn against the week's top score; figures in the page's locale (Western digits,
+  // as UAE apps print them), with separators
+  const topXp = Math.max(1, ...c.xp.spotlight.rows.map((r) => r.xp))
+  const fmt = new Intl.NumberFormat(ar ? 'ar-AE-u-nu-latn' : 'en-AE')
   return (
     <>
       <header className="nav nav--centre">
@@ -125,7 +141,7 @@ export function Home({ c }: { c: Copy }) {
             </div>
             <div className="hero__art span-6 start-7" role="img" aria-label={c.hero.artLabel} data-fx="grain-gradient" data-fx-params='{"drift":0}'>
               <div className="ly-piece ly-piece--main apx-hero-phone" aria-hidden="true">
-                <Phone name="screen-fly" alt="" priority ping={{ x: 49.6, y: 47.8 }} />
+                <Phone name={m.heroScreen} alt="" priority ping={{ x: 49.6, y: 47.8 }} />
               </div>
               <div className="ly-piece ly-piece--note d-card apx-glass apx-note" aria-hidden="true" data-ly-steps="600">
                 <div className="d-card__row"><h5>{c.hero.cardTitle}</h5><span className="d-chip" data-step data-step-at="3"><bdi dir="ltr">{c.hero.cardChip}</bdi></span></div>
@@ -148,8 +164,8 @@ export function Home({ c }: { c: Copy }) {
                 <p><a className="link" href={c.download}>{c.rides.link}<Arrow /></a></p>
               </div>
               <div className="frame frame--split frame--lit span-6 start-7 apx-duo" role="img" aria-label={c.rides.artLabel}>
-                <Phone name="screen-home" alt="" className="apx-duo__a" />
-                <Phone name="screen-ridecard" alt="" className="apx-duo__b" />
+                <Phone name={m.ridesA} alt="" className="apx-duo__a" />
+                <Phone name={m.ridesB} alt="" className="apx-duo__b" />
               </div>
             </div>
           </div>
@@ -178,13 +194,13 @@ export function Home({ c }: { c: Copy }) {
                 <h3>{c.xp.cards[1].title}</h3>
                 <p>{c.xp.cards[1].body}</p>
                 <div className="panel apx-panel" role="img" aria-label={`${c.xp.spotlight.head}: ${c.xp.spotlight.rows.map((r) => `${r.rank}, ${r.xp} XP`).join('; ')}`}>
-                  <div className="d-card apx-glass apx-spot" aria-hidden="true">
+                  <div className="d-card apx-glass apx-spot" aria-hidden="true" data-count={topXp < 1000 ? 'on' : 'off'}>
                     <div className="d-card__row"><h5>{c.xp.spotlight.head}</h5><span className="apx-spot__week">{c.xp.spotlight.week}</span></div>
                     {c.xp.spotlight.rows.map((r, i) => (
-                      <div className="apx-spot__row" key={r.rank} style={{ ['--v' as string]: `${Math.round((r.xp / 200) * 100)}%`, ['--i' as string]: i }}>
+                      <div className="apx-spot__row" key={r.rank} style={{ ['--v' as string]: `${Math.max(4, Math.round((r.xp / topXp) * 100))}%`, ['--i' as string]: i }}>
                         <span className="apx-spot__rank">{r.rank}</span>
                         <span className="apx-spot__bar"><i /></span>
-                        <span className="apx-spot__xp" style={{ ['--xp-to' as string]: r.xp }}><b data-xp={r.xp}>{r.xp}</b> {c.xp.spotlight.unit}</span>
+                        <span className="apx-spot__xp" style={{ ['--xp-to' as string]: r.xp }}><b data-xp={r.xp}>{fmt.format(r.xp)}</b> {c.xp.spotlight.unit}</span>
                       </div>
                     ))}
                   </div>
@@ -224,8 +240,8 @@ export function Home({ c }: { c: Copy }) {
               {/* stand-in: replace with a real APEX photograph */}
               <img
                 className="frame__img"
-                src="/img/standin-riders-mountain-1280.webp"
-                srcSet="/img/standin-riders-mountain-640.webp 640w, /img/standin-riders-mountain-1280.webp 1280w"
+                src={`/img/${m.marketPhoto}-1280.webp`}
+                srcSet={`/img/${m.marketPhoto}-640.webp 640w, /img/${m.marketPhoto}-1280.webp 1280w`}
                 sizes="(max-width: 639px) 800px, (max-width: 1279px) 100vw, 1280px"
                 alt={c.market.photoAlt}
                 width={1280}
@@ -235,7 +251,7 @@ export function Home({ c }: { c: Copy }) {
                 data-source="library"
                 data-subject="riders and sport bikes"
               />
-              <Phone name="screen-market" alt={c.market.screenAlt} className="apx-wide__phone" />
+              <Phone name={m.marketScreen} alt={c.market.screenAlt} className="apx-wide__phone" />
             </div>
             <div className="grid apx-names">
               {c.market.names.map((n) => (
@@ -262,8 +278,8 @@ export function Home({ c }: { c: Copy }) {
                 {/* stand-in: replace with a real APEX photograph of a Ride Stop */}
                 <img
                   className="frame__img"
-                  src="/img/standin-night-meet-1280.webp"
-                  srcSet="/img/standin-night-meet-640.webp 640w, /img/standin-night-meet-1280.webp 1280w"
+                  src={`/img/${m.cardPhoto}-1280.webp`}
+                  srcSet={`/img/${m.cardPhoto}-640.webp 640w, /img/${m.cardPhoto}-1280.webp 1280w`}
                   sizes="(max-width: 639px) 1200px, (max-width: 1023px) 100vw, 1120px"
                   alt={c.card.photoAlt}
                   width={1280}
@@ -291,6 +307,7 @@ export function Home({ c }: { c: Copy }) {
           className="section ground-inverse"
           id="partners"
           aria-labelledby="partners-h"
+          style={{ ['--hm' as string]: 2 }}
           // letters-assemble splits a statement into one box per letter, which breaks Arabic joining: on /ar the
           // statement stands as written (the moment's own rest state).
           data-moment={ar ? undefined : 'letters-assemble'}
@@ -337,8 +354,8 @@ export function Home({ c }: { c: Copy }) {
                 {/* stand-in: replace with a real APEX photograph at a partner */}
                 <img
                   className="frame__img"
-                  src="/img/standin-convoy-1280.webp"
-                  srcSet="/img/standin-convoy-640.webp 640w, /img/standin-convoy-1280.webp 1280w"
+                  src={`/img/${m.formPhoto}-1280.webp`}
+                  srcSet={`/img/${m.formPhoto}-640.webp 640w, /img/${m.formPhoto}-1280.webp 1280w`}
                   sizes="(max-width: 639px) 1200px, (max-width: 1023px) 100vw, 1120px"
                   alt={c.form.photoAlt}
                   width={1280}
