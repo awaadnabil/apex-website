@@ -25,6 +25,7 @@ const particleVertex = /* glsl */ `
   uniform float time;
   uniform float pixelRatio;
   uniform float size;
+  uniform vec3 attract;
   varying float vSeed;
   varying float vFade;
   void main() {
@@ -33,6 +34,9 @@ const particleVertex = /* glsl */ `
     p.x += sin(t + seed * 6.2831) * 0.45;
     p.y += cos(t * 0.8 + seed * 12.566) * 0.3;
     p.z += sin(t * 0.6 + seed * 3.14) * 0.35;
+    // a gentle pull toward the cursor, strongest near it, never more than ~0.3 units
+    vec2 toward = attract.xy - p.xy;
+    p.xy += toward * 0.18 * exp(-dot(toward, toward) * 0.35) * attract.z;
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * mv;
     float depth = -mv.z;
@@ -57,8 +61,9 @@ const particleFragment = /* glsl */ `
   }
 `
 
-function Particles({ count, reduced }: { count: number; reduced: boolean }) {
+function Particles({ count, reduced, signals, follow }: { count: number; reduced: boolean; signals: StageSignals; follow: boolean }) {
   const pixelRatio = useThree((s) => s.viewport.dpr)
+  const viewport = useThree((s) => s.viewport)
   const { positions, seeds } = useMemo(() => {
     const positions = new Float32Array(count * 3)
     const seeds = new Float32Array(count)
@@ -78,9 +83,17 @@ function Particles({ count, reduced }: { count: number; reduced: boolean }) {
     size: { value: 2.2 },
     ink: { value: INK },
     teal: { value: TEAL },
+    attract: { value: new THREE.Vector3(0, 0, 0) },
   }), [pixelRatio])
-  useFrame(({ clock }) => {
-    if (!reduced) uniforms.time.value = clock.elapsedTime
+  useFrame(({ clock }, delta) => {
+    if (reduced) return
+    uniforms.time.value = clock.elapsedTime
+    const target = uniforms.attract.value
+    // ease toward the pointer (spring.soft feel) on the z = 0 plane; z carries the pull's strength
+    const k = 1 - Math.exp(-delta * 4)
+    target.x += (signals.pointer.x * viewport.width * 0.5 - target.x) * k
+    target.y += (-signals.pointer.y * viewport.height * 0.5 - target.y) * k
+    target.z += ((follow ? 1 : 0) - target.z) * k
   })
   return (
     <points frustumCulled={false}>
@@ -210,7 +223,7 @@ export default function HeroScene({
         <Lightformer form="ring" intensity={2} color="#00c8c8" position={[4, -2, 3]} scale={2} />
         <Lightformer form="rect" intensity={1.2} color="#9aa4ab" position={[0, -5, 0]} rotation-x={-Math.PI / 2} scale={[10, 10, 1]} />
       </Environment>
-      <Particles count={count} reduced={tier === 0} />
+      <Particles count={count} reduced={tier === 0} signals={signals} follow={!mobile} />
       <ChromeForms mobile={mobile} />
       <CameraRig signals={signals} parallax={!mobile} />
       {tier === 2 && !mobile && (
