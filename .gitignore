@@ -20,3 +20,11 @@ tsconfig.tsbuildinfo
 .taste-skill/chrome-*
 .taste-skill/shots/
 shots/
+.playwright-mcp/
+.taste-skill/gate/
+.taste-skill/gate.json
+.taste-skill/gate-blocks.json
+.taste-skill/build.json
+.taste-skill/*.txt
+.taste-skill/gate-hook-missing.txt
+.taste-skill/build.done.json

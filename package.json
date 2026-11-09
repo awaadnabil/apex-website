@@ -27,6 +27,9 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "postcss": "^8.5",
+    "qrcode": "1.5.4",
+    "rtlcss": "4.3.0",
+    "sharp": "0.34.4",
     "tailwindcss": "^4.2.0",
     "typescript": "5.7.3"
   },

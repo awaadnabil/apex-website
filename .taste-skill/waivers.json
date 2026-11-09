@@ -1,0 +1,17 @@
+[
+  {
+    "check": "copy-headings",
+    "target": "You only pay on member sales",
+    "reason": "The owner's exact required wording for the partner promise (Stage 1 answer 3: use \"You only pay on member sales\"); the brief wins over the heading-noun rule. The line under it names dealers, shops and Ride Stops."
+  },
+  {
+    "check": "scroll-reveal",
+    "target": "div.closing__cta.close--word > div.section-head--split > div.btn-row > a.btn.btn--secondary",
+    "reason": "False positive: measured with Playwright, scrolling the button into view with the pointer away starts no transition; only a real hover starts the kit motion layer's 0.12s colour/border/transform step. The checker's resting pointer lands on the button."
+  },
+  {
+    "check": "section-gaps",
+    "target": "main#top > section.hero.hero--collage / section#rides",
+    "reason": "At 390 the dealt collage hero ends its art at H-24 exactly as layout-v4 specifies (kit demo measures the same 342x256 visual at y 564); the median is set by phone sections that grow with their content per the kit. Closing this gap would cut the hero art under the kit's 220px minimum."
+  }
+]

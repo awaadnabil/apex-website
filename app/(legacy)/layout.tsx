@@ -1,7 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Syne } from 'next/font/google'
-import './globals.css'
+import '../globals.css'
 
 const syne = Syne({
   variable: '--font-syne',
@@ -19,7 +19,6 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   colorScheme: 'dark',
   themeColor: '#080808',
-  userScalable: false,
 }
 
 export default function RootLayout({
