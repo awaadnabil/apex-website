@@ -1,0 +1,27 @@
+html.apex-smooth-scroll {
+  scroll-behavior: auto !important;
+}
+
+html.apex-smooth-scroll.lenis-stopped {
+  overflow: hidden;
+}
+
+[data-apex-motion-target]:focus-within {
+  opacity: 1 !important;
+  filter: none !important;
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.apex-smooth-scroll {
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  [data-apex-motion-target] {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+  }
+}
