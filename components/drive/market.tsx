@@ -158,6 +158,7 @@ export function Market() {
       <div
         role="region"
         aria-roledescription="carousel"
+        dir="ltr"
         aria-label={t.market.label}
         tabIndex={0}
         onKeyDown={(e) => {

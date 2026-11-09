@@ -200,11 +200,11 @@
    Latin-only pieces (wordmark, store names) opt out with lang="en".
    Letter-spacing is reset because tracking breaks Arabic letter joining. */
 .drive[lang='ar'] :is(.font-display, .font-body, .font-mono):not(:lang(en)) {
-  font-family: var(--font-arabic);
+  font-family: var(--font-plex-arabic), sans-serif;
   letter-spacing: 0;
 }
 .drive[lang='ar'] {
-  font-family: var(--font-arabic);
+  font-family: var(--font-plex-arabic), sans-serif;
 }
 
 .drive ::selection {
