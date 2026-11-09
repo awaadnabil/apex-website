@@ -6,6 +6,7 @@ import { dmMono, outfit } from '@/lib/site/fonts'
 import { Analytics } from '@vercel/analytics/next'
 import type { Locale } from '@/lib/site/content'
 import { KitScripts } from './kit-scripts'
+import { MotionFoundation } from './motion-foundation'
 
 
 import { readFileSync } from 'node:fs'
@@ -85,6 +86,7 @@ export function KitDocument({
       <body suppressHydrationWarning>
         {children}
         <KitScripts />
+        <MotionFoundation />
         {/* Vercel serves /_vercel/insights only on its own deployments; locally the script would 404 */}
         {process.env.VERCEL === '1' && <Analytics />}
       </body>
