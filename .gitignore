@@ -15,3 +15,8 @@ node_modules
 .DS_Store
 .vercel
 tsconfig.tsbuildinfo
+
+# design-taste-frontend working files
+.taste-skill/chrome-*
+.taste-skill/shots/
+shots/
