@@ -13,8 +13,9 @@
 | Before | After |
 |---|---|
 | `/` | 200, rebuilt |
-| — | `/ar` 200, `/ar/download` 200 (new) |
-| `/download`, `/privacy`, `/terms` | 200; text identical, source byte-identical |
+| — | `/ar` 200, `/ar/download` 200 (new; same 2.6.0 APK) |
+| `/download` | 200; only change, by owner request: the Android button now links to the 2.6.0 APK, labelled "Download for Android (APK)", with the note "Allow installs from this source when prompted." |
+| `/privacy`, `/terms` | 200; text identical, source byte-identical |
 | `/concierge` | 200; form really delivers |
 | `/c/[code]`, `/drive/[id]` (+OG), `/join/[ref]`, `/l/[id]`, `/.well-known/*` | 200, unchanged |
 | — | `/partner` → 308 `/#partner`; `/dev/break-ui` 404 in production |

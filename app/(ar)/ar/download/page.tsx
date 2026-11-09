@@ -1,11 +1,11 @@
 // /ar/download: the Arabic version of /download. The same facts, the same App Store link and the same
-// APK (NEXT_PUBLIC_APK_URL, else the GitHub release), translated, in true RTL on the kit.
+// APK (the 2.6.0 GitHub release), translated, in true RTL on the kit.
 import type { Metadata } from 'next'
 import { APP_STORE_URL, COPY } from '@/lib/site/content'
 import { SITE_URL, kitViewport } from '@/lib/site/metadata'
 
-const APK_URL =
-  process.env.NEXT_PUBLIC_APK_URL ?? 'https://github.com/awaadnabil/apex-releases/releases/latest/download/apex.apk'
+// The same APK as /download: the 2.6.0 GitHub release (owner, 2026-11-09).
+const APK_URL = 'https://github.com/awaadnabil/apex-website/releases/download/android-2.6.0/APEX-2.6.0.apk'
 
 const STEPS = [
   {
@@ -80,8 +80,9 @@ export default function ArabicDownload() {
                 <h2>Android</h2>
                 <p>‏APEX غير متوفر على متجر Play. ثبّته مباشرةً من هنا، فهو التطبيق نفسه دون متجر بينك وبينه.</p>
                 <div className="btn-row">
-                  <a className="btn btn--primary" href={APK_URL}>{c.android}</a>
+                  <a className="btn btn--primary" href={APK_URL}>نزّل لأجهزة Android ‏(APK)</a>
                 </div>
+                <p className="muted">اسمح بالتثبيت من هذا المصدر عند ظهور الطلب.</p>
                 <ol className="apx-steps">
                   {STEPS.map((s) => (
                     <li key={s.n}>

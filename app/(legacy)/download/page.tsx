@@ -6,13 +6,8 @@ import { ApexButton } from '@/components/apex-button'
 
 const APP_STORE_URL = 'https://apps.apple.com/app/apex-mena/id6773114294'
 
-/**
- * Point this at wherever the signed APK lives. EAS artifact URLs expire —
- * Supabase Storage or any static host is the durable choice.
- */
-const APK_URL =
-  process.env.NEXT_PUBLIC_APK_URL ??
-  'https://github.com/awaadnabil/apex-releases/releases/latest/download/apex.apk'
+// The Android APK: the 2.6.0 GitHub release (owner, 2026-11-09). Fixed here so no env value can redirect it.
+const APK_URL = 'https://github.com/awaadnabil/apex-website/releases/download/android-2.6.0/APEX-2.6.0.apk'
 
 const ANDROID_STEPS = [
   {
@@ -95,8 +90,11 @@ export default function DownloadPage() {
           </p>
           <div className="mt-8">
             <ApexButton href={APK_URL} variant="white">
-              Download for Android
+              Download for Android (APK)
             </ApexButton>
+            <p className="mt-4 text-[13px] leading-relaxed text-white/55">
+              Allow installs from this source when prompted.
+            </p>
           </div>
 
           <div className="mt-14 flex flex-col gap-8">
