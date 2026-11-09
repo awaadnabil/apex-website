@@ -43,6 +43,12 @@ export function EnquiryForm({ c }: { c: Copy }) {
     // a failure is announced at once and shown in the error style; progress and success stay polite
     el.setAttribute('role', error ? 'alert' : 'status')
     el.dataset.state = error ? 'error' : text === f.sent ? 'sent' : ''
+    // after a failed send, focus lands on the message (not on <body>), so keyboard and screen-reader users
+    // are where the problem is explained
+    if (error && !el.closest('form')?.querySelector('[aria-invalid="true"]')) {
+      el.tabIndex = -1
+      el.focus({ preventScroll: false })
+    }
   }
 
   useEffect(() => {

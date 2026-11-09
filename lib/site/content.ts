@@ -225,7 +225,7 @@ const en: Copy = {
     sending: 'Sending',
     sent: 'Your partner enquiry is in. The APEX team will contact you.',
     failed: "That didn't send. Your details are still here, so try again.",
-    fix: '{n} to fix.',
+    fix: '{n} fields to fix.',
     rate: 'Too many enquiries from this connection. Try again in ten minutes.',
     turnstile: 'The security check did not pass. Tick it again, then send.',
     unavailable: "Enquiries can't be sent right now. Your details are still here, so try again later.",

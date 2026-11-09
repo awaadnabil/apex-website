@@ -15,9 +15,12 @@ export function KitScripts() {
     if (document.documentElement.lang === 'ar') {
       const AR: Record<string, string> = { 'Pause animation': 'إيقاف الحركة مؤقتاً', 'Play animation': 'تشغيل الحركة' }
       const fix = () =>
-        document.querySelectorAll<HTMLElement>('.loop-pause, .ui-pause').forEach((b) => {
+        document.querySelectorAll<HTMLElement>('.loop-pause, .ui-pause, header.nav [aria-label]').forEach((b) => {
           const l = b.getAttribute('aria-label') ?? ''
           if (AR[l]) { b.setAttribute('aria-label', AR[l]); b.title = AR[l] }
+          // the kit names a nav word's menu button "Show <word> links"
+          const m = l.match(/^(Show|Hide) (.+) links$/)
+          if (m) b.setAttribute('aria-label', `${m[1] === 'Show' ? 'إظهار' : 'إخفاء'} روابط ${m[2]}`)
         })
       mo = new MutationObserver(fix)
       mo.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['aria-label'] })
