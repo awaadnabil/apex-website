@@ -35,9 +35,23 @@ function StoreBadge({ c, id }: { c: Copy; id?: string }) {
 }
 
 /** A phone: the real App Store screen inside a drawn device edge (the screenshot is never mirrored). */
-function Phone({ name, alt, className = '', priority = false }: { name: string; alt: string; className?: string; priority?: boolean }) {
+function Phone({
+  name,
+  alt,
+  className = '',
+  priority = false,
+  ping,
+}: {
+  name: string
+  alt: string
+  className?: string
+  priority?: boolean
+  /** a live-location ping drawn over the screen's own map marker, in % of the screen */
+  ping?: { x: number; y: number }
+}) {
   return (
     <div className={`apx-phone ${className}`} dir="ltr">
+      {ping && <span className="apx-ping" style={{ ['--px' as string]: ping.x / 100, ['--py' as string]: ping.y / 100 }} aria-hidden="true" />}
       <img
         src={`/img/${name}-720.webp`}
         srcSet={`/img/${name}-360.webp 360w, /img/${name}-720.webp 720w`}
@@ -111,7 +125,7 @@ export function Home({ c }: { c: Copy }) {
             </div>
             <div className="hero__art span-6 start-7" role="img" aria-label={c.hero.artLabel} data-fx="grain-gradient" data-fx-params='{"drift":0}'>
               <div className="ly-piece ly-piece--main apx-hero-phone" aria-hidden="true">
-                <Phone name="screen-fly" alt="" priority />
+                <Phone name="screen-fly" alt="" priority ping={{ x: 49.6, y: 47.8 }} />
               </div>
               <div className="ly-piece ly-piece--note d-card apx-glass apx-note" aria-hidden="true" data-ly-steps="600">
                 <div className="d-card__row"><h5>{c.hero.cardTitle}</h5><span className="d-chip" data-step data-step-at="3"><bdi dir="ltr">{c.hero.cardChip}</bdi></span></div>
@@ -170,7 +184,7 @@ export function Home({ c }: { c: Copy }) {
                       <div className="apx-spot__row" key={r.rank} style={{ ['--v' as string]: `${Math.round((r.xp / 200) * 100)}%`, ['--i' as string]: i }}>
                         <span className="apx-spot__rank">{r.rank}</span>
                         <span className="apx-spot__bar"><i /></span>
-                        <span className="apx-spot__xp"><b data-xp={r.xp}>{r.xp}</b> {c.xp.spotlight.unit}</span>
+                        <span className="apx-spot__xp" style={{ ['--xp-to' as string]: r.xp }}><b data-xp={r.xp}>{r.xp}</b> {c.xp.spotlight.unit}</span>
                       </div>
                     ))}
                   </div>

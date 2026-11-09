@@ -45,7 +45,7 @@ html[data-ground="apex"] {
 /* ---- the App Store badge: Apple's own artwork at the button height, answering the pointer like a button */
 .apx-badge { display: inline-flex; height: 44px; border-radius: 9px; transition: transform var(--dur, 160ms) var(--ease, ease); }
 .apx-badge img { height: 44px; width: auto; display: block; }
-.apx-badge:hover { transform: translateY(-1px); }
+@media (hover: hover) and (pointer: fine) { .apx-badge:hover { transform: translateY(-1px); } }
 .apx-badge:active { transform: translateY(0) scale(0.98); }
 .apx-badge:focus-visible { outline: 2px solid var(--action); outline-offset: 3px; }
 @media (max-width: 639px) { .btn-row:has(.apx-badge) { align-items: stretch; } .apx-badge { justify-content: center; } }
@@ -299,7 +299,11 @@ header.nav .nav__menu { background: rgb(10 12 14 / 0.86); -webkit-backdrop-filte
 .form__status[data-state="sent"] { color: var(--app-teal-hi); }
 .apx-form__fallback { grid-column: 1 / -1; }
 /* the phone bar steps aside while a visitor is typing in a form */
-@media (max-width: 639px) { body:has(form :focus) > nav.actionbar { translate: 0 110%; } }
+@media (max-width: 639px) {
+  nav.actionbar { transition: translate 240ms var(--ease); }
+  body:has(form :focus) > nav.actionbar { translate: 0 110%; }
+}
+@media (prefers-reduced-motion: reduce) { nav.actionbar { transition: none; } }
 
 /* ---- the close: the badge and the Android pill as one pair, never a wide pill beside a small badge */
 @media (max-width: 639px) {
@@ -316,3 +320,65 @@ header.nav .nav__menu { background: rgb(10 12 14 / 0.86); -webkit-backdrop-filte
 ::selection { background: rgb(0 200 200 / 0.35); color: #fff; }
 :root { accent-color: var(--app-teal); caret-color: var(--app-teal); scrollbar-color: #2a3238 var(--p-bg); }
 @media (min-width: 640px) and (max-width: 1023px) { .apx-wide { aspect-ratio: 16 / 9; } }
+
+/* ================================================================ motion (Stage 4)
+   review-animations: never delay what the visitor watches most. The hero's words stand from the first
+   paint; only its picture enters (kit motion layer), and a little faster than the kit's 1.1 s. */
+html.m-enter .hero :is(h1, .hero__lead, .btn-row, .hero__proof),
+html.m-enter .hero :is(h1, .hero__lead, .btn-row, .hero__proof) * { opacity: 1 !important; transform: none !important; }
+html.m-enter .hero[data-enter] .hero__art { transition: scale 700ms var(--m-ease-enter, cubic-bezier(0.23, 1, 0.32, 1)) !important; }
+
+/* Live tracking: FLY's own map marker pings three times when the page opens, then rests (under 5 s, so no
+   pause control is needed). Transform and opacity only. */
+.apx-ping { position: absolute; z-index: 2; width: 0; height: 0; left: calc(5px + (100% - 10px) * var(--px)); top: calc(5px + (100% - 10px) * var(--py)); }
+.apx-ping::before, .apx-ping::after { content: ""; position: absolute; inset: -9px; border-radius: 50%; border: 2px solid var(--app-teal); opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .apx-ping::before, .apx-ping::after { animation: apx-ping 1.5s cubic-bezier(0.23, 1, 0.32, 1) 3 both; }
+  .apx-ping::after { animation-delay: 0.3s; }
+}
+@keyframes apx-ping { 0% { opacity: 0.9; transform: scale(0.6); } 100% { opacity: 0; transform: scale(3.2); } }
+
+/* Scroll transitions (owner direction, 2026-11-09), CSS scroll-driven only. Every picture is whole and in
+   place at rest: the animation starts from a visible state, only moves (never hides), and is absent where
+   scroll timelines are unsupported or motion is reduced. Text never moves with the scroll. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* the phones rise and settle into their frames as each section comes in */
+    .frame.apx-duo > .apx-phone, .frame.apx-wide > .apx-wide__phone {
+      animation: apx-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 40%;
+    }
+    .frame.apx-duo > .apx-duo__b { animation-range: entry 20% cover 48%; }
+    /* the APEX Card and the dealer dashboard lift off their photograph and glow */
+    .frame.apx-cardframe > .apx-qr, .apx-dealerframe > .apx-dash {
+      animation: apx-lift linear both;
+      animation-timeline: view();
+      animation-range: entry 15% cover 45%;
+    }
+    /* XP climbing: the Spotlight bars fill and their figures count up as the card comes into view */
+    .apx-spot__bar i {
+      transform-origin: left center;
+      animation: apx-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 50%;
+    }
+    [dir="rtl"] .apx-spot__bar i { transform-origin: right center; }
+    .apx-spot__row:nth-of-type(3) .apx-spot__bar i { animation-range: entry 34% cover 54%; }
+    .apx-spot__row:nth-of-type(4) .apx-spot__bar i { animation-range: entry 38% cover 58%; }
+    .apx-spot__xp b { font-size: 0; }
+    .apx-spot__xp b::after {
+      font-size: 13px;
+      counter-reset: xp var(--xp);
+      content: counter(xp);
+      animation: apx-count linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 50%;
+    }
+  }
+}
+@keyframes apx-settle { from { transform: translateY(56px) scale(0.97); } to { transform: none; } }
+@keyframes apx-lift { from { transform: translateY(28px); } to { transform: none; } }
+@keyframes apx-fill { from { transform: scaleX(0.08); } to { transform: none; } }
+@property --xp { syntax: "<integer>"; inherits: false; initial-value: 0; }
+@keyframes apx-count { from { --xp: 0; } to { --xp: var(--xp-to); } }
