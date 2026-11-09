@@ -1,0 +1,442 @@
+/* APEX page CSS: only what sits inside a visual and the kit lacks (design-taste-frontend: "page CSS").
+   Logical properties throughout, so /ar mirrors through dir="rtl" with the kit's generated RTL copies. */
+
+/* The lit ground: the kit's are daylight tints (sand, sky, sage); APEX's is the deep teal-black of its
+   App Store artwork, used behind UI frames and in footer-statement. */
+/* The app's own UI colours, for the pieces of APEX UI drawn as live HTML (they depict the app, so they
+   do not follow the page's grounds). */
+:root {
+  --app-card: #121518;
+  --app-ink: #eef2f4;
+  --app-muted: #9aa4ab;
+  --app-faint: #b9c2c8;
+  --app-teal: #00c8c8;
+  --app-teal-hi: #2fe0e0;
+  --app-teal-lo: #00a3a3;
+  --app-line: rgb(255 255 255 / 0.07);
+  --app-fill: rgb(255 255 255 / 0.06);
+  --error-ink: #ff8a7a;
+}
+
+html[data-ground="apex"] {
+  --ground-bg: #0b1a1c;
+  --ground-surface: #10252a;
+  --ground-ink: #eef2f4;
+  --ground-muted: #a3b6ba;
+  --ground-accent: #00c8c8;
+}
+
+/* Arabic: never tracked (negative tracking pulls joined letters apart), a taller line for the script's
+   ascenders and dots, and the Latin brand words inside it keep Outfit. */
+:root:lang(ar) { --display-tracking: 0; --display-tracking-xl: 0; }
+:lang(ar) :is(h1, h2, h3, .mo-la__type, .close__word, .hero__lead, .t-lead) { letter-spacing: 0; }
+:lang(ar) :is(h1, h2) { line-height: 1.3; }
+:lang(ar) .mo-la__type { line-height: 1.25; }
+:lang(ar) body { line-height: 1.75; }
+[dir="rtl"] .m-arrow, [dir="rtl"] .link::after { transform: scaleX(-1); }
+[dir="rtl"] .link:hover::after { transform: scaleX(-1) translateX(3px); }
+
+/* ---- logo: the client's chrome peak and its own wordmark (never retyped) */
+.nav__logo { display: inline-flex; align-items: center; gap: 10px; }
+.nav__logo .apx-peak { height: 26px; width: auto; }
+.nav__logo .apx-wordmark { height: 10px; width: auto; }
+@media (max-width: 639px) { .nav__logo .apx-peak { height: 22px; } .nav__logo .apx-wordmark { height: 9px; } }
+
+/* ---- the App Store badge: Apple's own artwork at the button height, answering the pointer like a button */
+.apx-badge { display: inline-flex; height: 44px; border-radius: 9px; transition: transform var(--dur, 160ms) var(--ease, ease); }
+.apx-badge img { height: 44px; width: auto; display: block; }
+@media (hover: hover) and (pointer: fine) { .apx-badge:hover { transform: translateY(-1px); } }
+.apx-badge:active { transform: translateY(0) scale(0.98); }
+.apx-badge:focus-visible { outline: 2px solid var(--action); outline-offset: 3px; }
+@media (max-width: 639px) { .btn-row:has(.apx-badge) { align-items: stretch; } .apx-badge { justify-content: center; } }
+
+/* ---- the phone: the real screen in a thin chrome edge (the logo's own steel) */
+.apx-phone {
+  position: relative;
+  padding: 5px;
+  border-radius: 40px;
+  background: linear-gradient(140deg, #eef5fa 0%, #8ea3b2 30%, #2a3238 55%, #a9bdc9 80%, #dbe7ef 100%);
+  box-shadow: 0 30px 60px -30px rgb(0 0 0 / 0.9), 0 0 0 1px rgb(255 255 255 / 0.06);
+}
+.apx-phone img { display: block; width: 100%; height: auto; border-radius: 35px; background: #050606; }
+
+/* ---- hero (collage): the frame keeps the kit's place; the main piece is a phone, cut by the frame's foot */
+.hero__art {
+  background:
+    radial-gradient(70% 55% at 70% 18%, rgb(0 200 200 / 0.20), transparent 70%),
+    radial-gradient(60% 50% at 10% 100%, rgb(0 200 200 / 0.10), transparent 70%),
+    var(--ground-bg);
+}
+.hero__art > .ly-piece--main.apx-hero-phone {
+  left: auto; right: auto;
+  inset-inline-start: calc(50% - 150px);
+  top: var(--s-8);
+  width: min(384px, 64%);
+}
+.hero__art > .ly-piece--note { left: auto; right: auto; inset-inline-start: var(--s-6); bottom: var(--s-6); width: 300px; z-index: 2; }
+@media (max-width: 1023px) {
+  .hero__art > .ly-piece--main.apx-hero-phone { inset-inline-start: calc(50% - 120px); width: 240px; top: var(--s-6); }
+}
+@media (max-width: 639px) {
+  .hero__art > .ly-piece--main.apx-hero-phone { inset-inline-start: calc(50% - 100px); width: 200px; top: var(--s-4); }
+  .hero__art > .ly-piece--main.apx-hero-phone .apx-phone { border-radius: 30px; padding: 4px; }
+  .hero__art > .ly-piece--main.apx-hero-phone .apx-phone img { border-radius: 26px; }
+}
+
+/* ---- d-card: a small piece of APEX UI, in the app's own dark card look */
+.d-card {
+  background: var(--app-card); color: var(--app-ink);
+  border-radius: 16px; padding: 14px 16px;
+  font: 400 14px/1.4 var(--font-text);
+  text-align: start;
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 0.07), 0 18px 40px -20px rgb(0 0 0 / 0.85);
+}
+.d-card h5 { margin: 0 0 4px; font: 500 15px/1.3 var(--font-text); }
+.d-card p { margin: 0; color: var(--app-muted); font-size: 13px; }
+.d-card__row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.d-chip {
+  display: inline-flex; align-items: center; gap: 5px; height: 24px; padding: 0 10px; border-radius: 99px;
+  font: 500 13px/1 var(--font-mono); background: rgb(0 200 200 / 0.14); color: var(--app-teal-hi); white-space: nowrap;
+}
+.d-note__line { display: flex; align-items: center; gap: 10px; padding: 8px 0; font-size: 13px; color: var(--app-faint); border-top: 1px solid var(--app-line); }
+.d-note__line:first-of-type { border-top: 0; }
+.d-note__line i {
+  inline-size: 20px; block-size: 20px; border-radius: 50%; flex: none; display: grid; place-items: center;
+  background: rgb(0 200 200 / 0.14); color: var(--app-teal-hi); font: 500 11px/1 var(--font-mono); font-style: normal;
+}
+.d-note__line i.xp { inline-size: auto; padding-inline: 6px; border-radius: 99px; }
+.d-note__line b { font-weight: 500; color: var(--app-ink); }
+
+/* ---- rides: two real screens on the lit ground, both cut by the frame's foot */
+.apx-duo { position: relative; overflow: hidden; background: var(--ground-bg); min-height: 640px; }
+.frame.apx-duo > .apx-phone { position: absolute; width: min(43%, 270px); }
+.frame.apx-duo > .apx-duo__a { inset-inline-start: 8%; top: var(--s-8); }
+.frame.apx-duo > .apx-duo__b { inset-inline-end: 8%; top: calc(var(--s-8) + var(--s-8)); }
+.apx-facts { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-3); }
+.apx-facts li { padding-block-start: var(--s-3); border-top: 1px solid var(--line); }
+@media (max-width: 1023px) { .apx-duo { min-height: 440px; margin-top: var(--s-7); } }
+@media (max-width: 639px) { .apx-duo { min-height: 360px; } .frame.apx-duo > .apx-phone { width: 46%; } .frame.apx-duo > .apx-duo__a { inset-inline-start: 2%; top: var(--s-5); } .frame.apx-duo > .apx-duo__b { inset-inline-end: 2%; top: var(--s-9); } }
+
+/* ---- xp: three open cards; panels on the lit ground */
+.apx-cards > .card { grid-column: 1 / -1; }
+@media (min-width: 1024px) { .apx-cards > .card { grid-column: auto / span 4; } }
+.apx-cards .panel.apx-panel { --p-h: 260px; height: var(--p-h); min-height: 0; flex: none; position: relative; overflow: hidden; display: grid; place-items: center; background: var(--ground-bg); }
+.apx-panel > .d-card { width: min(300px, calc(100% - 2 * var(--s-5))); }
+.apx-spot__week { font-size: 13px; color: var(--app-muted); }
+.apx-spot__row { display: grid; grid-template-columns: 22px minmax(0, 1fr) 70px; align-items: center; gap: 10px; padding-block: 9px; border-top: 1px solid var(--app-line); }
+.apx-spot__row:first-of-type { margin-top: 8px; }
+.apx-spot__rank { font: 500 13px/1 var(--font-mono); color: var(--app-teal-hi); }
+.apx-spot__bar { block-size: 6px; border-radius: 99px; background: var(--app-fill); overflow: hidden; }
+.apx-spot__bar i { display: block; block-size: 100%; inline-size: var(--v); border-radius: inherit; background: linear-gradient(90deg, var(--app-teal-lo), var(--app-teal-hi)); }
+[dir="rtl"] .apx-spot__bar i { background: linear-gradient(270deg, var(--app-teal-lo), var(--app-teal-hi)); }
+.apx-spot__xp { text-align: end; font: 400 13px/1 var(--font-mono); color: var(--app-muted); }
+.apx-spot__xp b { font-weight: 500; color: var(--app-ink); }
+.apx-share__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.apx-share__btn { display: flex; align-items: center; gap: 8px; min-block-size: 40px; padding-inline: 10px; border-radius: 12px; background: var(--app-fill); font-size: 13px; font-weight: 500; color: var(--app-ink); }
+.apx-share__btn img, .apx-share__btn svg { flex: none; }
+.apx-share__btn--on { background: var(--app-teal); color: #041414; }
+@media (max-width: 1023px) { .apx-cards .panel.apx-panel { --p-h: 240px; } }
+@media (max-width: 639px) { .apx-cards .panel.apx-panel { --p-h: 200px; } }
+
+/* ---- market: chapter. One wide frame (photograph) with the real Market screen over its edge */
+.apx-chapter-line { font-size: var(--t-lead); line-height: 1.5; }
+.apx-wide { position: relative; margin-top: var(--s-7); aspect-ratio: 16 / 4.2; overflow: hidden; }
+.apx-wide > .frame__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+.frame.apx-wide > .apx-wide__phone { position: absolute; inset-inline-end: var(--s-8); top: var(--s-6); width: 200px; }
+.apx-names { margin-top: var(--s-6); }
+.apx-names__t { font-weight: 500; font-size: var(--t-lead); }
+@media (max-width: 1023px) { .apx-names > .span-3 { grid-column: auto / span 6; } .frame.apx-wide > .apx-wide__phone { width: 180px; inset-inline-end: var(--s-6); } }
+@media (max-width: 639px) {
+  .apx-wide { aspect-ratio: 4 / 5; margin-top: var(--s-6); }
+  .apx-wide > .frame__img { object-position: 30% 50%; }
+  .frame.apx-wide > .apx-wide__phone { width: 150px; inset-inline-end: var(--s-4); top: var(--s-5); }
+  .apx-names { margin-top: var(--s-6); row-gap: var(--s-4); }
+}
+
+/* ---- APEX Card: a stand-in photograph with the live QR panel over its lower start corner */
+.apx-cardframe { position: relative; overflow: hidden; min-height: 620px; }
+.apx-cardframe > .frame__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.frame.apx-cardframe > .apx-qr { position: absolute; inset-inline-start: var(--s-6); bottom: var(--s-6); width: 236px; display: grid; justify-items: center; gap: 10px; padding: 18px; z-index: 1; }
+.apx-qr__show { font: 500 13px/1.3 var(--font-text) !important; color: var(--app-muted) !important; }
+.apx-qr__code { width: 132px; height: 132px; padding: 8px; border-radius: 12px; background: #fff; }
+.apx-qr__num { font: 500 26px/1 var(--font-mono) !important; color: var(--app-ink) !important; letter-spacing: 0.12em; }
+.apx-qr__bar { inline-size: 100%; block-size: 3px; border-radius: 99px; background: var(--app-fill); overflow: hidden; }
+.apx-qr__bar i { display: block; block-size: 100%; inline-size: 18%; background: var(--app-teal); border-radius: inherit; }
+.apx-qr__next { font-size: 12px !important; }
+.apx-price { margin: 0; display: grid; gap: var(--s-1); padding-block: var(--s-4); border-block: 1px solid var(--line); }
+.apx-price dt { font-size: var(--t-small); color: var(--muted); }
+.apx-price dd { margin: 0; font-size: var(--t-lead); font-weight: 500; }
+@media (max-width: 1023px) { .apx-cardframe { margin-top: var(--s-7); } }
+@media (max-width: 639px) { .frame.apx-cardframe > .apx-qr { width: 200px; inset-inline-start: var(--s-4); bottom: var(--s-4); padding: 14px; } .apx-qr__code { width: 104px; height: 104px; } .apx-qr__num { font-size: 22px !important; } }
+
+/* ---- partners (the chrome band) */
+#partners .mo-la__sub { color: var(--ink); }
+#partners .mo-la__type { font-size: clamp(48px, 6.2vw, 96px); max-width: 12ch; }
+.apx-partners-grid { row-gap: var(--s-7); }
+.apx-dealerframe { grid-row: 1 / span 3; position: relative; overflow: hidden; min-height: 520px; border-radius: var(--r-lg); background: var(--ground-bg); }
+@media (max-width: 1023px) { .apx-dealerframe { grid-row: auto; min-height: 0; } .apx-partners-col { grid-column: auto / span 6; } }
+@media (max-width: 639px) { .apx-dealerframe { padding: var(--s-4); } .apx-partners-col { grid-column: 1 / -1; } }
+:lang(ar) #partners .mo-la__sub { color: var(--ink); }
+#partners .mo-la__type { font-size: clamp(40px, 6.4vw, 104px); max-width: 16ch; }
+.apx-partners-col h3 { font: 500 var(--t-card)/1.3 var(--font-text); }
+.apx-partners-col p { color: var(--ink); }
+.apx-partners__cta { margin: 0; }
+@media (max-width: 639px) { .apx-partners-grid { row-gap: var(--s-6); } .apx-partners__cta .btn { width: 100%; } }
+
+/* ---- the partner form */
+.apx-form { row-gap: var(--s-5); }
+.apx-form > :is(.apx-turnstile, .apx-hp) { grid-column: 1 / -1; }
+.apx-form .field :is(input, select) { font-size: 16px; width: 100%; }
+.apx-form .field label { min-block-size: 1.5em; }
+.apx-form .field label .muted { font-weight: 400; }
+.apx-hp { position: absolute !important; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.apx-turnstile:empty { display: none; }
+.apx-turnstile { margin-top: var(--s-4); }
+.apx-form .btn-row { margin-top: var(--s-5); }
+.apx-formframe { position: relative; overflow: hidden; min-height: 560px; }
+.apx-formframe > .frame__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 70%; }
+@media (max-width: 1023px) { .apx-formframe { margin-top: var(--s-7); min-height: 440px; } }
+@media (max-width: 639px) { .apx-formframe { min-height: 360px; } }
+
+/* ---- close: the client's own wordmark set across the wrap */
+.close__word img { display: block; inline-size: 100%; block-size: auto; }
+
+/* ---- /ar/download: one plain reading column on the kit */
+.apx-sub { padding-top: var(--nav); }
+.apx-sub__section { block-size: auto; min-block-size: auto; padding-block: var(--s-9) var(--s-9); }
+.apx-sub__col { max-width: 720px; }
+.apx-sub__col h1 { font-size: clamp(40px, 5vw, 64px); }
+.apx-sub__block { padding-top: var(--s-7); border-top: 1px solid var(--line); margin-top: var(--s-7); }
+.apx-sub__block h2 { font-size: var(--t-h3); }
+.apx-steps { list-style: none; margin: var(--s-5) 0 0; padding: 0; display: grid; gap: var(--s-6); }
+.apx-steps li { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: var(--s-4); }
+.apx-steps h3 { font: 500 var(--t-lead)/1.4 var(--font-text); }
+.apx-steps p { color: var(--muted); margin-top: var(--s-2); }
+.apx-steps__n { font: 500 14px/1.8 var(--font-mono); color: var(--accent); }
+.apx-sub__note { margin-top: var(--s-6); padding: var(--s-5); border-radius: var(--r-md); background: var(--surface); }
+.apx-sub__note p { color: var(--muted); }
+.apx-sub__foot { padding-block: var(--s-7); border-top: 1px solid var(--line); }
+.apx-sub__foot .wrap { display: flex; flex-wrap: wrap; gap: var(--s-4) var(--s-6); color: var(--muted); font-size: var(--t-small); }
+.apx-sub__foot a { color: var(--ink); min-block-size: 44px; display: inline-flex; align-items: center; }
+
+
+/* ---- questions: the Android install path, beside the answers */
+.apx-install { margin-top: var(--s-6); max-width: 460px; padding: var(--s-5); display: grid; gap: var(--s-4); }
+.apx-install__title { font: 500 var(--t-card)/1.3 var(--font-text); letter-spacing: 0; color: var(--app-ink); }
+.apx-install__steps { display: grid; gap: var(--s-3); counter-reset: none; }
+.apx-install__steps li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: var(--s-3); align-items: start; color: var(--app-faint); font-size: 15px; line-height: 1.5; }
+.apx-install__n { display: grid; place-items: center; inline-size: 28px; block-size: 28px; border-radius: 50%; background: rgb(0 200 200 / 0.14); color: var(--app-teal-hi); font: 500 13px/1 var(--font-mono); }
+
+/* ---- the Ride Card summary and the dealer dashboard, as live UI */
+.apx-ridecard { display: grid; gap: 12px; }
+.apx-ridecard__earned { text-align: center; color: var(--app-teal-hi) !important; font: 500 16px/1.2 var(--font-text) !important; }
+.apx-ridecard__card { display: grid; gap: 6px; padding: 16px; border-radius: 14px; background: radial-gradient(120% 90% at 100% 0%, rgb(0 200 200 / 0.28), transparent 60%), #0b2023; }
+.apx-ridecard__brand { font: 500 13px/1 var(--font-text); letter-spacing: 0.3em; color: var(--app-ink); }
+.apx-ridecard__meta { font: 500 11px/1.3 var(--font-mono); letter-spacing: 0.06em; color: var(--app-teal-hi); }
+.apx-ridecard__title { font: 500 20px/1.2 var(--font-text); color: var(--app-ink); }
+.apx-dealerframe { display: grid; place-items: center; padding: var(--s-6); }
+.apx-dash { width: 100%; max-width: 320px; }
+.apx-dash__range { font-size: 13px; color: var(--app-muted); }
+.apx-dash__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 12px; }
+.apx-dash__grid li { display: flex; align-items: center; gap: 8px; min-block-size: 56px; padding: 10px; border-radius: 12px; background: var(--app-fill); font-size: 13px; line-height: 1.3; color: var(--app-ink); }
+.apx-dash__tick { flex: none; inline-size: 8px; block-size: 8px; border-radius: 50%; background: var(--app-teal); box-shadow: 0 0 0 4px rgb(0 200 200 / 0.16); }
+
+/* ---- liquid glass: the owner's direction (2026-11-09). Floating UI over imagery and glow is a pane of
+   frosted glass: a translucent tint, a strong backdrop blur with saturation, a bright hairline edge, a
+   specular highlight on its top edge and a soft offset shadow. Solid when blur is unsupported or the
+   visitor asks for less transparency. */
+.apx-glass {
+  --glass-tint: rgb(14 20 24 / 0.52);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.10), rgb(255 255 255 / 0.02) 42%, rgb(255 255 255 / 0)) ,
+    var(--glass-tint);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid rgb(255 255 255 / 0.16);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.22),
+    inset 0 -1px 0 rgb(255 255 255 / 0.04),
+    0 24px 48px -24px rgb(0 0 0 / 0.75);
+}
+/* over a busy photograph the pane darkens so its words keep 7:1 */
+.apx-cardframe .apx-glass { --glass-tint: rgb(10 14 16 / 0.62); }
+
+/* the nav and the phone bar: glass over the page as it scrolls under them */
+/* The glass is painted by a layer behind the bar's content, never by the header itself: a backdrop-filter
+   on the header makes it the containing block of its fixed children, which left the phone menu sheet and
+   the desktop Partners panel see-through over the hero (impeccable re-critique, P1). The menus keep the
+   kit's opaque surface. */
+header.nav, nav.actionbar { background: transparent; }
+header.nav::before, nav.actionbar::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: rgb(8 8 8 / 0.62);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: inset 0 -1px 0 rgb(255 255 255 / 0.08);
+}
+nav.actionbar::before { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.10); }
+header.nav { isolation: isolate; }
+nav.actionbar { isolation: isolate; }
+header.nav.is-open::before { background: var(--bg); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .apx-glass { background: var(--app-card); }
+  header.nav::before, nav.actionbar::before { background: var(--bg); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .apx-glass { background: var(--app-card); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  header.nav::before, nav.actionbar::before { background: var(--bg); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  .apx-glass { background: var(--app-card); border-color: rgb(255 255 255 / 0.4); }
+}
+
+/* ---- hierarchy: the hero h1 stays the largest type; the partner promise sits under it */
+#partners .mo-la__type { font-size: clamp(40px, 4.4vw, 60px); max-width: 16ch; }
+:lang(ar) #partners .mo-la__type { font-size: clamp(36px, 4vw, 56px); }
+
+/* ---- Arabic headings: IBM Plex Sans Arabic at 500, open leading */
+:lang(ar) :is(h1, h2, .mo-la__type) { font-weight: 500; }
+:lang(ar) .hero__lead, :lang(ar) .t-lead { line-height: 1.75; }
+
+/* ---- RTL: the pill buttons' chevron points the reading way (scale, so the kit's hover nudge still runs) */
+[dir="rtl"] :is(.btn--primary, .btn--secondary)::after { scale: -1 1; }
+
+/* ---- form states */
+.form__status[data-state="error"] { color: var(--error-ink); display: flex; gap: 8px; align-items: baseline; }
+.form__status[data-state="error"]::before { content: "!"; flex: none; display: inline-grid; place-items: center; inline-size: 18px; block-size: 18px; border-radius: 50%; background: var(--error-ink); color: #1a0705; font: 600 12px/1 var(--font-text); }
+.form__status[data-state="sent"] { color: var(--app-teal-hi); }
+.apx-form__fallback { grid-column: 1 / -1; }
+/* the phone bar steps aside while a visitor is typing in a form */
+@media (max-width: 639px) {
+  nav.actionbar { transition: translate 240ms var(--ease); }
+  body:has(form :focus) > nav.actionbar { translate: 0 110%; }
+}
+@media (prefers-reduced-motion: reduce) { nav.actionbar { transition: none; } }
+
+/* ---- the close: the badge and the Android pill as one pair, never a wide pill beside a small badge */
+@media (max-width: 639px) {
+  .btn-row:has(> .apx-badge) { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; align-items: center; }
+  .btn-row:has(> .apx-badge) > .btn { width: auto; flex: 0 1 auto; }
+  .apx-badge { justify-content: flex-start; }
+}
+
+/* ---- small fixes from the audit */
+.footer__lede { line-height: 1.5; }
+@media (prefers-reduced-motion: reduce) { .apx-badge { transition: none; } .apx-badge:hover { transform: none; } }
+
+/* ---- browser surfaces carry the palette */
+::selection { background: rgb(0 200 200 / 0.35); color: #fff; }
+:root { accent-color: var(--app-teal); caret-color: var(--app-teal); scrollbar-color: #2a3238 var(--p-bg); }
+@media (min-width: 640px) and (max-width: 1023px) { .apx-wide { aspect-ratio: 16 / 9; } }
+
+/* ================================================================ motion (Stage 4)
+   review-animations: never delay what the visitor watches most. The hero's words stand from the first
+   paint; only its picture enters (kit motion layer), and a little faster than the kit's 1.1 s. */
+html.m-enter .hero :is(h1, .hero__lead, .btn-row, .hero__proof),
+html.m-enter .hero :is(h1, .hero__lead, .btn-row, .hero__proof) * { opacity: 1 !important; transform: none !important; }
+html.m-enter .hero[data-enter] .hero__art { transition: scale 700ms var(--m-ease-enter, cubic-bezier(0.23, 1, 0.32, 1)) !important; }
+
+/* Live tracking: FLY's own map marker pings three times when the page opens, then rests (under 5 s, so no
+   pause control is needed). Transform and opacity only. */
+.apx-ping { position: absolute; z-index: 2; width: 0; height: 0; left: calc(5px + (100% - 10px) * var(--px)); top: calc(5px + (100% - 10px) * var(--py)); }
+.apx-ping::before, .apx-ping::after { content: ""; position: absolute; inset: -9px; border-radius: 50%; border: 2px solid var(--app-teal); opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .apx-ping::before, .apx-ping::after { animation: apx-ping 1.5s cubic-bezier(0.23, 1, 0.32, 1) 3 both; }
+  .apx-ping::after { animation-delay: 0.3s; }
+}
+@keyframes apx-ping { 0% { opacity: 0.9; transform: scale(0.6); } 100% { opacity: 0; transform: scale(3.2); } }
+
+/* Scroll transitions (owner direction, 2026-11-09), CSS scroll-driven only. Every picture is whole and in
+   place at rest: the animation starts from a visible state, only moves (never hides), and is absent where
+   scroll timelines are unsupported or motion is reduced. Text never moves with the scroll. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* the phones rise and settle into their frames as each section comes in */
+    .frame.apx-duo > .apx-phone, .frame.apx-wide > .apx-wide__phone {
+      animation: apx-settle linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 40%;
+    }
+    .frame.apx-duo > .apx-duo__b { animation-range: entry 20% cover 48%; }
+    /* the APEX Card and the dealer dashboard lift off their photograph and glow */
+    .frame.apx-cardframe > .apx-qr, .apx-dealerframe > .apx-dash {
+      animation: apx-lift linear both;
+      animation-timeline: view();
+      animation-range: entry 15% cover 45%;
+    }
+    /* XP climbing: the Spotlight bars fill and their figures count up as the card comes into view */
+    .apx-spot__bar i {
+      transform-origin: left center;
+      animation: apx-fill linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 50%;
+    }
+    [dir="rtl"] .apx-spot__bar i { transform-origin: right center; }
+    .apx-spot__row:nth-of-type(3) .apx-spot__bar i { animation-range: entry 34% cover 54%; }
+    .apx-spot__row:nth-of-type(4) .apx-spot__bar i { animation-range: entry 38% cover 58%; }
+    .apx-spot[data-count="on"] .apx-spot__xp b { font-size: 0; }
+    .apx-spot[data-count="on"] .apx-spot__xp b::after {
+      font-size: 13px;
+      counter-reset: xp var(--xp);
+      content: counter(xp);
+      animation: apx-count linear both;
+      animation-timeline: view();
+      animation-range: entry 30% cover 50%;
+    }
+  }
+}
+@keyframes apx-settle { from { transform: translateY(56px) scale(0.97); } to { transform: none; } }
+@keyframes apx-lift { from { transform: translateY(28px); } to { transform: none; } }
+@keyframes apx-fill { from { transform: scaleX(0.08); } to { transform: none; } }
+@property --xp { syntax: "<integer>"; inherits: false; initial-value: 0; }
+@keyframes apx-count { from { --xp: 0; } to { --xp: var(--xp-to); } }
+
+.apx-form__noscript { grid-column: 1 / -1; color: var(--error-ink); }
+
+/* ---- break-ui: worst-case data */
+/* a picture that failed to load keeps its box; the frame's lit ground shows instead of a broken icon */
+img[data-broken] { visibility: hidden; }
+.frame--photo { background: var(--ground-bg); }
+/* a phone's screen is dark before (or without) its picture; the chrome stays on the 5px edge */
+.apx-phone {
+  background:
+    linear-gradient(#050606, #050606) content-box,
+    linear-gradient(140deg, #eef5fa 0%, #8ea3b2 30%, #2a3238 55%, #a9bdc9 80%, #dbe7ef 100%) border-box;
+}
+/* long labels (fuller Arabic phrasing) never push a card past its panel */
+.apx-panel, .apx-dealerframe { container-type: inline-size; }
+.apx-share__btn, .apx-dash__grid li { min-width: 0; overflow-wrap: anywhere; }
+@container (max-width: 300px) { .apx-share__grid, .apx-dash__grid { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---- mobile-native (Stage 5) */
+/* no gray flash on tap: every control already has its own :active press (motion layer) */
+html { -webkit-tap-highlight-color: transparent; }
+/* no 300ms double-tap wait; long-press never selects a control's label or opens the link callout */
+:is(a, button, [role="button"], summary, label, select) { touch-action: manipulation; }
+:is(.btn, .apx-badge, .nav__toggle, .nav__link, .loop-pause, .ui-pause) { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+/* edge to edge under the notch (viewport-fit=cover); the content keeps clear of it in landscape and in an
+   installed web app's status bar */
+.wrap { width: min(100% - 2 * max(var(--gut), env(safe-area-inset-left, 0px), env(safe-area-inset-right, 0px)), var(--container, 1280px)); }
+header.nav { padding-top: env(safe-area-inset-top, 0px); height: calc(var(--nav) + env(safe-area-inset-top, 0px)); }
+/* the kit's 32px pause disc keeps its look; its tap area grows to 44px */
+:is(.loop-pause, .ui-pause)::before { content: ""; position: absolute; inset: -6px; }
+/* /ar/download footer links: 44px wide as well as tall */
+.apx-sub__foot a { min-inline-size: 44px; justify-content: center; }
+/* the kit writes the "n to fix" line itself; it reads as an error whenever a field is invalid */
+.form:has([aria-invalid="true"]) .form__status:not([data-state="sent"]) { color: var(--error-ink); }
+
+/* no stranded last word in leads, fact lines and answers (both scripts) */
+:is(.t-lead, .hero__lead, .apx-facts li, .faq p, .mo-la__sub, .apx-chapter-line) { text-wrap: pretty; }
+/* the XP panels on the flat lit ground: the kit's soft-light panel gradient repeated on every card read as
+   one glow everywhere (impeccable critique + detector); the glow is kept for the hero frame (the App Store
+   artwork's own teal gradient) and the Ride Card (the app's own card) */
+.apx-cards .card .panel.apx-panel { background: var(--ground-bg) !important; }
+.apx-cards .card .panel.apx-panel::before { background: none !important; }
+.apx-install__head { display: flex; align-items: center; gap: var(--s-4); }
+.apx-install__icons { display: inline-flex; align-items: center; gap: var(--s-3); flex: none; padding: 10px 12px; border-radius: 14px; background: var(--app-fill); }
+.apx-install__icons img { flex: none; }
+
+/* Arabic partner band: the subhead clears the heading's descenders */
+:lang(ar) #partners .mo-la__sub { margin-top: var(--s-6); }
+/* a button is never underlined, whatever link rule reaches it */
+.btn, .btn:hover { text-decoration: none; }
