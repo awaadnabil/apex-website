@@ -7,6 +7,12 @@ import { Analytics } from '@vercel/analytics/next'
 import type { Locale } from '@/lib/site/content'
 import { KitScripts } from './kit-scripts'
 import { MotionFoundation } from './motion-foundation'
+import { ApexStage } from './apex-stage'
+import { BootSequence } from './boot-sequence'
+import { BOOT_GATE_SCRIPT, ROUTE_REVEAL_SCRIPT } from '@/lib/site/boot-gate'
+import { InteractionLayer } from './interaction-layer'
+import { CustomCursor } from './custom-cursor'
+import { HeroTextFx } from './hero-text-fx'
 
 
 import { readFileSync } from 'node:fs'
@@ -78,15 +84,23 @@ export function KitDocument({
               "document.documentElement.classList.add('mo-js');setTimeout(function(){document.documentElement.classList.add('mo-safe')},2500);",
           }}
         />
+        {/* the boot overlay's first-visit gate, before first paint (components/site/boot-sequence.tsx) */}
+        <script dangerouslySetInnerHTML={{ __html: BOOT_GATE_SCRIPT + ';' + ROUTE_REVEAL_SCRIPT }} />
         {/* the grounds' tokens before first paint, inline (the kit loads this plain, not deferred) */}
         <script dangerouslySetInnerHTML={{ __html: BACKGROUNDS_JS }} />
         <link rel="modulepreload" href="/assets/system.js" />
         <link rel="modulepreload" href="/assets/moments/moments.js" />
       </head>
       <body suppressHydrationWarning>
+        <BootSequence />
+        <div className="apx-route-bar" aria-hidden="true" />
         {children}
         <KitScripts />
         <MotionFoundation />
+        <ApexStage />
+        <HeroTextFx />
+        <InteractionLayer />
+        <CustomCursor />
         {/* Vercel serves /_vercel/insights only on its own deployments; locally the script would 404 */}
         {process.env.VERCEL === '1' && <Analytics />}
       </body>

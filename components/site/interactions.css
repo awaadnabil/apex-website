@@ -1,0 +1,195 @@
+/* Phase 3: the interaction layer and page transitions. Only transform-family properties (translate,
+   rotate, scale), opacity, filter and clip-path animate; nothing here changes layout. */
+
+/* ---------- cards: sheen, lit edge, holographic sheen ---------- */
+.apx-sheen, .apx-edge, .apx-holo {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 3;
+}
+.apx-sheen {
+  background: radial-gradient(420px circle at var(--x, 50%) var(--y, 50%), color-mix(in srgb, var(--p-ink) 9%, transparent), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card.is-pointer > .apx-sheen { opacity: 1; transition-duration: 0.18s; }
+
+.apx-edge {
+  padding: 1px;
+  overflow: hidden;
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: calc(0.12 + var(--apx-near, 0) * 0.55);
+  transition: opacity 0.18s linear;
+}
+.apx-edge i {
+  position: absolute;
+  inset: -50%;
+  background: conic-gradient(from 0deg, transparent 0 62%, var(--p-accent) 78%, var(--p-ink) 82%, transparent 92%);
+  animation: apx-spin 8s linear infinite;
+  animation-play-state: paused;
+}
+.card.is-pointer > .apx-edge { opacity: 1; }
+.card.is-pointer > .apx-edge i { animation-play-state: running; animation-duration: 3s; }
+
+.apx-holo {
+  overflow: hidden;
+  mix-blend-mode: overlay;
+  opacity: 0;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.apx-holo::before {
+  content: '';
+  position: absolute;
+  inset: -60%;
+  background: conic-gradient(from 90deg, rgb(0 200 200 / 0.55), rgb(238 242 244 / 0.4), rgb(154 164 171 / 0.5), rgb(0 200 200 / 0.55));
+  animation: apx-spin 6s linear infinite;
+  animation-play-state: paused;
+}
+.card.is-pointer > .apx-holo { opacity: 0.55; }
+.card.is-pointer > .apx-holo::before { animation-play-state: running; }
+
+/* ---------- buttons: glow, press, ripple, orbit ---------- */
+/* the glow is its own layer, so the kit's transition list on .btn stays untouched; focus gets it too */
+.apx-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: 0 0 22px 2px color-mix(in srgb, var(--p-accent) 42%, transparent);
+  opacity: 0;
+  transition: opacity 0.18s linear;
+}
+.btn:is(:hover, :focus-visible) > .apx-glow { opacity: 1; }
+/* with the kit's own .985 press this lands on .97 */
+html[data-apx-interact] :is(.btn, .apx-badge):active { scale: 0.985; }
+.apx-ripple-host {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  overflow: hidden;
+  pointer-events: none;
+}
+.apx-ripple-host i {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0;
+  pointer-events: none;
+}
+.apx-orbit {
+  position: absolute;
+  inset: -5px;
+  border-radius: 999px;
+  pointer-events: none;
+}
+.apx-orbit i {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  margin: -2px 0 0 -2px;
+  border-radius: 50%;
+  background: var(--p-accent);
+  box-shadow: 0 0 8px var(--p-accent);
+  offset-path: inset(0 round 999px);
+  offset-rotate: 0deg;
+  opacity: 0.55;
+  animation: apx-orbit 9s linear infinite;
+}
+.apx-orbit i:nth-child(2) { animation-delay: -3s; opacity: 0.35; }
+.apx-orbit i:nth-child(3) { animation-delay: -6s; opacity: 0.2; }
+.btn:is(:hover, :focus-visible) > .apx-orbit i { animation-duration: 3.5s; opacity: 0.9; }
+@keyframes apx-orbit { to { offset-distance: 100%; } }
+
+/* ---------- photos: parallax room, liquid ripple ---------- */
+main .frame--photo.is-liquid > img.frame__img { filter: url(#apx-liquid); }
+.apx-svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ---------- custom cursor (fine pointers only) ---------- */
+html.apx-cursor, html.apx-cursor * { cursor: none !important; }
+html.apx-cursor :is(input, textarea, select, [contenteditable="true"]) { cursor: auto !important; }
+html.apx-cursor :is(input, textarea)[type]:not([type="checkbox"], [type="radio"], [type="range"]) { cursor: text !important; }
+.apx-cursor-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: none;
+}
+.apx-cursor-dot, .apx-cursor-ring {
+  position: fixed;
+  left: 0;
+  top: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform;
+}
+.apx-cursor-dot {
+  width: 6px;
+  height: 6px;
+  margin: -3px 0 0 -3px;
+  background: var(--p-accent);
+}
+.apx-cursor-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: -18px 0 0 -18px;
+  border: 1px solid color-mix(in srgb, var(--p-ink) 70%, transparent);
+}
+.apx-cursor-ring.is-difference {
+  mix-blend-mode: difference;
+  background: var(--p-ink);
+  border-color: transparent;
+}
+.apx-cursor-label {
+  font: 500 7px/1 var(--font-mono);
+  letter-spacing: 0.14em;
+  color: var(--p-ink);
+}
+
+@keyframes apx-spin { to { transform: rotate(1turn); } }
+
+/* ---------- page transitions (cross-document view transitions, ≤ 0.6s) ---------- */
+@view-transition { navigation: auto; }
+::view-transition-old(root) { animation: apx-page-out 0.28s cubic-bezier(0.65, 0, 0.35, 1) both; }
+::view-transition-new(root) { animation: apx-page-in 0.34s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both; }
+.apx-route-bar {
+  position: fixed;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  z-index: 250;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(90deg, transparent, var(--p-accent) 40%, var(--p-ink) 50%, var(--p-accent) 60%, transparent);
+  box-shadow: 0 0 16px var(--p-accent);
+  view-transition-name: apx-route-bar;
+}
+html.apx-vt .apx-route-bar { opacity: 1; }
+::view-transition-group(apx-route-bar) { animation-duration: 0.55s; }
+::view-transition-old(apx-route-bar) { display: none; }
+::view-transition-new(apx-route-bar) { animation: apx-bar-sweep 0.55s cubic-bezier(0.65, 0, 0.35, 1) both; }
+@keyframes apx-page-out { to { opacity: 0; filter: blur(4px); transform: translateY(-10px); } }
+@keyframes apx-page-in { from { opacity: 0; } }
+@keyframes apx-bar-sweep {
+  from { transform: translateX(-100%); opacity: 1; }
+  80% { opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+  .apx-edge i, .apx-holo::before, .apx-orbit i { animation: none; }
+  .apx-orbit { display: none; }
+}
+@media (hover: none), (pointer: coarse) {
+  .apx-orbit { display: none; }
+}
+@media print {
+  .apx-sheen, .apx-edge, .apx-holo, .apx-orbit, .apx-ripple-host, .apx-glow, .apx-cursor-layer, .apx-route-bar { display: none !important; }
+}

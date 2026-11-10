@@ -1,0 +1,116 @@
+/* The shared WebGL layer: fixed behind every section, under the page's in-flow content. */
+.apex-stage {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.apex-stage.is-ready { opacity: 1; }
+.apex-stage__scroll { position: absolute; inset: 0; }
+.apex-stage canvas { display: block; pointer-events: none; }
+
+/* No WebGL, or reduced motion: a still, low-contrast accent ground behind the hero's content. */
+.apex-hero-fallback {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 50% at 82% 18%, color-mix(in srgb, var(--p-accent) 14%, transparent), transparent 70%),
+    radial-gradient(50% 45% at 12% 88%, color-mix(in srgb, var(--p-accent) 8%, transparent), transparent 70%);
+}
+
+/* Boot: hidden unless the head script marked a first visit. */
+.apex-boot { display: none; }
+html.apex-booting .apex-boot {
+  display: block;
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  pointer-events: auto;
+  cursor: progress;
+}
+.apex-boot__half {
+  position: absolute;
+  inset: 0;
+  background: var(--p-bg);
+}
+.apex-boot__half:first-child { clip-path: inset(0 0 50% 0); }
+.apex-boot__half:nth-child(2) { clip-path: inset(50% 0 0 0); }
+.apex-boot__line {
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 1px;
+  margin-top: -0.5px;
+  background: var(--p-accent);
+  box-shadow: 0 0 18px 2px color-mix(in srgb, var(--p-accent) 60%, transparent);
+  opacity: 0;
+  transform: scaleX(0.12);
+}
+.apex-boot__content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.apex-boot__label {
+  margin: 0;
+  font: 400 14px/1.4 var(--font-mono);
+  letter-spacing: 0.18em;
+  color: var(--p-muted);
+  font-variant-numeric: tabular-nums;
+}
+.apex-boot__bar {
+  display: block;
+  width: 160px;
+  height: 1px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--p-muted) 25%, transparent);
+}
+.apex-boot__bar i {
+  display: block;
+  height: 100%;
+  background: var(--p-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+/* Headline decode: each character keeps its own (transparent) glyph so the line never reflows. */
+.apx-scr { position: relative; }
+.apx-scr[data-g] { color: transparent; }
+.apx-scr[data-g]::after {
+  content: attr(data-g);
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  color: var(--p-accent);
+  opacity: 0.85;
+}
+
+/* Headline light sweep: an accent copy of the words, laid exactly over them, shown through a moving band. */
+.apx-sweep {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--p-accent);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--p-accent) 55%, transparent);
+  clip-path: inset(0 100% 0 -18%);
+  will-change: clip-path;
+  user-select: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .apex-stage { transition: none; }
+  html.apex-booting .apex-boot { display: none; }
+}
+
+@media print {
+  .apex-stage, .apex-boot, .apex-hero-fallback { display: none !important; }
+}
