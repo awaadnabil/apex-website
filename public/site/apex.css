@@ -204,6 +204,12 @@ html[data-ground="apex"] {
 /* ---- /ar/download: one plain reading column on the kit */
 .apx-sub { padding-top: var(--nav); }
 .apx-sub__section { block-size: auto; min-block-size: auto; padding-block: var(--s-9) var(--s-9); }
+/* the kit sizes every `main > section` to one screen (height, specificity 0,1,1): a sub-page section grows with its words */
+main.apx-sub > .apx-sub__section { height: auto; min-height: 0; }
+/* a link inside running text (an FAQ answer, a note): ink, underlined in the accent */
+.apx-inline { color: var(--ink); text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.apx-inline:hover { text-decoration-thickness: 2px; }
+.apx-inline:focus-visible { outline: 2px solid var(--action); outline-offset: 2px; border-radius: 2px; }
 .apx-sub__col { max-width: 720px; }
 .apx-sub__col h1 { font-size: clamp(40px, 5vw, 64px); }
 .apx-sub__block { padding-top: var(--s-7); border-top: 1px solid var(--line); margin-top: var(--s-7); }

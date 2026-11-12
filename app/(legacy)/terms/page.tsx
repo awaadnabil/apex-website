@@ -1,8 +1,10 @@
 import type { Metadata } from "next"
+import { SiteFooter } from "@/components/site-footer"
 
 export const metadata: Metadata = {
   title: "Terms of Use — APEX",
   description: "APEX Terms of Use",
+  alternates: { canonical: "https://getapexmena.com/terms", languages: { en: "https://getapexmena.com/terms", ar: "https://getapexmena.com/ar/terms" } },
 }
 
 export default function Terms() {
@@ -11,7 +13,7 @@ export default function Terms() {
       <div className="max-w-3xl mx-auto">
         <a href="/" className="text-[#00C8C8] text-xs tracking-[0.3em] uppercase mb-12 block">← APEX</a>
         <h1 className="text-4xl font-black mb-2">Terms of Use</h1>
-        <p className="text-white/40 text-sm mb-12">Last updated: July 2026</p>
+        <p className="text-white/40 text-sm mb-12">Last updated: November 2026</p>
         <div className="space-y-10 text-white/70 text-sm leading-relaxed">
           <section>
             <h2 className="text-white font-bold text-lg mb-3">1. Acceptance of Terms</h2>
@@ -23,7 +25,7 @@ export default function Terms() {
           </section>
           <section>
             <h2 className="text-white font-bold text-lg mb-3">3. Subscriptions and Payments</h2>
-            <p>APEX offers auto-renewable subscriptions processed through Apple In-App Purchase. Subscriptions renew unless cancelled 24 hours before the end of the current period. Manage in Settings → Apple ID → Subscriptions.</p>
+            <p>APEX offers auto-renewable subscriptions. On iPhone, subscriptions are purchased through the App Store and processed by Apple In-App Purchase; they renew unless cancelled 24 hours before the end of the current period, and you manage them in Settings → Apple ID → Subscriptions. On Android and the web, subscriptions are processed by Paddle.com, as set out in section 8.</p>
           </section>
           <section>
             <h2 className="text-white font-bold text-lg mb-3">4. User Content</h2>
@@ -42,12 +44,17 @@ export default function Terms() {
             <p>We may suspend or terminate your account for violations. You may delete your account anytime from app settings.</p>
           </section>
           <section>
-            <h2 className="text-white font-bold text-lg mb-3">8. Contact</h2>
+            <h2 className="text-white font-bold text-lg mb-3">8. Web and Android Orders</h2>
+            <p>Our order process is conducted by our online reseller Paddle.com. Paddle.com is the Merchant of Record for all our web and Android orders. Paddle provides all customer service inquiries and handles returns.</p>
+          </section>
+          <section>
+            <h2 className="text-white font-bold text-lg mb-3">9. Contact</h2>
             <p className="mt-3 text-[#00C8C8]">support@getapexmena.com</p>
             <p className="mt-1 text-white/40">APEX Motors GCC · Dubai, United Arab Emirates</p>
           </section>
         </div>
       </div>
+      <SiteFooter />
     </main>
   )
 }

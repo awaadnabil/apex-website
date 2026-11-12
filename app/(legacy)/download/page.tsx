@@ -119,7 +119,11 @@ export default function DownloadPage() {
             </p>
             <p className="mt-4 text-[14px] leading-relaxed text-white/55">
               Join unlimited drives, follow the community and use the live map.
-              For APEX MEMBER, speak to an organiser.
+              On Android, become a Member via secure checkout — see{' '}
+              <a href="/pricing" className="text-white underline underline-offset-4 transition-colors duration-500 hover:text-teal">
+                Pricing
+              </a>
+              .
             </p>
           </div>
         </div>

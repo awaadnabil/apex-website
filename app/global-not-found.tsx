@@ -13,7 +13,7 @@ export default function GlobalNotFound() {
   return (
     <html lang="en" className="bg-[#080808]">
       <body className="bg-[#080808] font-sans text-white antialiased">
-        <main className="mx-auto flex min-h-svh max-w-xl flex-col justify-center gap-6 px-6">
+        <main className="mx-auto flex min-h-[85svh] max-w-xl flex-col justify-center gap-6 px-6">
           <p className="text-sm text-[#00C8C8]">404</p>
           <h1 className="text-4xl font-medium leading-tight">This page isn&apos;t here.</h1>
           <p className="text-white/70" lang="ar" dir="rtl">هذه الصفحة غير موجودة.</p>
@@ -22,6 +22,18 @@ export default function GlobalNotFound() {
             <a className="rounded-full border border-white/25 px-5 py-3 font-medium" href="/ar" lang="ar">الصفحة الرئيسية</a>
           </div>
         </main>
+        <footer className="mx-auto flex max-w-xl flex-wrap gap-x-6 gap-y-2 px-6 pb-10 text-sm text-white/60">
+          {[
+            ['Pricing', '/pricing'],
+            ['Refunds', '/refunds'],
+            ['Terms', '/terms'],
+            ['Privacy', '/privacy'],
+          ].map(([label, href]) => (
+            <a key={href} className="inline-flex min-h-11 items-center hover:text-white" href={href}>
+              {label}
+            </a>
+          ))}
+        </footer>
       </body>
     </html>
   )
