@@ -77,7 +77,7 @@ export type Copy = {
     photoAlt: string
     honeypot: string
   }
-  faq: { h2: string; line: string; link: string; install: { title: string; steps: string[]; link: string }; items: { q: string; a: string; assumedTail?: string }[] }
+  faq: { h2: string; line: string; link: string; install: { title: string; steps: string[]; link: string }; items: { q: string; a: string; assumedTail?: string; link?: { label: string; href: string; after?: string } }[] }
   close: { h2: string; line: string }
   footer: {
     lede: string
@@ -254,7 +254,11 @@ const en: Copy = {
         q: 'Is the Android file safe to install?',
         a: "It's the same APEX app, delivered without a storefront in between. Chrome's warning appears for every app installed from outside the Play Store.",
       },
-      { q: 'What does APEX Member cost riders?', a: 'AED 49 a month or AED 399 a year, bought inside the iPhone app. On Android, speak to an organiser.' },
+      {
+        q: 'What does APEX Member cost riders?',
+        a: 'AED 49 a month or AED 399 a year, bought inside the iPhone app. On Android, become a Member via secure checkout — see',
+        link: { label: 'Pricing', href: '/pricing', after: '.' },
+      },
       {
         q: 'What do partners pay for the app?',
         a: "Only on sales to APEX members, tracked when members scan your QR. There's no listing fee and no monthly fee.",
@@ -470,7 +474,11 @@ const ar: Copy = {
         q: 'هل ملف تطبيق Android آمن للتثبيت؟',
         a: 'إنه تطبيق APEX نفسه، يصلك دون متجر بينك وبينه. ويظهر تحذير Chrome لكل تطبيق يُثبَّت من خارج متجر Play.',
       },
-      { q: 'كم تكلّف عضوية APEX Member للراكبين؟', a: '‏49 درهماً شهرياً أو 399 درهماً سنوياً، والاشتراك من داخل تطبيق iPhone. وعلى Android، تحدّث إلى أحد المنظّمين.' },
+      {
+        q: 'كم تكلّف عضوية APEX Member للراكبين؟',
+        a: '‏49 درهماً شهرياً أو 399 درهماً سنوياً، والاشتراك من داخل تطبيق iPhone. وعلى Android، اشترك في العضوية عبر دفع آمن — راجع',
+        link: { label: 'الأسعار', href: '/ar/pricing', after: '.' },
+      },
       {
         q: 'ماذا يدفع الشركاء مقابل التطبيق؟',
         a: 'تدفع فقط على المبيعات لأعضاء APEX، وتُسجَّل حين يمسح العضو رمز QR. لا رسوم إدراج ولا رسوم شهرية.',

@@ -401,6 +401,7 @@ export function Home({ c, media: m = MEDIA }: { c: Copy; media?: Media }) {
                     <h3>{it.q}</h3>
                     <p>
                       {it.a}
+                      {it.link ? <> <a className="apx-inline" href={it.link.href}>{it.link.label}</a>{it.link.after}</> : null}
                       {it.assumedTail ? <> <span data-assumed>{it.assumedTail}</span></> : null}
                     </p>
                   </div>

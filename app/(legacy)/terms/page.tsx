@@ -25,7 +25,7 @@ export default function Terms() {
           </section>
           <section>
             <h2 className="text-white font-bold text-lg mb-3">3. Subscriptions and Payments</h2>
-            <p>APEX offers auto-renewable subscriptions processed through Apple In-App Purchase. Subscriptions renew unless cancelled 24 hours before the end of the current period. Manage in Settings → Apple ID → Subscriptions.</p>
+            <p>APEX offers auto-renewable subscriptions. On iPhone, subscriptions are purchased through the App Store and processed by Apple In-App Purchase; they renew unless cancelled 24 hours before the end of the current period, and you manage them in Settings → Apple ID → Subscriptions. On Android and the web, subscriptions are processed by Paddle.com, as set out in section 8.</p>
           </section>
           <section>
             <h2 className="text-white font-bold text-lg mb-3">4. User Content</h2>

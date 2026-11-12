@@ -97,7 +97,7 @@ export default function ArabicDownload() {
                 </ol>
                 <div className="apx-sub__note stack-2">
                   <h3>العضوية على Android</h3>
-                  <p>انضم إلى رحلات بلا حدود، وتابع المجتمع، واستخدم الخريطة المباشرة. وللحصول على APEX MEMBER، تحدّث إلى أحد المنظّمين.</p>
+                  <p>انضم إلى رحلات بلا حدود، وتابع المجتمع، واستخدم الخريطة المباشرة. وعلى Android، اشترك في العضوية عبر دفع آمن — راجع <a className="apx-inline" href="/ar/pricing">الأسعار</a>.</p>
                 </div>
               </div>
             </div>
