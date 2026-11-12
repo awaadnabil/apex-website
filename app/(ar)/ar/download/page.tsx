@@ -3,6 +3,7 @@
 import type { Metadata } from 'next'
 import { APP_STORE_URL, COPY } from '@/lib/site/content'
 import { SITE_URL, kitViewport } from '@/lib/site/metadata'
+import { SubFooter } from '@/components/site/sub-page'
 
 // The same APK as /download: the 2.6.0 GitHub release (owner, 2026-11-09).
 const APK_URL = 'https://github.com/awaadnabil/apex-website/releases/download/android-2.6.0/APEX-2.6.0.apk'
@@ -103,14 +104,7 @@ export default function ArabicDownload() {
           </div>
         </section>
       </main>
-      <footer className="apx-sub__foot">
-        <div className="wrap">
-          <span>{c.footer.rights}</span>
-          <a href="/ar">الرئيسية</a>
-          <a href="/privacy">{c.footer.privacy}</a>
-          <a href="/terms">{c.footer.terms}</a>
-        </div>
-      </footer>
+      <SubFooter c={c} />
     </>
   )
 }

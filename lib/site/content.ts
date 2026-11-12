@@ -83,8 +83,10 @@ export type Copy = {
     lede: string
     cols: { title: string; links: { label: string; href: string }[] }[]
     rights: string
-    privacy: string
-    terms: string
+    /** the sub-pages' link back to the home page */
+    homeLabel: string
+    /** Pricing, Refunds, Terms, Privacy: on every page's footer, in this order */
+    legal: { label: string; href: string }[]
   }
 }
 
@@ -294,8 +296,13 @@ const en: Copy = {
       },
     ],
     rights: '© 2026 APEX, Dubai',
-    privacy: 'Privacy',
-    terms: 'Terms',
+    homeLabel: 'Home',
+    legal: [
+      { label: 'Pricing', href: '/pricing' },
+      { label: 'Refunds', href: '/refunds' },
+      { label: 'Terms', href: '/terms' },
+      { label: 'Privacy', href: '/privacy' },
+    ],
   },
 }
 
@@ -505,8 +512,14 @@ const ar: Copy = {
       },
     ],
     rights: '© 2026 APEX، دبي',
-    privacy: 'الخصوصية',
-    terms: 'الشروط',
+    homeLabel: 'الرئيسية',
+    // /privacy has no Arabic version (its wording must not change), so it is marked English like /concierge
+    legal: [
+      { label: 'الأسعار', href: '/ar/pricing' },
+      { label: 'الاسترداد', href: '/ar/refunds' },
+      { label: 'الشروط', href: '/ar/terms' },
+      { label: 'الخصوصية (بالإنجليزية)', href: '/privacy' },
+    ],
   },
 }
 

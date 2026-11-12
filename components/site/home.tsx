@@ -7,6 +7,7 @@
 // Effect: grain-gradient in the hero art frame, held still. Moments: line-carries-colour (#card),
 // letters-assemble (#partners). The page is a stack of screens: hero, rides, xp, market, card,
 // partners, partner, faq, footer.closing.
+import { Fragment } from 'react'
 import { APP_STORE_URL, type Copy } from '@/lib/site/content'
 
 /** Every picture the page shows, by base name under /img (photos: -640/-1280.webp; screens: -360/-720.webp). */
@@ -436,7 +437,7 @@ export function Home({ c, media: m = MEDIA }: { c: Copy; media?: Media }) {
               ))}
             </div>
             <div className="footer__legal">
-              <span>{c.footer.rights} &nbsp; <a href="/privacy">{c.footer.privacy}</a> &nbsp; <a href="/terms">{c.footer.terms}</a></span>
+              <span>{c.footer.rights}{c.footer.legal.map((l) => <Fragment key={l.href}> &nbsp; <a href={l.href}>{l.label}</a></Fragment>)}</span>
               <a href={c.altHome} hrefLang={ar ? 'en' : 'ar'} lang={ar ? 'en' : 'ar'}>{c.altLangLabel}</a>
             </div>
           </div>

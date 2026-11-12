@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { cardRef } from '@/lib/card-scan'
 import { CardScan } from './CardScan'
+import { SiteFooter } from '@/components/site-footer'
 
 // A live, per-rider code: never indexed, never previewed, never cached.
 export const dynamic = 'force-dynamic'
@@ -33,6 +34,7 @@ export default async function ApexCardScanPage({
         </div>
         <CardScan member={ref?.member ?? null} code={ref?.code ?? null} />
       </section>
+      <SiteFooter />
     </main>
   )
 }
