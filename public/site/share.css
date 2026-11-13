@@ -1,0 +1,83 @@
+/* The share pages (/dealer/[id], /club/[id] and their /ar twins), on top of the kit bundle. Logical
+   properties only, so the Arabic pages mirror through dir="rtl" without a second file. */
+.apx-share__section { padding-block: var(--s-6) var(--s-9); }
+.apx-share { max-width: 720px; margin-inline: auto; }
+
+/* cover: the partner's photo, cropped to a wide frame; a brand gradient when there is none */
+.apx-share__cover { position: relative; aspect-ratio: 16 / 9; border-radius: var(--r-lg, 20px); overflow: hidden; background: linear-gradient(135deg, #121518 0%, #0a1416 55%, color-mix(in oklab, var(--accent) 22%, #080808) 100%); }
+.apx-share__cover img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+.apx-share__cover::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(8, 8, 8, 0.72), rgba(8, 8, 8, 0) 55%); }
+.apx-share__cover--tall { aspect-ratio: 4 / 3; }
+@media (min-width: 720px) { .apx-share__cover--tall { aspect-ratio: 16 / 9; } }
+
+/* head: logo over the cover's bottom edge, then kind, name, verified */
+.apx-share__head { position: relative; padding-inline: var(--s-5); margin-top: calc(-1 * var(--s-7)); display: grid; gap: var(--s-2); }
+.apx-share__logo { inline-size: 88px; block-size: 88px; border-radius: 22px; object-fit: cover; background: var(--surface); border: 3px solid var(--bg); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45); display: block; }
+.apx-share__logo--mark { display: grid; place-items: center; }
+.apx-share__logo--mark img { inline-size: 40px; block-size: auto; border: 0; }
+.apx-share__kind { color: var(--muted); font-size: var(--t-label); letter-spacing: 0.02em; margin-top: var(--s-2); }
+.apx-share__kind [dir="ltr"] { unicode-bidi: isolate; }
+.apx-share h1 { font-size: clamp(32px, 4.2vw, 48px); line-height: 1.05; letter-spacing: var(--display-tracking); overflow-wrap: anywhere; }
+.apx-share__verified { display: inline-flex; align-items: center; gap: 6px; vertical-align: middle; margin-inline-start: var(--s-3); padding: 4px 10px; border-radius: 999px; background: color-mix(in oklab, var(--accent) 16%, transparent); color: var(--accent); font: 500 13px/1 var(--font-text); letter-spacing: 0; white-space: nowrap; }
+.apx-share__verified svg { inline-size: 14px; block-size: 14px; }
+.apx-share__sub { color: var(--muted); font-size: var(--t-body); }
+.apx-share__sub b { color: var(--ink); font-weight: 500; }
+
+/* perks: the rider perk is the hero, the members' extra sits under it */
+.apx-share__perks { display: grid; gap: var(--s-3); margin-top: var(--s-6); padding-inline: 0; }
+.apx-share__perk { border-radius: var(--r-lg, 20px); padding: var(--s-5); display: grid; gap: var(--s-2); }
+.apx-share__perk--hero { background: var(--accent); color: var(--p-accent-ink); }
+.apx-share__perk--hero .t-label { color: color-mix(in oklab, var(--p-accent-ink) 70%, var(--accent)); }
+.apx-share__perk--hero .apx-share__perk-text { font-size: clamp(26px, 3.6vw, 40px); line-height: 1.1; letter-spacing: var(--display-tracking); font-weight: 500; overflow-wrap: anywhere; }
+.apx-share__perk--member { background: var(--surface); border: 1px solid var(--line); }
+.apx-share__perk--member .t-label { color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.apx-share__perk--member .t-label svg { inline-size: 14px; block-size: 14px; }
+.apx-share__perk--member .apx-share__perk-text { font-size: var(--t-lead); line-height: 1.35; font-weight: 500; }
+.apx-share__perk--member .muted { font-size: var(--t-small); }
+.apx-share__perk--empty { background: var(--surface); border: 1px dashed var(--line); color: var(--muted); }
+.apx-share__perk .t-label { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+:lang(ar) .apx-share__perk .t-label { letter-spacing: 0; text-transform: none; }
+.apx-share__perk-text { unicode-bidi: plaintext; }
+
+/* the one action */
+.apx-share__cta { display: grid; gap: var(--s-3); justify-items: center; text-align: center; margin-top: var(--s-6); }
+.apx-share__cta .btn { inline-size: 100%; max-inline-size: 440px; min-block-size: 56px; font-size: var(--t-body); }
+.apx-share__cta .apx-inline { font-size: var(--t-small); min-block-size: 44px; display: inline-flex; align-items: center; }
+.apx-share__cta .muted { font-size: var(--t-small); }
+
+/* the partner's own channels */
+.apx-share__links { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--s-3); margin-top: var(--s-6); list-style: none; padding: 0; }
+.apx-share__links a { display: flex; align-items: center; justify-content: center; gap: var(--s-2); min-block-size: 52px; padding: var(--s-3) var(--s-4); border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none; font-size: var(--t-small); font-weight: 500; transition: border-color var(--dur) var(--ease), background var(--dur) var(--ease); }
+.apx-share__links a:hover { border-color: color-mix(in oklab, var(--ink) 30%, transparent); }
+.apx-share__links a:focus-visible { outline: 2px solid var(--action); outline-offset: 2px; }
+.apx-share__links svg { inline-size: 18px; block-size: 18px; flex: none; }
+
+.apx-share__about { margin-top: var(--s-7); display: grid; gap: var(--s-3); }
+.apx-share__about h2 { font-size: var(--t-h3); }
+.apx-share__about p { color: var(--muted); white-space: pre-line; overflow-wrap: anywhere; }
+
+/* club: the next rides */
+.apx-share__rides { margin-top: var(--s-7); display: grid; gap: var(--s-3); }
+.apx-share__rides h2 { font-size: var(--t-h3); }
+.apx-share__ride { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: var(--s-4); padding: var(--s-4); border-radius: var(--r-md, 14px); background: var(--surface); border: 1px solid var(--line); }
+.apx-share__ride-date { display: grid; place-content: center; text-align: center; border-radius: 12px; background: var(--bg); color: var(--ink); padding: var(--s-2) 0; line-height: 1.1; }
+.apx-share__ride-date b { font: 500 22px/1 var(--font-mono); }
+.apx-share__ride-date span { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
+:lang(ar) .apx-share__ride-date span { letter-spacing: 0; text-transform: none; }
+.apx-share__ride h3 { font-size: var(--t-card); font-weight: 500; line-height: 1.25; overflow-wrap: anywhere; }
+.apx-share__ride p { color: var(--muted); font-size: var(--t-small); margin-top: 4px; overflow-wrap: anywhere; }
+.apx-share__ride .pill { margin-top: var(--s-2); height: 26px; font-size: 12px; }
+.apx-share__empty { color: var(--muted); padding: var(--s-4); border: 1px dashed var(--line); border-radius: var(--r-md, 14px); }
+
+@media (max-width: 480px) {
+  .apx-share__head { padding-inline: var(--s-4); }
+  .apx-share__logo { inline-size: 72px; block-size: 72px; border-radius: 18px; }
+  .apx-share__head { margin-top: calc(-1 * var(--s-6)); }
+}
+
+/* the members-only tag stays on one line */
+.apx-share__ride .pill { height: auto; min-block-size: 28px; padding: 2px 10px; white-space: nowrap; gap: 6px; }
+.apx-share__ride .pill svg { inline-size: 14px; block-size: 14px; }
+
+/* the language link stays in the bar on phones: the share pages have no menu to tuck it into */
+body:has(.apx-share) .nav:not(.is-open) .nav__actions > .nav__link { display: inline-flex; }
