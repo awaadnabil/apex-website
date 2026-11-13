@@ -47,11 +47,19 @@ const PALETTE = `:root {
 export function KitDocument({
   locale,
   extraFontClass = '',
+  lean = false,
   children,
 }: {
   locale: Locale
   /** the Arabic layout passes IBM Plex Sans Arabic's variable class; English pages never load it */
   extraFontClass?: string
+  /**
+   * The share pages (/dealer/[id], /club/[id] and their /ar twins) are opened from a WhatsApp or Instagram
+   * link, mostly on a phone, by someone who does not have the app yet. They keep the kit's stylesheets,
+   * palette and scripts but skip the home page's theatre: no boot overlay, no WebGL stage, no custom
+   * cursor, no smooth scroll, no hero glyph effect.
+   */
+  lean?: boolean
   children: React.ReactNode
 }) {
   const rtl = locale === 'ar'
@@ -85,22 +93,26 @@ export function KitDocument({
           }}
         />
         {/* the boot overlay's first-visit gate, before first paint (components/site/boot-sequence.tsx) */}
-        <script dangerouslySetInnerHTML={{ __html: BOOT_GATE_SCRIPT + ';' + ROUTE_REVEAL_SCRIPT }} />
+        <script dangerouslySetInnerHTML={{ __html: (lean ? '' : BOOT_GATE_SCRIPT + ';') + ROUTE_REVEAL_SCRIPT }} />
         {/* the grounds' tokens before first paint, inline (the kit loads this plain, not deferred) */}
         <script dangerouslySetInnerHTML={{ __html: BACKGROUNDS_JS }} />
         <link rel="modulepreload" href="/assets/system.js" />
         <link rel="modulepreload" href="/assets/moments/moments.js" />
       </head>
       <body suppressHydrationWarning>
-        <BootSequence />
+        {lean ? null : <BootSequence />}
         <div className="apx-route-bar" aria-hidden="true" />
         {children}
         <KitScripts />
-        <MotionFoundation />
-        <ApexStage />
-        <HeroTextFx />
-        <InteractionLayer />
-        <CustomCursor />
+        {lean ? null : (
+          <>
+            <MotionFoundation />
+            <ApexStage />
+            <HeroTextFx />
+            <InteractionLayer />
+            <CustomCursor />
+          </>
+        )}
         {/* Vercel serves /_vercel/insights only on its own deployments; locally the script would 404 */}
         {process.env.VERCEL === '1' && <Analytics />}
       </body>

@@ -26,6 +26,7 @@ The app combines the ride itself (group rides, FLY live tracking, XP, Weekly Spo
 - iOS app is live: App Store id 6773114294, `https://apps.apple.com/app/apex-mena/id6773114294`.
 - Android is an APK, not on Play Store, installed from `/download` (`NEXT_PUBLIC_APK_URL`, defaulting to the GitHub release `awaadnabil/apex-releases`).
 - Deep-link share routes open the app or fall back to the store: `/c/[code]` club invite, `/drive/[id]` ride, `/join/[ref]` referral, `/l/[id]` Market listing. Universal links come from `public/.well-known/`.
+- Public share pages, English and Arabic, for someone without the app: `/dealer/[id]` and `/ar/dealer/[id]` (a partner: cover, logo, name, city, the perk every rider gets as the hero, the members' extra, Directions / Instagram / WhatsApp, one install CTA), `/club/[id]` and `/ar/club/[id]` (cover, name, size, next rides, one join CTA). Each has its own 1200×630 card (`opengraph-image.tsx`). `?ref=<userId>` rides along on the store, download and `apex://` links and is kept in the `apex_ref` cookie for a month. Data comes only from two anon RPCs that return public fields (`supabase/sql/2026-11-13_public_share_rpcs.sql`), so no fee rate can reach the page.
 - Membership is bought in-app (Apple IAP).
 
 ## Capabilities and Constraints
