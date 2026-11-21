@@ -28,9 +28,10 @@ const ANDROID_STEPS = [
 ]
 
 export const metadata: Metadata = {
-  title: 'Download APEX',
+  title: 'Download APEX for iPhone & Android (APK) | Motorcycle Group Ride App UAE',
   description:
-    'Install APEX on iPhone or Android — the GCC’s most exclusive motor community.',
+    'Download APEX free: the motorcycle and car group ride app for Dubai, the UAE and the GCC. iPhone on the App Store, Android as a direct APK.',
+  alternates: { canonical: 'https://getapexmena.com/download', languages: { en: '/download', ar: '/ar/download' } },
   openGraph: {
     title: 'Download APEX',
     description: 'Install APEX on iPhone or Android.',
