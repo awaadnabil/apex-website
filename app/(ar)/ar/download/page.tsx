@@ -6,7 +6,7 @@ import { SITE_URL, kitViewport } from '@/lib/site/metadata'
 import { SubFooter } from '@/components/site/sub-page'
 
 // The same APK as /download: the 2.7.0 GitHub release (owner, 2026-11-21).
-const APK_URL = 'https://github.com/awaadnabil/apex-website/releases/download/android-2.7.0/APEX-2.7.0.apk'
+const APK_URL = 'https://github.com/awaadnabil/apex-website/releases/download/android-2.7.0/application-b916fe8d-b884-443e-801b-4c04b8763d7a.apk'
 
 const STEPS = [
   {
