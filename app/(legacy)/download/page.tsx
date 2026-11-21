@@ -6,8 +6,8 @@ import { ApexButton } from '@/components/apex-button'
 
 const APP_STORE_URL = 'https://apps.apple.com/app/apex-mena/id6773114294'
 
-// The Android APK: the 2.6.0 GitHub release (owner, 2026-11-09). Fixed here so no env value can redirect it.
-const APK_URL = 'https://github.com/awaadnabil/apex-website/releases/download/android-2.6.0/APEX-2.6.0.apk'
+// The Android APK: the 2.7.0 GitHub release (owner, 2026-11-21). Fixed here so no env value can redirect it.
+const APK_URL = 'https://github.com/awaadnabil/apex-website/releases/download/android-2.7.0/APEX-2.7.0.apk'
 
 const ANDROID_STEPS = [
   {

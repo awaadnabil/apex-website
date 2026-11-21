@@ -1,12 +1,12 @@
 // /ar/download: the Arabic version of /download. The same facts, the same App Store link and the same
-// APK (the 2.6.0 GitHub release), translated, in true RTL on the kit.
+// APK (the 2.7.0 GitHub release), translated, in true RTL on the kit.
 import type { Metadata } from 'next'
 import { APP_STORE_URL, COPY } from '@/lib/site/content'
 import { SITE_URL, kitViewport } from '@/lib/site/metadata'
 import { SubFooter } from '@/components/site/sub-page'
 
-// The same APK as /download: the 2.6.0 GitHub release (owner, 2026-11-09).
-const APK_URL = 'https://github.com/awaadnabil/apex-website/releases/download/android-2.6.0/APEX-2.6.0.apk'
+// The same APK as /download: the 2.7.0 GitHub release (owner, 2026-11-21).
+const APK_URL = 'https://github.com/awaadnabil/apex-website/releases/download/android-2.7.0/APEX-2.7.0.apk'
 
 const STEPS = [
   {
