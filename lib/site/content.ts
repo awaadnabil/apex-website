@@ -99,9 +99,9 @@ const en: Copy = {
   altHome: '/ar',
   altLangLabel: 'العربية',
   meta: {
-    title: 'APEX: the motor community app for GCC riders and drivers',
+    title: 'APEX | Motorcycle & Car Group Ride App in Dubai, UAE & GCC',
     description:
-      'Group rides, FLY live tracking, XP and the Weekly Spotlight, the Market and APEX Card perks. On iPhone and Android.',
+      'Join group rides in Dubai and across the GCC. Live ride tracking, ride cards, weekly leaderboard, bike and car marketplace, and partner discounts. Free on iPhone and Android.',
     ogLocale: 'en_AE',
   },
   skip: 'Skip to content',
@@ -319,9 +319,9 @@ const ar: Copy = {
   altHome: '/',
   altLangLabel: 'English',
   meta: {
-    title: 'APEX: تطبيق مجتمع السيارات والدراجات في الخليج',
+    title: 'APEX | تطبيق رحلات الدراجات النارية والسيارات في دبي والإمارات والخليج',
     description:
-      'رحلات جماعية، وتتبّع مباشر مع FLY، ونقاط XP وWeekly Spotlight، والسوق، ومزايا APEX Card. على iPhone وAndroid.',
+      'انضم إلى رحلات الدراجات النارية والسيارات الجماعية في دبي والخليج. تتبّع مباشر للرحلة، بطاقات الرحلات، لوحة صدارة أسبوعية، سوق للدراجات والسيارات، وخصومات لدى الشركاء. مجاني على iPhone وAndroid.',
     ogLocale: 'ar_AE',
   },
   skip: 'انتقل إلى المحتوى',
