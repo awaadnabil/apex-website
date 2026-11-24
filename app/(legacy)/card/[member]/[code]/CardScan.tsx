@@ -98,6 +98,7 @@ export function CardScan({ member, code }: { member: string | null; code: string
   const valid = !!result?.valid && !result.own_card
   const perk = perkToGive(result)
   const isMember = result?.tier === 'member'
+  const founding = isMember && !!(result as { founding?: boolean } | null)?.founding
 
   return (
     <>
@@ -105,15 +106,6 @@ export function CardScan({ member, code }: { member: string | null; code: string
         {valid ? (
           <>
             {result?.rider_name ? <p className="text-xl font-bold">{result.rider_name}</p> : null}
-            <span
-              className={
-                isMember
-                  ? 'rounded-full bg-teal px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.25em] text-carbon'
-                  : 'rounded-full border border-white/40 px-4 py-1.5 text-[11px] font-bold uppercase tracking-[0.25em] text-white'
-              }
-            >
-              {isMember ? 'APEX Member' : 'Rider'}
-            </span>
           </>
         ) : null}
         {result?.scanned_at ? (
@@ -121,13 +113,32 @@ export function CardScan({ member, code }: { member: string | null; code: string
         ) : null}
       </Status>
 
-      {valid && perk ? (
-        <div className="flex flex-col gap-2 rounded-2xl border border-teal/40 bg-teal/10 p-5 text-center" aria-live="polite">
-          <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-white/60">Give this perk</p>
-          <p className="text-balance text-2xl font-extrabold leading-tight">{perk}</p>
+      {valid ? (
+        <div
+          className={
+            isMember
+              ? founding
+                ? 'flex flex-col gap-1 rounded-2xl border border-[#E8C15A] bg-[#2A2109] p-6 text-center'
+                : 'flex flex-col gap-1 rounded-2xl border border-teal bg-[#07302E] p-6 text-center'
+              : 'flex flex-col gap-1 rounded-2xl border border-white/15 bg-white/5 p-6 text-center'
+          }
+          aria-live="polite"
+        >
+          <p className={`text-[12px] font-semibold uppercase tracking-[0.3em] ${isMember ? 'text-white' : 'text-white/60'}`}>
+            {isMember ? (founding ? 'Founding Member' : 'APEX Member') : 'Rider'}
+          </p>
+          <p className={`text-balance text-[26px] font-extrabold leading-tight ${isMember ? (founding ? 'text-[#E8C15A]' : 'text-teal') : 'text-white'}`}>
+            {isMember ? 'Give the full member perk' : 'Rider perk only'}
+          </p>
+          {perk ? <p className={`mt-1 text-balance text-xl font-bold ${isMember ? 'text-white' : 'text-white/80'}`}>{perk}</p> : null}
           {!isMember && result?.dealer?.member_perk ? (
-            <p className="text-[13px] text-white/60">{`APEX Members only (not this rider): ${result.dealer.member_perk}`}</p>
+            <p className="mt-1 text-[13px] text-white/50">{`Members get ${result.dealer.member_perk} — not this rider.`}</p>
           ) : null}
+          {result?.recently_redeemed ? (
+            <p className="mt-2 text-[13px] font-bold text-[#FFB020]">Already redeemed here in the last 10 minutes.</p>
+          ) : null}
+        </div>
+      ) : null}
           {result?.recently_redeemed ? (
             <p className="text-[13px] font-bold text-[#FFB020]">Already redeemed here in the last 10 minutes.</p>
           ) : null}
