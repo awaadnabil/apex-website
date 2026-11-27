@@ -139,11 +139,6 @@ export function CardScan({ member, code }: { member: string | null; code: string
           ) : null}
         </div>
       ) : null}
-          {result?.recently_redeemed ? (
-            <p className="text-[13px] font-bold text-[#FFB020]">Already redeemed here in the last 10 minutes.</p>
-          ) : null}
-        </div>
-      ) : null}
 
       {valid && venue && !picking ? (
         <div className="flex items-center gap-3 text-[15px]">
